@@ -1,0 +1,84 @@
+ext {
+    android = [
+            compileSdkVersion: 26,
+            buildToolsVersion: "26.0.2",
+            applicationId    : "com.wj.dawsonwanandroid",
+            minSdkVersion    : 16,
+            targetSdkVersion : 26,
+            versionCode      : 1,
+            versionName      : "1.0.0"
+    ]
+
+    def dependVersion = [
+            support    : "27.0.2",
+            butterknife: "8.8.1",
+            glide      : "4.1.1"
+    ]
+
+    dependencies = [
+            //base
+            "support-v4"              : "com.android.support:support-v4:${dependVersion.support}",
+            "appcompat-v7"            : "com.android.support:appcompat-v7:${dependVersion.support}",
+            "support-annotations"     : "com.android.support:support-annotations:${dependVersion.support}",
+            "support-compat"          : "com.android.support:support-compat:${dependVersion.support}",
+            "support-design"          : "com.android.support:design:${dependVersion.support}",
+            "recyclerview"            : "com.android.support:recyclerview-v7:${dependVersion.support}",
+            "cardview"                : "com.android.support:cardview-v7:${dependVersion.support}",
+            "constraint-layout"       : "com.android.support.constraint:constraint-layout:1.0.2",
+            //test
+            "junit"                   : "junit:junit:4.12",
+            "runner"                  : "com.android.support.test:runner:1.0.1",
+            "espresso-core"           : "com.android.support.test.espresso:espresso-core:3.0.1",
+            //eventbus
+            "eventbus"                : "org.greenrobot:eventbus:3.1.1",
+            //butterknife
+            "butterknife"             : "com.jakewharton:butterknife:${dependVersion.butterknife}",
+            "butterknife-compiler"    : "com.jakewharton:butterknife-compiler:${dependVersion.butterknife}",
+            //Glide
+            "glide"                   : "com.github.bumptech.glide:glide:${dependVersion.glide}",
+            "glide-compiler"          : "com.github.bumptech.glide:compiler:${dependVersion.glide}",
+            //log
+            "logger"                  : "com.orhanobut:logger:2.1.1",
+
+            //Rxjava
+            "rxjava"                  : "io.reactivex.rxjava2:rxjava:2.1.6",
+            "rxandroid"               : "io.reactivex.rxjava2:rxandroid:2.0.1",
+            "rxrelay"                 : "com.jakewharton.rxrelay2:rxrelay:2.0.0",
+
+            //Retrofit
+            "retrofit"                : "com.squareup.retrofit2:retrofit:2.3.0",
+            "retrofit-gson"           : "com.squareup.retrofit2:converter-gson:2.3.0",
+            "retrofit-adapter"        : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
+            "okhttp-log-interceptor"  : "com.squareup.okhttp3:logging-interceptor:3.8.0",
+
+            //刷新控件
+            "SmartRefreshLayout"      : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7",
+            "SmartRefreshHeader"      : "com.scwang.smartrefresh:SmartRefreshHeader:1.0.4-7",
+            //Banner
+            "banner"                  : "com.youth.banner:banner:1.4.10",
+            "brvah"                   : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34",
+            "flexibledivider"         : "com.yqritc:recyclerview-flexibledivider:1.4.0",
+            //jiaozivideoplayer
+            "jiaozivideoplayer"       : "cn.jzvd:jiaozivideoplayer:6.2.4",
+            "flowlayout"              : "com.hyman:flowlayout-lib:1.1.2",
+            "roundedimageview"        : "com.makeramen:roundedimageview:2.3.0",
+            "circleimageview"         : "de.hdodenhof:circleimageview:2.2.0",
+            "photoview"               : "com.github.chrisbanes:PhotoView:2.0.0",
+            "rxpermissions2"          : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar",
+            "material-dialogs"        : "com.afollestad.material-dialogs:commons:0.9.6.0",
+            "recyclerview-animators"  : "jp.wasabeef:recyclerview-animators:2.3.0",
+            "pinyin4j"                : "com.github.open-android:pinyin4j:2.5.0",
+            "materialsearchview"      : "com.miguelcatalan:materialsearchview:1.4.0",
+            "blurry"                  : "jp.wasabeef:blurry:2.1.1",
+            "matisse"                 : "com.zhihu.android:matisse:0.4.3",
+            "picasso"                 : "com.squareup.picasso:picasso:2.5.2",
+            //di
+            "dagger"                  : "com.google.dagger:dagger:2.4",
+            "dagger-compiler"         : "com.google.dagger:dagger-compiler:2.4",
+            "javax-annotation"        : "org.glassfish:javax.annotation:10.0-b28",
+            "dagger-android-support"  : "com.google.dagger:dagger-android-support:2.15",
+            "dagger-android-processor": "com.google.dagger:dagger-android-processor:2.15",
+
+            "materialprogressbar"     : "me.zhanghai.android.materialprogressbar:library:1.4.2"
+    ]
+}

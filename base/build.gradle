@@ -1,0 +1,94 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 27
+
+
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.dependencies["constraint-layout"]
+    //test
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation rootProject.ext.dependencies["junit"]
+    androidTestImplementation rootProject.ext.dependencies["runner"]
+    androidTestImplementation rootProject.ext.dependencies["espresso-core"]
+    //support
+    api(rootProject.ext.dependencies["support-v4"]) {
+        exclude module: 'support-annotations'
+    }
+    api(rootProject.ext.dependencies["appcompat-v7"]) {
+        exclude module: 'support-v4'
+    }
+    api rootProject.ext.dependencies["support-annotations"]
+    api rootProject.ext.dependencies["support-compat"]
+    api(rootProject.ext.dependencies["support-design"]) {
+        exclude module: 'recyclerview-v7'
+    }
+    api rootProject.ext.dependencies["recyclerview"]
+
+    //rxjava
+    api(rootProject.ext.dependencies["rxjava"])
+    api(rootProject.ext.dependencies["rxandroid"])
+    api(rootProject.ext.dependencies["rxrelay"])
+
+    //retrofit
+    api(rootProject.ext.dependencies["retrofit"])
+    api(rootProject.ext.dependencies["retrofit-gson"])
+    api(rootProject.ext.dependencies["retrofit-adapter"])
+    api(rootProject.ext.dependencies["okhttp-log-interceptor"])
+
+    //SmartRefreshLayout
+    api rootProject.ext.dependencies["SmartRefreshLayout"]
+    api rootProject.ext.dependencies["SmartRefreshHeader"]
+
+    //banner
+    api rootProject.ext.dependencies["banner"]
+
+    //brvah
+    api rootProject.ext.dependencies["brvah"]
+
+    //butterknife
+    api(rootProject.ext.dependencies["butterknife"]) {
+        exclude module: 'support-annotations'
+    }
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    api(rootProject.ext.dependencies["eventbus"])
+    api(rootProject.ext.dependencies["materialprogressbar"])
+    //dagger2
+    api(rootProject.ext.dependencies["dagger"])
+    annotationProcessor (rootProject.ext.dependencies["dagger-compiler"])
+    api (rootProject.ext.dependencies["javax-annotation"])
+    api (rootProject.ext.dependencies["dagger-android-support"])
+    annotationProcessor (rootProject.ext.dependencies["dagger-android-processor"])
+
+    //glide
+    api(rootProject.ext.dependencies["glide"]) {
+        exclude module: 'support-fragment'
+    }
+    annotationProcessor(rootProject.ext.dependencies["glide-compiler"]) {
+        exclude module: 'jsr305'
+    }
+
+    api rootProject.ext.dependencies["cardview"]
+}
