@@ -73,14 +73,16 @@ dependencies {
         exclude module: 'support-annotations'
     }
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+
     api(rootProject.ext.dependencies["eventbus"])
+
     api(rootProject.ext.dependencies["materialprogressbar"])
     //dagger2
     api(rootProject.ext.dependencies["dagger"])
     annotationProcessor (rootProject.ext.dependencies["dagger-compiler"])
     api (rootProject.ext.dependencies["javax-annotation"])
-    api (rootProject.ext.dependencies["dagger-android-support"])
-    annotationProcessor (rootProject.ext.dependencies["dagger-android-processor"])
+//    api (rootProject.ext.dependencies["dagger-android-support"])
+//    annotationProcessor (rootProject.ext.dependencies["dagger-android-processor"])
 
     //glide
     api(rootProject.ext.dependencies["glide"]) {

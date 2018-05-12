@@ -1,7 +1,9 @@
-package com.wj.dawsonwanandroid.app;
+package com.wj.dawsonwanandroid.core;
 
 import android.app.Application;
 import android.content.Context;
+
+import com.wj.base.Initialization;
 
 /**
  * Created by wj on 2018/5/11.
@@ -13,6 +15,8 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        context=this;
+        context = this;
+
+        new Initialization(this);
     }
 }

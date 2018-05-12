@@ -6,7 +6,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * Created by wj on 2018/5/10.
  */
-public class BasePresenter<T extends BaseView> {
+public class BasePresenter<T extends BaseContract.BaseView> implements BaseContract.AbstractPresenter<T> {
 
     protected T mView;
     private CompositeDisposable compositeDisposable;
@@ -18,10 +18,12 @@ public class BasePresenter<T extends BaseView> {
         compositeDisposable.add(disposable);
     }
 
+    @Override
     public void attachView(T view) {
         this.mView = view;
     }
 
+    @Override
     public void detachView() {
         this.mView = null;
         if (compositeDisposable != null) {
