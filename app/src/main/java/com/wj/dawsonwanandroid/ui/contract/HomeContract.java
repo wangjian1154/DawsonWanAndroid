@@ -1,7 +1,7 @@
 package com.wj.dawsonwanandroid.ui.contract;
 
-import com.wj.base.base.BaseContract;
-import com.youth.banner.Banner;
+import com.wj.dawsonwanandroid.base.BaseContract;
+import com.wj.dawsonwanandroid.bean.HomeBanner;
 
 import java.util.List;
 
@@ -9,9 +9,11 @@ public interface HomeContract {
 
     interface View extends BaseContract.BaseView {
 
-        void setHomeBanner(List<Banner> banner);
+        void setHomeBanner(List<HomeBanner> banners);
 
         void setListData();
+
+        void showFailed(String error);
 
     }
 
@@ -20,5 +22,7 @@ public interface HomeContract {
         void loadBanner();
 
         void loadListData();
+
+        void loadData(boolean isRefresh);
     }
 }

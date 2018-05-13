@@ -2,6 +2,8 @@ package com.wj.base.base;
 
 import android.os.Bundle;
 
+import com.trello.rxlifecycle2.LifecycleTransformer;
+
 import javax.inject.Inject;
 
 /**
@@ -18,13 +20,16 @@ public abstract class BaseActivity<T extends BaseContract.AbstractPresenter>
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     protected void onViewCreated() {
         super.onViewCreated();
         if (mPresenter != null) {
             mPresenter.attachView(this);
         }
+    }
+
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.bindToLifecycle();
     }
 
     @Override

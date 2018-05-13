@@ -7,13 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.wj.base.R;
 import com.wj.base.utils.EasyPermissionsUtils;
 
 import java.util.List;
 
 
-public class PermissionActivity extends AppCompatActivity implements
+public class PermissionActivity extends RxAppCompatActivity implements
         EasyPermissionsUtils.PermissionCallbacks {
 
     protected static final int RC_PERM = 123;

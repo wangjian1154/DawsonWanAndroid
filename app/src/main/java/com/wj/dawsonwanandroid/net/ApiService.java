@@ -3,6 +3,8 @@ package com.wj.dawsonwanandroid.net;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
@@ -14,6 +16,6 @@ public interface ApiService {
      * @return
      */
     @GET(ApiConstants.API_HOME_BANNER)
-    Observable<BaseResponse<HomeBanner>> getHomeBanners();
+    Observable<BaseResponse<List<HomeBanner>>> getHomeBanners();
 
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.wj.base.utils.HandleBackUtil;
 import com.wj.base.view.LoadingProgress;
 
@@ -23,7 +24,7 @@ import butterknife.Unbinder;
  * 无MVP基类
  */
 
-public abstract class SimpleFragment extends Fragment implements HandleBackUtil.HandleBackInterface  {
+public abstract class SimpleFragment extends RxFragment implements HandleBackUtil.HandleBackInterface  {
 
     private Unbinder bind;
     protected boolean isCreate = false;

@@ -50,7 +50,8 @@ dependencies {
     //rxjava
     api(rootProject.ext.dependencies["rxjava"])
     api(rootProject.ext.dependencies["rxandroid"])
-    api(rootProject.ext.dependencies["rxrelay"])
+    api(rootProject.ext.dependencies["rxlifecycle2"])
+    api(rootProject.ext.dependencies["rxlifecycle2-components"])
 
     //retrofit
     api(rootProject.ext.dependencies["retrofit"])
