@@ -9,6 +9,8 @@ import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.wj.dawsonwanandroid.di.compenent.BaseFragmentComponent;
 import com.wj.dawsonwanandroid.di.module.BaseFragmentModule;
 
+import java.net.HttpURLConnection;
+
 import javax.inject.Inject;
 
 /**
@@ -42,6 +44,7 @@ public abstract class BaseFragment<T extends BaseContract.AbstractPresenter>
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+
         super.onDestroyView();
     }
 

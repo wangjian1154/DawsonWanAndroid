@@ -18,14 +18,16 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.yokeyword.fragmentation.SupportFragment;
 
 /**
  * Created by wj on 2018/1/11.
  * 无MVP基类
  */
 
-public abstract class SimpleFragment extends RxFragment implements HandleBackUtil.HandleBackInterface  {
+public abstract class SimpleFragment extends SupportFragment implements HandleBackUtil.HandleBackInterface  {
 
+    protected final String TAG = this.getClass().getSimpleName();
     private Unbinder bind;
     protected boolean isCreate = false;
     protected boolean isDestroy = false;

@@ -3,6 +3,7 @@ package com.wj.dawsonwanandroid.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
+import com.wj.base.base.BaseFragment;
 import com.wj.dawsonwanandroid.base.BaseFragment;
 import com.wj.base.utils.BannerImageLoader;
 import com.wj.base.utils.ToastUtils;
