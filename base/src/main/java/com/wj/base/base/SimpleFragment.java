@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.wj.base.utils.HandleBackUtil;
 import com.wj.base.view.LoadingProgress;
@@ -25,7 +26,7 @@ import me.yokeyword.fragmentation.SupportFragment;
  * 无MVP基类
  */
 
-public abstract class SimpleFragment extends SupportFragment implements HandleBackUtil.HandleBackInterface  {
+public abstract class SimpleFragment extends RxFragment implements HandleBackUtil.HandleBackInterface  {
 
     protected final String TAG = this.getClass().getSimpleName();
     private Unbinder bind;
@@ -150,6 +151,11 @@ public abstract class SimpleFragment extends SupportFragment implements HandleBa
 
             }
         }
+    }
+
+
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.bindToLifecycle();
     }
 
 }

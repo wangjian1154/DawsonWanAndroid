@@ -1,6 +1,7 @@
 package com.wj.dawsonwanandroid.ui.presenter;
 
-import com.wj.dawsonwanandroid.base.BasePresenter;
+import com.wj.base.base.BasePresenter;
+import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
 import com.wj.dawsonwanandroid.net.ApiRetrofit;
@@ -36,7 +37,22 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     }
 
     @Override
-    public void loadListData() {
+    public void loadListData(final boolean isRefresh) {
+        ApiRetrofit.create(ApiService.class)
+                .getArtivleList()
+                .compose(RxUtils.<BaseResponse<List<ArticleBean>>>applySchedulers())
+                .compose(mView.<BaseResponse<List<ArticleBean>>>bindToLife())
+                .subscribe(new Consumer<BaseResponse<List<ArticleBean>>>() {
+                    @Override
+                    public void accept(BaseResponse<List<ArticleBean>> articleBean) throws Exception {
+                        mView.setListData(articleBean, isRefresh);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.showFailed(throwable.getMessage());
+                    }
+                });
 
     }
 
@@ -45,10 +61,10 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
         if (isRefresh) {
             page = 0;
             loadBanner();
-            loadListData();
+            loadListData(isRefresh);
         } else {
             page++;
-            loadListData();
+            loadListData(isRefresh);
         }
     }
 }

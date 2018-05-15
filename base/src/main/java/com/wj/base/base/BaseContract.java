@@ -3,7 +3,7 @@ package com.wj.base.base;
 import io.reactivex.ObservableTransformer;
 
 public interface BaseContract {
- 
+
     interface AbstractPresenter<T extends BaseContract.BaseView> {
 
         void attachView(T view);
@@ -12,10 +12,6 @@ public interface BaseContract {
     }
 
     interface BaseView {
-
-        void showLoading();
-
-        void hideLoading();
 
         void showError(String msg);
 

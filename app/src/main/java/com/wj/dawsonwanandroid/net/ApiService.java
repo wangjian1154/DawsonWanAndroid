@@ -1,5 +1,6 @@
 package com.wj.dawsonwanandroid.net;
 
+import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
 
@@ -17,5 +18,8 @@ public interface ApiService {
      */
     @GET(ApiConstants.API_HOME_BANNER)
     Observable<BaseResponse<List<HomeBanner>>> getHomeBanners();
+
+    @GET(ApiConstants.API_HOME_ARTICLE)
+    Observable<BaseResponse<List<ArticleBean>>> getArtivleList();
 
 }

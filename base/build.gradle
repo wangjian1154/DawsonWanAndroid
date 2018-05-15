@@ -79,10 +79,10 @@ dependencies {
     api(rootProject.ext.dependencies["eventbus"])
 
     api(rootProject.ext.dependencies["materialprogressbar"])
-    //dagger2
-    api(rootProject.ext.dependencies["dagger"])
-    annotationProcessor (rootProject.ext.dependencies["dagger-compiler"])
-    api (rootProject.ext.dependencies["javax-annotation"])
+//    //dagger2
+//    api(rootProject.ext.dependencies["dagger"])
+//    annotationProcessor (rootProject.ext.dependencies["dagger-compiler"])
+//    api (rootProject.ext.dependencies["javax-annotation"])
 //    api (rootProject.ext.dependencies["dagger-android-support"])
 //    annotationProcessor (rootProject.ext.dependencies["dagger-android-processor"])
 

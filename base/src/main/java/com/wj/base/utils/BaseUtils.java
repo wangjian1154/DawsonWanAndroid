@@ -9,6 +9,9 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.wj.base.Initialization;
@@ -129,5 +132,19 @@ public class BaseUtils {
         Uri uri = Uri.fromParts("package", context.getPackageName(), null);
         intent.setData(uri);
         context.startActivity(intent);
+    }
+
+    /**
+     * 配置 RecyclerView
+     *
+     * @param recyclerView
+     * @param layoutManager
+     */
+    public static void configRecyclerView(final RecyclerView recyclerView
+            , RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
+        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 }
