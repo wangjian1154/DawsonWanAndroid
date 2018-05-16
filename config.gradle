@@ -81,6 +81,7 @@ ext {
             "dagger-android-support"  : "com.google.dagger:dagger-android-support:2.15",
             "dagger-android-processor": "com.google.dagger:dagger-android-processor:2.15",
 
-            "materialprogressbar"     : "me.zhanghai.android.materialprogressbar:library:1.4.2"
+            "materialprogressbar"     : "me.zhanghai.android.materialprogressbar:library:1.4.2",
+            "agentweb"                : "com.just.agentweb:agentweb:4.0.2"
     ]
 }

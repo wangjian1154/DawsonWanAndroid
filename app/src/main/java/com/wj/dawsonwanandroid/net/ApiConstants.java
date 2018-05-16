@@ -12,5 +12,5 @@ public class ApiConstants {
     public static final String API_HOME_BANNER = "/banner/json";
 
     //首页文章
-    public static final String API_HOME_ARTICLE = "/article/list/0/json";
+    public static final String API_HOME_ARTICLE = "/article/list/{page}/json";
 }

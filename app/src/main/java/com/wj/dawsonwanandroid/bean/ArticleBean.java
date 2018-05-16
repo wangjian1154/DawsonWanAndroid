@@ -1,11 +1,12 @@
 package com.wj.dawsonwanandroid.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by wj on 2018/5/15.
  */
-public class ArticleBean {
+public class ArticleBean implements Serializable{
 
 
     /**
@@ -26,7 +27,7 @@ public class ArticleBean {
     public int total;
     public List<DatasBean> datas;
 
-    public static class DatasBean {
+    public static class DatasBean implements Serializable{
         /**
          * apkLink :
          * author : Kross

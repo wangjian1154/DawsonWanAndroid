@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -20,6 +21,6 @@ public interface ApiService {
     Observable<BaseResponse<List<HomeBanner>>> getHomeBanners();
 
     @GET(ApiConstants.API_HOME_ARTICLE)
-    Observable<BaseResponse<List<ArticleBean>>> getArtivleList();
+    Observable<BaseResponse<ArticleBean>> getArticleList(@Path("page") int page);
 
 }

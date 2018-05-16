@@ -39,12 +39,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
     @Override
     public void loadListData(final boolean isRefresh) {
         ApiRetrofit.create(ApiService.class)
-                .getArtivleList()
-                .compose(RxUtils.<BaseResponse<List<ArticleBean>>>applySchedulers())
-                .compose(mView.<BaseResponse<List<ArticleBean>>>bindToLife())
-                .subscribe(new Consumer<BaseResponse<List<ArticleBean>>>() {
+                .getArticleList(page)
+                .compose(RxUtils.<BaseResponse<ArticleBean>>applySchedulers())
+                .compose(mView.<BaseResponse<ArticleBean>>bindToLife())
+                .subscribe(new Consumer<BaseResponse<ArticleBean>>() {
                     @Override
-                    public void accept(BaseResponse<List<ArticleBean>> articleBean) throws Exception {
+                    public void accept(BaseResponse<ArticleBean> articleBean) throws Exception {
                         mView.setListData(articleBean, isRefresh);
                     }
                 }, new Consumer<Throwable>() {

@@ -95,4 +95,5 @@ dependencies {
     }
 
     api rootProject.ext.dependencies["cardview"]
+    api rootProject.ext.dependencies["agentweb"]
 }

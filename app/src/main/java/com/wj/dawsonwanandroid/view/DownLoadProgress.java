@@ -1,4 +1,4 @@
-package com.wj.dawsonwanandroid;
+package com.wj.dawsonwanandroid.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

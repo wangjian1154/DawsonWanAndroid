@@ -13,7 +13,7 @@ public interface HomeContract {
 
         void setHomeBanner(List<HomeBanner> banners);
 
-        void setListData(BaseResponse<List<ArticleBean>> articleBean,boolean isRefresh);
+        void setListData(BaseResponse<ArticleBean> articleBean,boolean isRefresh);
 
         void showFailed(String error);
 
