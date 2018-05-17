@@ -1,5 +1,6 @@
 package com.wj.dawsonwanandroid.net;
 
+import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
@@ -22,5 +23,8 @@ public interface ApiService {
 
     @GET(ApiConstants.API_HOME_ARTICLE)
     Observable<BaseResponse<ArticleBean>> getArticleList(@Path("page") int page);
+
+    @GET(ApiConstants.API_ANDROID_TREE)
+    Observable<BaseResponse<List<AndroidTreeBean>>> getAndroidTreeList();
 
 }

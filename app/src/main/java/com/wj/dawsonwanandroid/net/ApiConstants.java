@@ -13,4 +13,7 @@ public class ApiConstants {
 
     //首页文章
     public static final String API_HOME_ARTICLE = "/article/list/{page}/json";
+
+    //知识体系
+    public static final String API_ANDROID_TREE="/tree/json";
 }

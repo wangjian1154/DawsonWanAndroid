@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_size_100">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tv_title"
@@ -23,24 +23,12 @@
             android:textColor="@color/black"
             android:textSize="@dimen/widget_size_18" />
 
-
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tag_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="1111"
-            android:textSize="@dimen/widget_size_14" />
-
-
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="2018"
-            android:textSize="@dimen/widget_size_14" />
+            android:layout_below="@+id/tv_title"
+            android:layout_marginTop="@dimen/font_size_10" />
 
     </RelativeLayout>
 
