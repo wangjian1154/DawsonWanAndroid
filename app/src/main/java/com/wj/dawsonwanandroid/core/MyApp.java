@@ -19,4 +19,8 @@ public class MyApp extends Application {
 
         new Initialization(this);
     }
+
+    public static Context getInstance(){
+        return context;
+    }
 }
