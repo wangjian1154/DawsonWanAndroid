@@ -99,4 +99,8 @@ dependencies {
     api rootProject.ext.dependencies["agentweb"]
 
     api rootProject.ext.dependencies["flowlayout"]
+
+    api rootProject.ext.dependencies["MagicIndicator"]
+
+    api rootProject.ext.dependencies["roundedimageview"]
 }

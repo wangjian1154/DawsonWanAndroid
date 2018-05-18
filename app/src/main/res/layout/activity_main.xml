@@ -47,7 +47,7 @@
 
 
         <RadioButton
-            android:id="@+id/rb_person"
+            android:id="@+id/rb_open_source"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -56,7 +56,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/widget_size_5"
             android:paddingTop="@dimen/widget_size_5"
-            android:text="个人"
+            android:text="项目"
             android:textColor="@drawable/selector_tab_text"
             android:textSize="@dimen/font_size_14" />
 

@@ -11,7 +11,7 @@ import com.wj.base.view.NoScrollViewPager;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.ui.fragment.CategoryFragment;
 import com.wj.dawsonwanandroid.ui.fragment.HomeFragment;
-import com.wj.dawsonwanandroid.ui.fragment.MineFragment;
+import com.wj.dawsonwanandroid.ui.fragment.OpenSourceFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +27,8 @@ public class MainActivity extends SimpleActivity {
     RadioButton rbHome;
     @BindView(R.id.rb_category)
     RadioButton rbCategory;
-    @BindView(R.id.rb_person)
-    RadioButton rbPerson;
+    @BindView(R.id.rb_open_source)
+    RadioButton rbOpenSource;
 
     private List<Fragment> fragments;
 
@@ -56,10 +56,10 @@ public class MainActivity extends SimpleActivity {
 
         fragments.add(new HomeFragment());
         fragments.add(new CategoryFragment());
-        fragments.add(new MineFragment());
+        fragments.add(new OpenSourceFragment());
     }
 
-    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_person})
+    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_open_source})
     public void onBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.rb_home:
@@ -70,17 +70,17 @@ public class MainActivity extends SimpleActivity {
                 switchFragment(1);
                 break;
 
-            case R.id.rb_person:
+            case R.id.rb_open_source:
                 switchFragment(2);
                 break;
         }
     }
 
     private void switchFragment(int position) {
-        viewPager.setCurrentItem(position);
+        viewPager.setCurrentItem(position,false);
         rbHome.setChecked(false);
         rbCategory.setChecked(false);
-        rbPerson.setChecked(false);
+        rbOpenSource.setChecked(false);
         switch (position) {
             case 0:
                 rbHome.setChecked(true);
@@ -91,7 +91,7 @@ public class MainActivity extends SimpleActivity {
                 break;
 
             case 2:
-                rbPerson.setChecked(true);
+                rbOpenSource.setChecked(true);
                 break;
         }
     }

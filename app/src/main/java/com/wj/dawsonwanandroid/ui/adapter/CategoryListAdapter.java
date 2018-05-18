@@ -31,7 +31,7 @@ public class CategoryListAdapter extends BaseQuickAdapter<AndroidTreeBean, BaseV
     protected void convert(BaseViewHolder helper, AndroidTreeBean item) {
         TextView tvTitle = helper.getView(R.id.tv_title);
         TagFlowLayout flowLayout = helper.getView(R.id.tag_layout);
-
+        
         final List<AndroidTreeBean.ChildrenBean> children = item.getChildren();
         tvTitle.setText(item.getName());
         flowLayout.setAdapter(new TagAdapter<AndroidTreeBean.ChildrenBean>(children) {
