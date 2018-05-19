@@ -2,4 +2,6 @@
 <resources>
     <color name="title_bar_bg">#393A3F</color>
     <color name="webview_load_indicator">#228B22</color>
+    <color name="line_bg">#dddddd</color>
+    <color name="text_pressed">#05000000</color>
 </resources>

@@ -25,8 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiRetrofit {
 
-    private ApiRetrofit mApiRetrofit;
-
     public static <T> T create(Class<T> clazz) {
         //设置缓存路径
         File httpCacheDirectory = new File(Initialization.getContext().getCacheDir(), "RetrofitCache");

@@ -12,6 +12,7 @@ import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.ui.fragment.CategoryFragment;
 import com.wj.dawsonwanandroid.ui.fragment.HomeFragment;
 import com.wj.dawsonwanandroid.ui.fragment.OpenSourceFragment;
+import com.wj.dawsonwanandroid.ui.fragment.PersonFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ public class MainActivity extends SimpleActivity {
     RadioButton rbCategory;
     @BindView(R.id.rb_open_source)
     RadioButton rbOpenSource;
+    @BindView(R.id.rb_person)
+    RadioButton rbPerson;
 
     private List<Fragment> fragments;
 
@@ -57,9 +60,10 @@ public class MainActivity extends SimpleActivity {
         fragments.add(new HomeFragment());
         fragments.add(new CategoryFragment());
         fragments.add(new OpenSourceFragment());
+        fragments.add(new PersonFragment());
     }
 
-    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_open_source})
+    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_open_source, R.id.rb_person})
     public void onBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.rb_home:
@@ -73,14 +77,19 @@ public class MainActivity extends SimpleActivity {
             case R.id.rb_open_source:
                 switchFragment(2);
                 break;
+
+            case R.id.rb_person:
+                switchFragment(3);
+                break;
         }
     }
 
     private void switchFragment(int position) {
-        viewPager.setCurrentItem(position,false);
+        viewPager.setCurrentItem(position, false);
         rbHome.setChecked(false);
         rbCategory.setChecked(false);
         rbOpenSource.setChecked(false);
+        rbPerson.setChecked(false);
         switch (position) {
             case 0:
                 rbHome.setChecked(true);
@@ -92,6 +101,9 @@ public class MainActivity extends SimpleActivity {
 
             case 2:
                 rbOpenSource.setChecked(true);
+                break;
+            case 3:
+                rbPerson.setChecked(true);
                 break;
         }
     }

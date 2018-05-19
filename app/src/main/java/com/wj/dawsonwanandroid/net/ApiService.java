@@ -12,6 +12,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -36,5 +37,11 @@ public interface ApiService {
 
     @GET(ApiConstants.API_PROJECT_LIST)
     Observable<BaseResponse<ProjectListBean>> getProjectList(@Path("page") int page, @Query("cid") int cid);
+
+    @POST(ApiConstants.API_REGISTER)
+    Observable<JsonObject> register(@Query("username") String username, @Query("password") String password);
+
+    @POST(ApiConstants.API_LOGIN)
+    Observable<JsonObject> login(@Query("username") String username, @Query("password") String password);
 
 }

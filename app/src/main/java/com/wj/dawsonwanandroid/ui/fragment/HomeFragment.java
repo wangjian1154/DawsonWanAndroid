@@ -23,6 +23,7 @@ import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
+import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.core.MyApp;
 import com.wj.dawsonwanandroid.ui.activity.WebViewActivity;
 import com.wj.dawsonwanandroid.ui.adapter.ArticleListAdapter;
@@ -126,7 +127,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        WebViewActivity.show(getActivity(), banners.get(position).getUrl());
+                        JumpModel.getInstance().jumpWebActivity(getActivity(), banners.get(position).getUrl());
                     }
                 })
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
@@ -184,7 +185,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        WebViewActivity.show(getActivity(), articleList.get(position).link);
+        JumpModel.getInstance().jumpWebActivity(getActivity(), articleList.get(position).link);
     }
 
     @Override
@@ -195,7 +196,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @OnClick({R.id.iv_to_top})
-    public void onClick(View view){
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_to_top:
                 recyclerView.smoothScrollToPosition(0);

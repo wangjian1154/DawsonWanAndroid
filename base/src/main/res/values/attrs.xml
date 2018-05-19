@@ -10,4 +10,8 @@
         <attr name="tb_action_text_color" format="color" />
         <attr name="tb_hide_navigator_icon" format="boolean" />
     </declare-styleable>
+
+    <declare-styleable name="PersonItemView">
+        <attr name="title" format="string" />
+    </declare-styleable>
 </resources>

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.wj.base.base.BaseFragment;
 import com.wj.base.base.BaseFragmentPageAdapter;
 import com.wj.base.utils.ScreenUtils;
@@ -66,6 +67,7 @@ public class OpenSourceFragment extends BaseFragment<OpenSourcePresenter> implem
         pageAdapter = new BaseFragmentPageAdapter(getChildFragmentManager(), fragments, titles);
         viewPager.setAdapter(pageAdapter);
         commonNavigator.setAdapter(adapter);
+
     }
 
     @Override

@@ -103,4 +103,5 @@ dependencies {
     api rootProject.ext.dependencies["MagicIndicator"]
 
     api rootProject.ext.dependencies["roundedimageview"]
+
 }

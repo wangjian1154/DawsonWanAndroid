@@ -21,7 +21,11 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.View> implem
 
     @Override
     public void loadData(final boolean isRefresh, int cid) {
-        page = isRefresh ? 0 : page++;
+        if (isRefresh) {
+            page = 0;
+        } else {
+            page++;
+        }
         ApiRetrofit.create(ApiService.class)
                 .getProjectList(page, cid)
                 .compose(RxUtils.<BaseResponse<ProjectListBean>>applySchedulers())
@@ -29,7 +33,7 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.View> implem
                 .subscribe(new Consumer<BaseResponse<ProjectListBean>>() {
                     @Override
                     public void accept(BaseResponse<ProjectListBean> result) throws Exception {
-                        mView.setListData(isRefresh,result);
+                        mView.setListData(isRefresh, result);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

@@ -28,7 +28,7 @@ public class CategoryPresenter extends BasePresenter<CategoryContract.View> impl
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
+                        mView.showError(throwable.getMessage());
                     }
                 });
 
