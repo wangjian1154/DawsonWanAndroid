@@ -39,9 +39,10 @@ public interface ApiService {
     Observable<BaseResponse<ProjectListBean>> getProjectList(@Path("page") int page, @Query("cid") int cid);
 
     @POST(ApiConstants.API_REGISTER)
-    Observable<JsonObject> register(@Query("username") String username, @Query("password") String password);
+    Observable<BaseResponse> register(@Query("username") String username,
+                                    @Query("password") String password, @Query("repassword") String repassword);
 
     @POST(ApiConstants.API_LOGIN)
-    Observable<JsonObject> login(@Query("username") String username, @Query("password") String password);
+    Observable<BaseResponse> login(@Query("username") String username, @Query("password") String password);
 
 }

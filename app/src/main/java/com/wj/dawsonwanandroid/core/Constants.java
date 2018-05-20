@@ -8,4 +8,7 @@ public class Constants {
         String KEY = "key";
     }
 
+    public interface RESPONSE {
+        int SUCCESS = 0;
+    }
 }

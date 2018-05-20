@@ -5,4 +5,9 @@
     <string name="hint_password">请输入密码</string>
     <string name="login">登录</string>
     <string name="register">注册</string>
+    <string name="register_title">注册新用户</string>
+    <string name="register_hint">账号或者密码长度必须大于6位！</string>
+    <string name="password_disagree">两次输入的密码不一致！</string>
+    <string name="register_success">注册成功</string>
+    <string name="login_success">登录成功</string>
 </resources>

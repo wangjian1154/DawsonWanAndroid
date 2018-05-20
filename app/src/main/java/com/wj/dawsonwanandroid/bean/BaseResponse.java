@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class BaseResponse<T> implements Serializable{
 
     private int errorCode;
-    private Object errorMsg;
+    private String errorMsg;
     private T data;
 
     public int getErrorCode() {
@@ -20,11 +20,11 @@ public class BaseResponse<T> implements Serializable{
         this.errorCode = errorCode;
     }
 
-    public Object getErrorMsg() {
+    public String getErrorMsg() {
         return errorMsg;
     }
 
-    public void setErrorMsg(Object errorMsg) {
+    public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
     }
 

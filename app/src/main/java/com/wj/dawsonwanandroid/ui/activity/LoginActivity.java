@@ -8,19 +8,20 @@ import android.widget.EditText;
 
 import com.google.gson.JsonObject;
 import com.wj.base.base.BaseActivity;
-import com.wj.base.base.SimpleActivity;
-import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.StringUtils;
 import com.wj.base.utils.ToastUtils;
 import com.wj.dawsonwanandroid.R;
-import com.wj.dawsonwanandroid.ui.contract.LoginContract;
-import com.wj.dawsonwanandroid.ui.presenter.LoginPresenter;
+import com.wj.dawsonwanandroid.bean.BaseResponse;
+import com.wj.dawsonwanandroid.core.Constants;
+import com.wj.dawsonwanandroid.core.JumpModel;
+import com.wj.dawsonwanandroid.ui.contract.UserContract;
+import com.wj.dawsonwanandroid.ui.presenter.UserPresenter;
 import com.wj.dawsonwanandroid.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
+public class LoginActivity extends BaseActivity<UserPresenter> implements UserContract.View {
 
     @BindView(R.id.et_username)
     EditText etUsername;
@@ -43,17 +44,21 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    public LoginPresenter createPresenter() {
-        return new LoginPresenter();
+    public UserPresenter createPresenter() {
+        return new UserPresenter();
     }
 
     @Override
-    public void onLoginCallback(JsonObject result) {
-
+    public void onLoginCallback(BaseResponse result) {
+        if (result.getErrorCode() != Constants.RESPONSE.SUCCESS) {
+            ToastUtils.showShort(result.getErrorMsg());
+        } else {
+            ToastUtils.showShort(Utils.getResourcesString(this, R.string.login_success));
+        }
     }
 
     @Override
-    public void onRegisterCallback(JsonObject result) {
+    public void onRegisterCallback(BaseResponse result) {
 
     }
 
@@ -76,21 +81,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                     ToastUtils.showShort(Utils.getResourcesString(this, R.string.hint_password));
                     break;
                 }
+
+                if (userName.length() <= 6 || password.length() <= 6) {
+                    ToastUtils.showShort(Utils.getResourcesString(this, R.string.register_hint));
+                    break;
+                }
+
                 mPresenter.login(userName, password);
                 break;
 
             case R.id.btn_register:
-                String userName2 = etUsername.getText().toString().trim();
-                if (StringUtils.isEmpty(userName2)) {
-                    ToastUtils.showShort(Utils.getResourcesString(this, R.string.hint_username));
-                    break;
-                }
-                String password2 = etPassword.getText().toString().trim();
-                if (StringUtils.isEmpty(userName2)) {
-                    ToastUtils.showShort(Utils.getResourcesString(this, R.string.hint_password));
-                    break;
-                }
-                mPresenter.register(userName2, password2);
+                JumpModel.getInstance().jumpRegister(this);
                 break;
         }
     }

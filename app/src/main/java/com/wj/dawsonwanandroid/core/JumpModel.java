@@ -3,6 +3,7 @@ package com.wj.dawsonwanandroid.core;
 import android.content.Context;
 
 import com.wj.dawsonwanandroid.ui.activity.LoginActivity;
+import com.wj.dawsonwanandroid.ui.activity.RegisterActivity;
 import com.wj.dawsonwanandroid.ui.activity.WebViewActivity;
 
 public class JumpModel {
@@ -16,12 +17,16 @@ public class JumpModel {
         return instance;
     }
 
-    public static void jumpWebActivity(Context context,String url){
-        WebViewActivity.show(context,url);
+    public static void jumpWebActivity(Context context, String url) {
+        WebViewActivity.show(context, url);
     }
 
-    public static void jumpLogin(Context context){
+    public static void jumpLogin(Context context) {
         LoginActivity.show(context);
+    }
+
+    public static void jumpRegister(Context context) {
+        RegisterActivity.show(context);
     }
 
 }
