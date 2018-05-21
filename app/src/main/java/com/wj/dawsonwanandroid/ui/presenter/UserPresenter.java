@@ -1,8 +1,8 @@
 package com.wj.dawsonwanandroid.ui.presenter;
 
-import com.google.gson.JsonObject;
 import com.wj.base.base.BasePresenter;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
+import com.wj.dawsonwanandroid.bean.UserBean;
 import com.wj.dawsonwanandroid.net.ApiRetrofit;
 import com.wj.dawsonwanandroid.net.ApiService;
 import com.wj.dawsonwanandroid.ui.contract.UserContract;
@@ -16,11 +16,11 @@ public class UserPresenter extends BasePresenter<UserContract.View> implements U
     public void login(String username, String password) {
         ApiRetrofit.create(ApiService.class)
                 .login(username, password)
-                .compose(RxUtils.<BaseResponse>applySchedulers())
-                .compose(mView.<BaseResponse>bindToLife())
-                .subscribe(new Consumer<BaseResponse>() {
+                .compose(RxUtils.<BaseResponse<UserBean>>applySchedulers())
+                .compose(mView.<BaseResponse<UserBean>>bindToLife())
+                .subscribe(new Consumer<BaseResponse<UserBean>>() {
                     @Override
-                    public void accept(BaseResponse result) throws Exception {
+                    public void accept(BaseResponse<UserBean> result) throws Exception {
                         mView.onLoginCallback(result);
                     }
                 }, new Consumer<Throwable>() {

@@ -17,12 +17,12 @@ import io.reactivex.functions.Consumer;
  */
 public class ProjectPresenter extends BasePresenter<ProjectContract.View> implements ProjectContract.Presenter {
 
-    private int page = 0;
+    private int page = 1;
 
     @Override
     public void loadData(final boolean isRefresh, int cid) {
         if (isRefresh) {
-            page = 0;
+            page = 1;
         } else {
             page++;
         }

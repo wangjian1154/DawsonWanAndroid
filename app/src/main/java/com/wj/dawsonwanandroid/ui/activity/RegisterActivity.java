@@ -2,12 +2,14 @@ package com.wj.dawsonwanandroid.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
 import com.google.gson.JsonObject;
 import com.wj.base.base.BaseActivity;
+import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.utils.StringUtils;
 import com.wj.base.utils.ToastUtils;
 import com.wj.base.view.TitleBar;
@@ -45,6 +47,8 @@ public class RegisterActivity extends BaseActivity<UserPresenter> implements Use
 
     @Override
     protected void initViewAndEvent(Bundle savedInstanceState) {
+        titleBar.setTitle(Utils.getResourcesString(this, R.string.register_title));
+        titleBar.setTitleTextColor(Color.WHITE);
         titleBar.setBackButton(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +115,8 @@ public class RegisterActivity extends BaseActivity<UserPresenter> implements Use
         if (result.getErrorCode() != Constants.RESPONSE.SUCCESS) {
             ToastUtils.showShort(result.getErrorMsg());
         } else {
-            ToastUtils.showShort(Utils.getResourcesString(this,R.string.register_success));
+            ToastUtils.showShort(Utils.getResourcesString(this, R.string.register_success));
+            finish();
         }
     }
 }

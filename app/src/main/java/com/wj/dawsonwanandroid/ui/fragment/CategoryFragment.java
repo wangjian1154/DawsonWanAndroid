@@ -8,7 +8,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wj.base.base.BaseFragment;
-import com.wj.base.base.SimpleFragment;
 import com.wj.base.utils.BaseUtils;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;

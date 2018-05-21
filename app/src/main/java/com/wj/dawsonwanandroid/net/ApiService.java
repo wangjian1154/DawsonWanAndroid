@@ -7,6 +7,7 @@ import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
 import com.wj.dawsonwanandroid.bean.ProjectCategoryBean;
 import com.wj.dawsonwanandroid.bean.ProjectListBean;
+import com.wj.dawsonwanandroid.bean.UserBean;
 
 import java.util.List;
 
@@ -43,6 +44,6 @@ public interface ApiService {
                                     @Query("password") String password, @Query("repassword") String repassword);
 
     @POST(ApiConstants.API_LOGIN)
-    Observable<BaseResponse> login(@Query("username") String username, @Query("password") String password);
+    Observable<BaseResponse<UserBean>> login(@Query("username") String username, @Query("password") String password);
 
 }

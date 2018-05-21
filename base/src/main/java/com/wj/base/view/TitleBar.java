@@ -1,8 +1,10 @@
 package com.wj.base.view;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.TintTypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -27,7 +29,7 @@ import com.wj.base.R;
 
 public class TitleBar extends FrameLayout {
 
-    private String TAG = "CoreTitleView";
+    private String TAG = "TitleBar";
     private TextView mTitle;
     private ImageButton mLeftBtn;
     private ImageButton mRightBtn;
@@ -47,6 +49,7 @@ public class TitleBar extends FrameLayout {
         this(context, attrs, 0);
     }
 
+    @SuppressLint("RestrictedApi")
     public TitleBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         LayoutInflater inflater = (LayoutInflater) context
@@ -70,7 +73,8 @@ public class TitleBar extends FrameLayout {
     }
 
     public void setTitle(String text) {
-        mTitle.setText(text);
+        if (text != null)
+            mTitle.setText(text);
     }
 
     public void setTitle(int string) {
@@ -95,7 +99,7 @@ public class TitleBar extends FrameLayout {
         return mTitle.getText().toString();
     }
 
-    public void setTitleClickListener(OnClickListener titleClickListener){
+    public void setTitleClickListener(OnClickListener titleClickListener) {
         mTitle.setOnClickListener(titleClickListener);
     }
 
@@ -181,7 +185,7 @@ public class TitleBar extends FrameLayout {
         mRightText.setTextColor(color);
     }
 
-    public void setRightBtnTextColor(int color){
+    public void setRightBtnTextColor(int color) {
         mRightText.setTextColor(color);
     }
 

@@ -7,8 +7,8 @@
 
     <corners android:radius="@dimen/widget_size_5" />
 
-    <padding android:bottom="@dimen/widget_size_5"
-        android:top="@dimen/widget_size_5"
+    <padding android:bottom="@dimen/widget_size_10"
+        android:top="@dimen/widget_size_10"
         android:left="@dimen/widget_size_10"
         android:right="@dimen/widget_size_10"/>
 </shape>

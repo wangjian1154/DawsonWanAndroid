@@ -3,6 +3,8 @@ package com.wj.base.base;
 import android.os.Bundle;
 import android.os.Message;
 
+import com.wj.base.R;
+import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.view.LoadingProgress;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +28,7 @@ public abstract class SimpleActivity extends PermissionActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.title_bar_bg));
         bind = ButterKnife.bind(this);
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);

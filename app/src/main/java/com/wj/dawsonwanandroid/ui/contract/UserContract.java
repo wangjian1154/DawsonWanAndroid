@@ -3,12 +3,13 @@ package com.wj.dawsonwanandroid.ui.contract;
 import com.google.gson.JsonObject;
 import com.wj.base.base.BaseContract;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
+import com.wj.dawsonwanandroid.bean.UserBean;
 
 public interface UserContract {
 
     interface View extends BaseContract.BaseView {
 
-        void onLoginCallback(BaseResponse result);
+        void onLoginCallback(BaseResponse<UserBean> result);
 
         void onRegisterCallback(BaseResponse result);
     }

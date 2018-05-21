@@ -1,5 +1,6 @@
 package com.wj.base.base;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.wj.base.R;
 import com.wj.base.utils.HandleBackUtil;
+import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.view.LoadingProgress;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,6 +53,7 @@ public abstract class SimpleFragment extends RxFragment implements HandleBackUti
         super.onViewCreated(view, savedInstanceState);
         onViewCreated(view);
         initViewAndEvent(savedInstanceState);
+        StatusBarUtil.setColor(getActivity(), getResources().getColor(R.color.title_bar_bg));
         boolean isVis = isHidden() || getUserVisibleHint();
         if (isVis && isFirstVisible) {
             lazyLoad();

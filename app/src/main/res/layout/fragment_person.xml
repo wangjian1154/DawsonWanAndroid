@@ -13,16 +13,16 @@
             android:id="@+id/rl_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/widget_size_15"
-            android:layout_marginRight="@dimen/widget_size_15"
-            android:background="@color/white"
+            android:paddingLeft="@dimen/widget_size_15"
+            android:paddingRight="@dimen/widget_size_15"
+            android:background="@drawable/btn_selector_white_bg"
             android:paddingBottom="@dimen/widget_size_20"
             android:paddingTop="@dimen/widget_size_20">
 
             <ImageView
                 android:id="@+id/iv_avatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/widget_size_49"
+                android:layout_height="@dimen/widget_size_49"
                 android:src="@drawable/ic_avatar_default" />
 
             <TextView
@@ -49,6 +49,7 @@
             android:id="@+id/piv_collection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/btn_selector_white_bg"
             app:title="收藏" />
 
         <include layout="@layout/devider_line" />
@@ -57,7 +58,27 @@
             android:id="@+id/piv_browse_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/btn_selector_white_bg"
             app:title="浏览记录" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_exit_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/devider_line" />
+
+            <com.wj.base.view.PersonItemView
+                android:id="@+id/piv_exit_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_selector_white_bg"
+                app:title="退出登录" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
