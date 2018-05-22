@@ -4,24 +4,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wj.base.base.SimpleFragment;
-import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ImageLoadUtils;
 import com.wj.base.utils.SPUtils;
-import com.wj.base.utils.SpanUtils;
 import com.wj.base.utils.StringUtils;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.UserBean;
 import com.wj.dawsonwanandroid.core.Constants;
 import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.core.MyApp;
-import com.wj.dawsonwanandroid.ui.activity.LoginActivity;
 import com.wj.dawsonwanandroid.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,6 +38,7 @@ public class PersonFragment extends SimpleFragment {
     protected void initViewAndEvent(Bundle savedInstanceState) {
 
         loadData();
+
     }
 
     @Override

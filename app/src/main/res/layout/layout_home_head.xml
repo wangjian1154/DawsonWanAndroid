@@ -9,8 +9,4 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/widget_size_200" />
 
-    <View
-        android:background="@null"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/widget_size_10" />
 </LinearLayout>

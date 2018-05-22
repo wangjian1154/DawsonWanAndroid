@@ -24,8 +24,11 @@ public class ApiConstants {
     public static final String API_PROJECT_LIST = "/project/list/{page}/json";
 
     //注册
-    public static final String API_REGISTER="/user/register";
+    public static final String API_REGISTER = "/user/register";
 
     //登录
-    public static final String API_LOGIN="/user/login";
+    public static final String API_LOGIN = "/user/login";
+
+    //知识体系下文章
+    public static final String API_KNOWLEDGE = "/article/list/{page}/json";
 }

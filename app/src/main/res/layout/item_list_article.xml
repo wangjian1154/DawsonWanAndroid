@@ -6,6 +6,7 @@
     android:layout_marginBottom="@dimen/widget_size_10"
     android:layout_marginLeft="@dimen/widget_size_10"
     android:layout_marginRight="@dimen/widget_size_10"
+    android:layout_marginTop="@dimen/widget_size_10"
     app:cardCornerRadius="@dimen/widget_size_5"
     app:cardElevation="@dimen/widget_size_5"
     app:contentPadding="@dimen/widget_size_10">

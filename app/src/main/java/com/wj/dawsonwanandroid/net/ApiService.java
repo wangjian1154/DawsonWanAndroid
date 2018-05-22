@@ -41,9 +41,12 @@ public interface ApiService {
 
     @POST(ApiConstants.API_REGISTER)
     Observable<BaseResponse> register(@Query("username") String username,
-                                    @Query("password") String password, @Query("repassword") String repassword);
+                                      @Query("password") String password, @Query("repassword") String repassword);
 
     @POST(ApiConstants.API_LOGIN)
     Observable<BaseResponse<UserBean>> login(@Query("username") String username, @Query("password") String password);
+
+    @GET(ApiConstants.API_KNOWLEDGE)
+    Observable<BaseResponse<ArticleBean>> getKnowledgeList(@Path("page") int page, @Query("cid") int cid);
 
 }

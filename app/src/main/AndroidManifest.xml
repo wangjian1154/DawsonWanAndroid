@@ -41,6 +41,11 @@
         <activity
             android:name=".ui.activity.RegisterActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.KnowledgeActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

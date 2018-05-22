@@ -18,6 +18,7 @@ import com.wj.base.base.BaseFragment;
 import com.wj.base.utils.BannerImageLoader;
 import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
+import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.utils.ToastUtils;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;

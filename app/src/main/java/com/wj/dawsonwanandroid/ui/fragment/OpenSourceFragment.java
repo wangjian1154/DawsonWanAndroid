@@ -19,8 +19,10 @@ import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.ProjectCategoryBean;
 import com.wj.dawsonwanandroid.core.Constants;
+import com.wj.dawsonwanandroid.ui.adapter.MyCommonNavigatorAdapter;
 import com.wj.dawsonwanandroid.ui.contract.OpenSourceContract;
 import com.wj.dawsonwanandroid.ui.presenter.OpenSourcePresenter;
+import com.wj.dawsonwanandroid.utils.Utils;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -63,7 +65,7 @@ public class OpenSourceFragment extends BaseFragment<OpenSourcePresenter> implem
         commonNavigator = new CommonNavigator(getActivity());
         commonNavigator.setScrollPivotX(0.65f);
 
-        adapter = new MyCommonNavigatorAdapter();
+        adapter = new MyCommonNavigatorAdapter(titles, viewPager);
         pageAdapter = new BaseFragmentPageAdapter(getChildFragmentManager(), fragments, titles);
         viewPager.setAdapter(pageAdapter);
         commonNavigator.setAdapter(adapter);
@@ -72,7 +74,7 @@ public class OpenSourceFragment extends BaseFragment<OpenSourcePresenter> implem
 
     @Override
     protected int getLayoutId() {
-        StatusBarUtil.setColor(getActivity(),Color.WHITE);
+        StatusBarUtil.setColor(getActivity(), Color.WHITE);
         return R.layout.fragment_open_source;
     }
 
@@ -110,39 +112,4 @@ public class OpenSourceFragment extends BaseFragment<OpenSourcePresenter> implem
         ToastUtils.showShort(msg);
     }
 
-    class MyCommonNavigatorAdapter extends CommonNavigatorAdapter {
-
-        @Override
-        public int getCount() {
-            return titles.size();
-        }
-
-        @Override
-        public IPagerTitleView getTitleView(Context context, final int index) {
-            ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
-            colorTransitionPagerTitleView.setNormalColor(Color.GRAY);
-            colorTransitionPagerTitleView.setSelectedColor(Color.BLACK);
-            colorTransitionPagerTitleView.setText(titles.get(index));
-            colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    viewPager.setCurrentItem(index);
-                }
-            });
-            return colorTransitionPagerTitleView;
-        }
-
-        @Override
-        public IPagerIndicator getIndicator(Context context) {
-            LinePagerIndicator indicator = new LinePagerIndicator(context);
-            indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
-            indicator.setLineHeight(ScreenUtils.dp2px(6));
-            indicator.setLineWidth(ScreenUtils.dp2px(10));
-            indicator.setRoundRadius(ScreenUtils.dp2px(3));
-            indicator.setStartInterpolator(new AccelerateInterpolator());
-            indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-            indicator.setColors(Color.parseColor("#00c853"));
-            return indicator;
-        }
-    }
 }
