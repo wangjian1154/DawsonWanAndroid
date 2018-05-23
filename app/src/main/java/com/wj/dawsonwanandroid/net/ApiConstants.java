@@ -31,4 +31,7 @@ public class ApiConstants {
 
     //知识体系下文章
     public static final String API_KNOWLEDGE = "/article/list/{page}/json";
+
+    //收藏站内文章
+    public static final String API_ARTICLE_COLLECTION="/lg/collect/{article_id}/json";
 }

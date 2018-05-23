@@ -33,15 +33,33 @@
             android:text="1111"
             android:textSize="@dimen/widget_size_14" />
 
-
         <TextView
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/widget_size_10"
+            android:layout_toRightOf="@+id/tv_author"
             android:text="2018"
             android:textSize="@dimen/widget_size_14" />
+
+        <LinearLayout
+            android:id="@+id/ll_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/widget_size_10"
+            android:paddingRight="@dimen/widget_size_10"
+            android:paddingTop="@dimen/widget_size_10">
+
+            <ImageView
+                android:id="@+id/iv_collection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/selector_article_collection" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

@@ -191,8 +191,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-        ArticleCollectionDialog dialog = new ArticleCollectionDialog();
-        dialog.show(getFragmentManager(), ArticleCollectionDialog.class.getSimpleName());
+//        ArticleCollectionDialog dialog = new ArticleCollectionDialog();
+//        dialog.show(getFragmentManager(), ArticleCollectionDialog.class.getSimpleName());
         return false;
     }
 
