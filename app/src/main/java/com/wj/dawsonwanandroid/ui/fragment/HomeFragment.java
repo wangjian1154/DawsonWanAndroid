@@ -1,10 +1,9 @@
 package com.wj.dawsonwanandroid.ui.fragment;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,26 +11,23 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wj.base.base.BaseFragment;
 import com.wj.base.utils.BannerImageLoader;
 import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
-import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.utils.ToastUtils;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
+import com.wj.dawsonwanandroid.core.Constants;
 import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.core.MyApp;
-import com.wj.dawsonwanandroid.ui.activity.WebViewActivity;
 import com.wj.dawsonwanandroid.ui.adapter.ArticleListAdapter;
 import com.wj.dawsonwanandroid.ui.contract.HomeContract;
 import com.wj.dawsonwanandroid.ui.presenter.HomePresenter;
 import com.wj.dawsonwanandroid.utils.Utils;
-import com.wj.dawsonwanandroid.view.dialog.ArticleCollectionDialog;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -46,7 +42,7 @@ import butterknife.OnClick;
  * 首页
  */
 public class HomeFragment extends BaseFragment<HomePresenter> implements HomeContract.View,
-        OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemLongClickListener {
+        OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener, BaseQuickAdapter.OnItemChildClickListener {
 
     private Banner banner;
     @BindView(R.id.recyclerView)
@@ -75,7 +71,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
         smartRefreshLayout.setOnRefreshLoadmoreListener(this);
         adapter.setOnItemClickListener(this);
-        adapter.setOnItemLongClickListener(this);
+        adapter.setOnItemChildClickListener(this);
 
         setProgressIndicator(true);
 
@@ -158,6 +154,20 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @Override
+    public void collectionArticle(BaseResponse result, int position) {
+        if (result != null) {
+            if (result.getErrorCode() == Constants.RESPONSE.SUCCESS) {
+                //收藏取反
+                articleList.get(position).collect = !articleList.get(position).collect;
+                adapter.notifyItemChanged(position,1);
+                Log.i("www","点击的position"+position);
+            } else {
+                ToastUtils.showShort(result.getErrorMsg());
+            }
+        }
+    }
+
+    @Override
     public HomePresenter createPresenter() {
         return new HomePresenter();
     }
@@ -189,12 +199,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         JumpModel.getInstance().jumpWebActivity(getActivity(), articleList.get(position).link);
     }
 
-    @Override
-    public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
-//        ArticleCollectionDialog dialog = new ArticleCollectionDialog();
-//        dialog.show(getFragmentManager(), ArticleCollectionDialog.class.getSimpleName());
-        return false;
-    }
 
     @OnClick({R.id.iv_to_top})
     public void onClick(View view) {
@@ -203,5 +207,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 recyclerView.smoothScrollToPosition(0);
                 break;
         }
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        mPresenter.collection(articleList.get(position).id, position);
     }
 }

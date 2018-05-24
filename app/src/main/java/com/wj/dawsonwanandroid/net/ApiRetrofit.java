@@ -1,5 +1,9 @@
 package com.wj.dawsonwanandroid.net;
 
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.GsonBuilder;
 import com.wj.base.Initialization;
 import com.wj.base.utils.NetworkUtils;
@@ -25,11 +29,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiRetrofit {
 
-    public static <T> T create(Class<T> clazz) {
+    private static ApiRetrofit mInstance;
+    private static Retrofit mRetrofit;
+
+    private static ApiRetrofit getInstance() {
+        if (mInstance == null) {
+            synchronized (ApiRetrofit.class) {
+                if (mInstance == null)
+                    mInstance = new ApiRetrofit();
+            }
+        }
+        return mInstance;
+    }
+
+    private ApiRetrofit() {
         //设置缓存路径
         File httpCacheDirectory = new File(Initialization.getContext().getCacheDir(), "RetrofitCache");
         int cacheSize = 1024 * 1024 * 50; // 50 MiB
         Cache cache = new Cache(httpCacheDirectory, cacheSize);
+
+        ClearableCookieJar cookieJar = new PersistentCookieJar(
+                new SetCookieCache(), new SharedPrefsCookiePersistor(Initialization.getContext()));
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -38,23 +58,27 @@ public class ApiRetrofit {
                 .addInterceptor(mHeaderInterceptor)//添加Header
                 .addInterceptor(mCacheInterceptor)//添加缓存
                 .addNetworkInterceptor(mCacheInterceptor)
+                .cookieJar(cookieJar)
                 .cache(cache)
                 .connectTimeout(20, TimeUnit.SECONDS)//设置连接超时20秒
                 .build();
 
-        Retrofit mRetrofit = new Retrofit.Builder()
+        mRetrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))//支持Gson转换
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//支持RxJava
                 .baseUrl(ApiConstants.API_SERVER)
                 .client(mClient)
                 .build();
+    }
 
+    public static <T> T create(Class<T> clazz) {
+        getInstance();
         return mRetrofit.create(clazz);
     }
 
 
     //缓存配置
-    private static Interceptor mCacheInterceptor = new Interceptor() {
+    private Interceptor mCacheInterceptor = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
 
@@ -86,7 +110,7 @@ public class ApiRetrofit {
     };
 
 
-    private static Interceptor mHeaderInterceptor = new Interceptor() {
+    private Interceptor mHeaderInterceptor = new Interceptor() {
         @Override
         public Response intercept(Chain chain) throws IOException {
             Request originalRequest = chain.request();

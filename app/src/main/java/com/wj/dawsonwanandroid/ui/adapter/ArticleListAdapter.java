@@ -1,6 +1,7 @@
 package com.wj.dawsonwanandroid.ui.adapter;
 
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,23 +22,20 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean.DatasBean, 
         super(R.layout.item_list_article, data);
     }
 
+
     @Override
-    protected void convert(BaseViewHolder helper, ArticleBean.DatasBean item) {
+    protected void convert(final BaseViewHolder helper, ArticleBean.DatasBean item) {
         TextView tvTitle = helper.getView(R.id.tv_title);
         TextView tvAuthor = helper.getView(R.id.tv_author);
         TextView tvTime = helper.getView(R.id.tv_time);
-        final ImageView ivCollection = helper.getView(R.id.iv_collection);
+        ImageView ivCollection = helper.getView(R.id.iv_collection);
 
         tvTitle.setText(item.title);
         tvAuthor.setText("作者：" + item.author);
         tvTime.setText(item.niceDate);
-
-        helper.getView(R.id.ll_collection).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ivCollection.setSelected(!ivCollection.isSelected());
-            }
-        });
-
+        ivCollection.setSelected(item.collect);
+        Log.i("www","适配器数据item.collect=="+item.collect+"getLayoutPosition"+helper.getLayoutPosition());
+        helper.addOnClickListener(R.id.ll_collection);
     }
+
 }

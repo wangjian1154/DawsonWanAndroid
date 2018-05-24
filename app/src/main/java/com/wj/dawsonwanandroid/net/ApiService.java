@@ -49,7 +49,7 @@ public interface ApiService {
     @GET(ApiConstants.API_KNOWLEDGE)
     Observable<BaseResponse<ArticleBean>> getKnowledgeList(@Path("page") int page, @Query("cid") int cid);
 
-    @GET(ApiConstants.API_ARTICLE_COLLECTION)
-    Observable<JsonObject> collectionArticle(@Path("article_id") int article_id);
+    @POST(ApiConstants.API_ARTICLE_COLLECTION)
+    Observable<BaseResponse> collectionArticle(@Path("article_id") int article_id);
 
 }

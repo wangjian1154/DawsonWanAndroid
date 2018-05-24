@@ -12,7 +12,8 @@ ext {
     def dependVersion = [
             support    : "27.0.2",
             butterknife: "8.8.1",
-            glide      : "4.1.1"
+            glide      : "4.1.1",
+            retrofit   : "2.3.0"
     ]
 
     dependencies = [
@@ -48,10 +49,13 @@ ext {
             "rxlifecycle2-components" : "com.trello.rxlifecycle2:rxlifecycle-components:2.1.0",
 
             //Retrofit
-            "retrofit"                : "com.squareup.retrofit2:retrofit:2.3.0",
-            "retrofit-gson"           : "com.squareup.retrofit2:converter-gson:2.3.0",
-            "retrofit-adapter"        : "com.squareup.retrofit2:adapter-rxjava2:2.3.0",
+            "retrofit"                : "com.squareup.retrofit2:retrofit:${dependVersion.retrofit}",
+            "retrofit-gson"           : "com.squareup.retrofit2:converter-gson:${dependVersion.retrofit}",
+            "retrofit-adapter"        : "com.squareup.retrofit2:adapter-rxjava2:${dependVersion.retrofit}",
             "okhttp-log-interceptor"  : "com.squareup.okhttp3:logging-interceptor:3.8.0",
+            "okhttp3"                 : "com.squareup.okhttp3:okhttp:3.10.0",
+            "okhttp-urlconnection"    : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
+            "PersistentCookieJar"     : "com.github.franmontiel:PersistentCookieJar:v1.0.1",
 
             //刷新控件
             "SmartRefreshLayout"      : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7",

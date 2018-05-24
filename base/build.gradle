@@ -59,6 +59,9 @@ dependencies {
     api(rootProject.ext.dependencies["retrofit-gson"])
     api(rootProject.ext.dependencies["retrofit-adapter"])
     api(rootProject.ext.dependencies["okhttp-log-interceptor"])
+    api rootProject.ext.dependencies["okhttp3"]
+    api rootProject.ext.dependencies["okhttp-urlconnection"]
+    api rootProject.ext.dependencies["PersistentCookieJar"]
 
     //SmartRefreshLayout
     api rootProject.ext.dependencies["SmartRefreshLayout"]
@@ -103,5 +106,6 @@ dependencies {
     api rootProject.ext.dependencies["MagicIndicator"]
 
     api rootProject.ext.dependencies["roundedimageview"]
+
 
 }

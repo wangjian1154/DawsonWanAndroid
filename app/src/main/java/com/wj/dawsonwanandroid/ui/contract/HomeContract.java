@@ -17,6 +17,8 @@ public interface HomeContract {
 
         void showFailed(String error);
 
+        void collectionArticle(BaseResponse result,int position);
+
     }
 
     interface Presenter extends BaseContract.AbstractPresenter<View> {
@@ -26,5 +28,7 @@ public interface HomeContract {
         void loadListData(boolean isRefresh);
 
         void loadData(boolean isRefresh);
+
+        void collection(int article_id,int position);
     }
 }
