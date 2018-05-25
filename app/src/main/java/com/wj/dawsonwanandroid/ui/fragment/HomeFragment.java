@@ -67,7 +67,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_home_head, null);
         banner = (Banner) headView.findViewById(R.id.banner);
         banner = headView.findViewById(R.id.banner);
-        adapter.addHeaderView(headView);
+//        adapter.addHeaderView(headView);
 
         smartRefreshLayout.setOnRefreshLoadmoreListener(this);
         adapter.setOnItemClickListener(this);
