@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:background="@drawable/shape_et_border"
-                android:drawableLeft= "@drawable/ic_user_pwd"
+                android:drawableLeft="@drawable/ic_user_pwd"
                 android:hint="@string/hint_password"
                 android:drawablePadding="@dimen/widget_size_3"
                 android:inputType="textPassword"

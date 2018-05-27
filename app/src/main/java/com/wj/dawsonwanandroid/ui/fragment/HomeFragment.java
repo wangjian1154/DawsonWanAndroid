@@ -211,6 +211,8 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        mPresenter.collection(articleList.get(position).id, position);
+        if (MyApp.checkLogin(getActivity())) {
+            mPresenter.collection(articleList.get(position).id, position);
+        }
     }
 }
