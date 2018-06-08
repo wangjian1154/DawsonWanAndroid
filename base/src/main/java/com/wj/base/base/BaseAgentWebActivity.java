@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.just.agentweb.AbsAgentWebSettings;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.AgentWebSettingsImpl;
 import com.just.agentweb.AgentWebUIControllerImplBase;
@@ -62,7 +64,7 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
                 .setOpenOtherPageWays(getOpenOtherAppWay())
                 .useMiddlewareWebChrome(getMiddleWareWebChrome())
                 .useMiddlewareWebClient(getMiddleWareWebClient())
-                .setAgentWebWebSettings(getAgentWebSettings())
+                .setAgentWebWebSettings(new MySetting())
                 .setMainFrameErrorView(mErrorLayoutEntity.layoutRes, mErrorLayoutEntity.reloadId)
                 .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
                 .createAgentWeb()
@@ -151,9 +153,18 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
         return null;
     }
 
-    public @Nullable
-    IAgentWebSettings getAgentWebSettings() {
-        return AgentWebSettingsImpl.getInstance();
+    class MySetting extends AgentWebSettingsImpl{
+
+        @Override
+        public WebSettings getWebSettings() {
+            WebSettings settings = super.getWebSettings();
+            settings.setUseWideViewPort(true);
+            settings.setLoadWithOverviewMode(true);
+            settings.setSupportZoom(true);
+            settings.setBuiltInZoomControls(true);
+            settings.setDisplayZoomControls(false);
+            return settings;
+        }
     }
 
     protected abstract @NonNull

@@ -5,10 +5,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.wj.base.base.SimpleFragment;
@@ -24,9 +22,6 @@ import com.wj.dawsonwanandroid.utils.Utils;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -38,24 +33,13 @@ public class PersonFragment extends SimpleFragment {
     TextView tvUsername;
     @BindView(R.id.ll_exit_login)
     LinearLayout llExitLogin;
-    @BindView(R.id.sp)
-    Spinner spinner;
-    private List<String> list = null;
 
 
     @Override
     protected void initViewAndEvent(Bundle savedInstanceState) {
 
         loadData();
-        // 数据源
-        String[] city = {"北京", "上海", "广州", "深圳", "长沙", "南京", "杭州","广州", "深圳", "长沙", "南京", "杭州"};
-        list = new ArrayList<>();
 
-        for (int i = 0; i < city.length; i++) {
-            list.add(city[i]);
-        }
-        ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, list);
-        spinner.setAdapter(adapter);
     }
 
     @Override
