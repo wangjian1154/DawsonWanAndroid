@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name=".ui.activity.WebViewActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.LoginActivity"
@@ -43,9 +43,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.KnowledgeActivity"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".ui.activity.CollectionActivity"></activity>
     </application>
 
 </manifest>

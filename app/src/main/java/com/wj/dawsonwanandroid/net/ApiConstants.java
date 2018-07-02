@@ -34,4 +34,10 @@ public class ApiConstants {
 
     //收藏站内文章
     public static final String API_ARTICLE_COLLECTION="/lg/collect/{article_id}/json";
+
+    //取消收藏
+    public static final String API_UN_COLLECTION="/lg/uncollect_originId/{article_id}/json";
+
+    //我的收藏列表
+    public static final String API_COLLECTION_LIST="/lg/collect/list/0/json";
 }

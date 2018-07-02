@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.animation.SlideInLeftAnimation;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -38,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
  * 首页
@@ -57,7 +59,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private ArticleListAdapter adapter;
     private int height = ScreenUtils.getHeightInPx(MyApp.getInstance());
     private int overallXScroll = 0;
-    public static final int HEAD_POSITION_COUNT=1;
 
     @Override
     protected void initViewAndEvent(Bundle savedInstanceState) {
@@ -65,9 +66,9 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         BaseUtils.configRecyclerView(recyclerView, new LinearLayoutManager(getActivity()));
         adapter = new ArticleListAdapter(articleList);
         recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new SlideInLeftAnimator());
 
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_home_head, null);
-        banner = (Banner) headView.findViewById(R.id.banner);
         banner = headView.findViewById(R.id.banner);
         adapter.addHeaderView(headView);
 
@@ -159,12 +160,26 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void collectionArticle(BaseResponse result, int position) {
         if (result != null) {
             if (result.getErrorCode() == Constants.RESPONSE.SUCCESS) {
-                //收藏取反
-                articleList.get(position).collect = !articleList.get(position).collect;
+                //收藏成功
+                articleList.get(position).collect = true;
 //                adapter.notifyItemChanged(position, 1);
                 adapter.notifyDataSetChanged();
                 setProgressIndicator(false);
                 Log.i("www", "点击的position" + position);
+            } else {
+                ToastUtils.showShort(result.getErrorMsg());
+            }
+        }
+    }
+
+    @Override
+    public void unCollectionArticle(BaseResponse result, int position) {
+        if (result != null) {
+            if (result.getErrorCode() == Constants.RESPONSE.SUCCESS) {
+                //取消收藏成功
+                articleList.get(position).collect = false;
+                adapter.notifyDataSetChanged();
+                setProgressIndicator(false);
             } else {
                 ToastUtils.showShort(result.getErrorMsg());
             }
@@ -217,7 +232,13 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (MyApp.checkLogin(getActivity())) {
             setProgressIndicator(true);
-            mPresenter.collection(articleList.get(position).id, position);
+            ArticleBean.DatasBean item = articleList.get(position);
+            int articleId = item.id;
+            if (item.collect) {
+                mPresenter.unCollection(articleId, position);
+            }else{
+                mPresenter.collection(articleId, position);
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.wj.dawsonwanandroid.core;
 import android.content.Context;
 
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
+import com.wj.dawsonwanandroid.ui.activity.CollectionActivity;
 import com.wj.dawsonwanandroid.ui.activity.KnowledgeActivity;
 import com.wj.dawsonwanandroid.ui.activity.LoginActivity;
 import com.wj.dawsonwanandroid.ui.activity.RegisterActivity;
@@ -31,8 +32,11 @@ public class JumpModel {
         RegisterActivity.show(context);
     }
 
-    public static void jumpKnowledge(Context context,AndroidTreeBean bean){
-        KnowledgeActivity.show(context,bean);
+    public static void jumpKnowledge(Context context, AndroidTreeBean bean) {
+        KnowledgeActivity.show(context, bean);
     }
 
+    public static void jumpCollection(Context context) {
+        CollectionActivity.show(context);
+    }
 }

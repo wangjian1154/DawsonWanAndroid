@@ -1,6 +1,5 @@
 package com.wj.dawsonwanandroid.ui.presenter;
 
-import com.google.gson.JsonObject;
 import com.wj.base.base.BasePresenter;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
@@ -67,6 +66,25 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                     @Override
                     public void accept(BaseResponse result) throws Exception {
                         mView.collectionArticle(result,position);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        mView.showFailed(throwable.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void unCollection(int article_id, final int position) {
+        ApiRetrofit.create(ApiService.class)
+                .unCollectionArticle(article_id)
+                .compose(RxUtils.<BaseResponse>applySchedulers())
+                .compose(mView.<BaseResponse>bindToLife())
+                .subscribe(new Consumer<BaseResponse>() {
+                    @Override
+                    public void accept(BaseResponse result) throws Exception {
+                        mView.unCollectionArticle(result,position);
                     }
                 }, new Consumer<Throwable>() {
                     @Override

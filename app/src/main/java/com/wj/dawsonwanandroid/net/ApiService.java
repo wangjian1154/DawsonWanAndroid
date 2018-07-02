@@ -52,4 +52,9 @@ public interface ApiService {
     @POST(ApiConstants.API_ARTICLE_COLLECTION)
     Observable<BaseResponse> collectionArticle(@Path("article_id") int article_id);
 
+    @POST(ApiConstants.API_UN_COLLECTION)
+    Observable<BaseResponse> unCollectionArticle(@Path("article_id") int article_id);
+
+    @GET(ApiConstants.API_COLLECTION_LIST)
+    Observable<BaseResponse<ArticleBean>> getCollectionList();
 }

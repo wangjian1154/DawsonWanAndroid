@@ -19,6 +19,8 @@ public interface HomeContract {
 
         void collectionArticle(BaseResponse result,int position);
 
+        void unCollectionArticle(BaseResponse result,int position);
+
     }
 
     interface Presenter extends BaseContract.AbstractPresenter<View> {
@@ -30,5 +32,7 @@ public interface HomeContract {
         void loadData(boolean isRefresh);
 
         void collection(int article_id,int position);
+
+        void unCollection(int article_id,int position);
     }
 }

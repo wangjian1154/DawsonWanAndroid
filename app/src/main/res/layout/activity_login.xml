@@ -80,6 +80,7 @@
                 android:background="@drawable/shape_et_border"
                 android:drawableLeft="@drawable/ic_user_pwd"
                 android:drawablePadding="@dimen/widget_size_3"
+                android:inputType="textPassword"
                 android:hint="@string/hint_password" />
 
             <View

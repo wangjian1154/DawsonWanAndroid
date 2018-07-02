@@ -64,7 +64,7 @@ public class PersonFragment extends SimpleFragment {
 
             case R.id.piv_collection:
                 if (MyApp.checkLogin(getActivity())) {
-
+                    JumpModel.getInstance().jumpCollection(getActivity());
                 }
                 break;
 
