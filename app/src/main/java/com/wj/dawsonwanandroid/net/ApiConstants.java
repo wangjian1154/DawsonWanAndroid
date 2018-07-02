@@ -33,11 +33,11 @@ public class ApiConstants {
     public static final String API_KNOWLEDGE = "/article/list/{page}/json";
 
     //收藏站内文章
-    public static final String API_ARTICLE_COLLECTION="/lg/collect/{article_id}/json";
+    public static final String API_ARTICLE_COLLECTION = "/lg/collect/{article_id}/json";
 
     //取消收藏
-    public static final String API_UN_COLLECTION="/lg/uncollect_originId/{article_id}/json";
+    public static final String API_UN_COLLECTION = "/lg/uncollect_originId/{article_id}/json";
 
     //我的收藏列表
-    public static final String API_COLLECTION_LIST="/lg/collect/list/0/json";
+    public static final String API_COLLECTION_LIST = "/lg/collect/list/{page}/json";
 }

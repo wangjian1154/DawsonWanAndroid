@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -40,7 +41,8 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
  * 我的收藏
  */
 public class CollectionActivity extends BaseActivity<CollectionPresenter> implements
-        CollectionContact.View, OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener, View.OnClickListener {
+        CollectionContact.View, OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener,
+        View.OnClickListener, BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -80,6 +82,7 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
 
         smartRefresh.setOnRefreshLoadmoreListener(this);
         adapter.setOnItemClickListener(this);
+        adapter.setOnItemChildClickListener(this);
         titleBar.setBackButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,6 +156,50 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
             case R.id.iv_to_top:
                 recyclerView.smoothScrollToPosition(0);
                 break;
+        }
+    }
+
+    @Override
+    public void collectionArticle(BaseResponse result, int position) {
+        if (result != null) {
+            if (result.getErrorCode() == Constants.RESPONSE.SUCCESS) {
+                //收藏成功
+                articleList.get(position).collect = true;
+//                adapter.notifyItemChanged(position, 1);
+                adapter.notifyDataSetChanged();
+                setProgressIndicator(false);
+                Log.i("www", "点击的position" + position);
+            } else {
+                ToastUtils.showShort(result.getErrorMsg());
+            }
+        }
+    }
+
+    @Override
+    public void unCollectionArticle(BaseResponse result, int position) {
+        if (result != null) {
+            if (result.getErrorCode() == Constants.RESPONSE.SUCCESS) {
+                //取消收藏成功
+                articleList.get(position).collect = false;
+                adapter.notifyDataSetChanged();
+                setProgressIndicator(false);
+            } else {
+                ToastUtils.showShort(result.getErrorMsg());
+            }
+        }
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        if (MyApp.checkLogin(this)) {
+            setProgressIndicator(true);
+            ArticleBean.DatasBean item = articleList.get(position);
+            int articleId = item.id;
+            if (item.collect) {
+                mPresenter.unCollection(articleId, position);
+            } else {
+                mPresenter.collection(articleId, position);
+            }
         }
     }
 

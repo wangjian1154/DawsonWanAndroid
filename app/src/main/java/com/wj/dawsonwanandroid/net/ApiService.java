@@ -1,6 +1,5 @@
 package com.wj.dawsonwanandroid.net;
 
-import com.google.gson.JsonObject;
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
@@ -56,5 +55,5 @@ public interface ApiService {
     Observable<BaseResponse> unCollectionArticle(@Path("article_id") int article_id);
 
     @GET(ApiConstants.API_COLLECTION_LIST)
-    Observable<BaseResponse<ArticleBean>> getCollectionList();
+    Observable<BaseResponse<ArticleBean>> getCollectionList(@Path("page") int page);
 }
