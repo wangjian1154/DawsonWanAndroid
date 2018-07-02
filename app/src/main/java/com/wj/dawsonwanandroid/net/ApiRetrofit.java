@@ -7,6 +7,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.google.gson.GsonBuilder;
 import com.wj.base.Initialization;
 import com.wj.base.utils.NetworkUtils;
+import com.wj.dawsonwanandroid.core.MyApp;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,8 +49,7 @@ public class ApiRetrofit {
         int cacheSize = 1024 * 1024 * 50; // 50 MiB
         Cache cache = new Cache(httpCacheDirectory, cacheSize);
 
-        ClearableCookieJar cookieJar = new PersistentCookieJar(
-                new SetCookieCache(), new SharedPrefsCookiePersistor(Initialization.getContext()));
+
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -58,7 +58,7 @@ public class ApiRetrofit {
                 .addInterceptor(mHeaderInterceptor)//添加Header
                 .addInterceptor(mCacheInterceptor)//添加缓存
                 .addNetworkInterceptor(mCacheInterceptor)
-                .cookieJar(cookieJar)
+                .cookieJar(MyApp.getCookie())
                 .cache(cache)
                 .connectTimeout(20, TimeUnit.SECONDS)//设置连接超时20秒
                 .build();

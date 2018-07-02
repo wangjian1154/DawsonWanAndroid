@@ -33,8 +33,9 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean.DatasBean, 
         tvTitle.setText(item.title);
         tvAuthor.setText("作者：" + item.author);
         tvTime.setText(item.niceDate);
-        ivCollection.setSelected(item.collect);
-        Log.i("www","适配器数据item.collect=="+item.collect+"getLayoutPosition"+helper.getLayoutPosition());
+
+        ivCollection.setImageResource(item.collect ? R.drawable.ic_collection : R.drawable.ic_collection_normal);
+
         helper.addOnClickListener(R.id.ll_collection);
     }
 

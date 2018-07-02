@@ -57,11 +57,9 @@ public class PersonFragment extends SimpleFragment {
                 break;
 
             case R.id.piv_exit_login:
-                if (MyApp.isLogined() != null && MyApp.isLogined() instanceof UserBean) {
-                    SPUtils.getInstance().remove(Constants.SP_KEY.USER_INFO);
-                    EventBus.getDefault().post(Message.obtain(new Handler(Looper.getMainLooper()),
-                            Constants.Key_EventBus_Msg.EXIT_LOGIN, null));
-                }
+
+                MyApp.loginOut();
+
                 break;
 
             case R.id.piv_collection:

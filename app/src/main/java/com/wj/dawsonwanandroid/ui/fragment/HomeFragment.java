@@ -1,6 +1,7 @@
 package com.wj.dawsonwanandroid.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -56,6 +57,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     private ArticleListAdapter adapter;
     private int height = ScreenUtils.getHeightInPx(MyApp.getInstance());
     private int overallXScroll = 0;
+    public static final int HEAD_POSITION_COUNT=1;
 
     @Override
     protected void initViewAndEvent(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_home_head, null);
         banner = (Banner) headView.findViewById(R.id.banner);
         banner = headView.findViewById(R.id.banner);
-//        adapter.addHeaderView(headView);
+        adapter.addHeaderView(headView);
 
         smartRefreshLayout.setOnRefreshLoadmoreListener(this);
         adapter.setOnItemClickListener(this);
@@ -159,8 +161,10 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
             if (result.getErrorCode() == Constants.RESPONSE.SUCCESS) {
                 //收藏取反
                 articleList.get(position).collect = !articleList.get(position).collect;
-                adapter.notifyItemChanged(position,1);
-                Log.i("www","点击的position"+position);
+//                adapter.notifyItemChanged(position, 1);
+                adapter.notifyDataSetChanged();
+                setProgressIndicator(false);
+                Log.i("www", "点击的position" + position);
             } else {
                 ToastUtils.showShort(result.getErrorMsg());
             }
@@ -212,7 +216,19 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (MyApp.checkLogin(getActivity())) {
+            setProgressIndicator(true);
             mPresenter.collection(articleList.get(position).id, position);
+        }
+    }
+
+    @Override
+    public void onEventMainThread(Message msg) {
+        super.onEventMainThread(msg);
+        switch (msg.what) {
+            case Constants.Key_EventBus_Msg.LOGIN_SUCCESS:
+            case Constants.Key_EventBus_Msg.EXIT_LOGIN:
+                mPresenter.loadData(true);
+                break;
         }
     }
 }
