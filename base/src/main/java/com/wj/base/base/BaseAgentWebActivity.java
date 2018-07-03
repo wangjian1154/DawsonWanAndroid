@@ -36,6 +36,7 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
     private ErrorLayoutEntity mErrorLayoutEntity;
     private MiddlewareWebChromeBase mMiddleWareWebChrome;
     private MiddlewareWebClientBase mMiddleWareWebClient;
+    protected WebView mWebView;
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -71,7 +72,7 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
                 .ready()
                 .go(getUrl());
 
-
+        mWebView = mAgentWeb.getWebCreator().getWebView();
     }
 
 
@@ -192,7 +193,7 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
 
     protected @Nullable
     WebView getWebView() {
-        return null;
+        return mWebView;
     }
 
     protected @Nullable

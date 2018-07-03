@@ -15,12 +15,12 @@ import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
 import com.wj.base.utils.ToastUtils;
 import com.wj.dawsonwanandroid.R;
+import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.ProjectListBean;
 import com.wj.dawsonwanandroid.core.Constants;
 import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.core.MyApp;
-import com.wj.dawsonwanandroid.ui.activity.WebViewActivity;
 import com.wj.dawsonwanandroid.ui.adapter.ProjectListAdapter;
 import com.wj.dawsonwanandroid.ui.contract.ProjectContract;
 import com.wj.dawsonwanandroid.ui.presenter.ProjectPresenter;
@@ -45,7 +45,7 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter> implements
     @BindView(R.id.iv_to_top)
     ImageView ivToTop;
 
-    private List<ProjectListBean.DatasBean> list;
+    private List<ArticleBean> list;
     private ProjectListAdapter adapter;
     private int cId;
     private int height = ScreenUtils.getHeightInPx(MyApp.getInstance());
@@ -134,7 +134,7 @@ public class ProjectFragment extends BaseFragment<ProjectPresenter> implements
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        JumpModel.getInstance().jumpWebActivity(getActivity(), list.get(position).getLink());
+        JumpModel.getInstance().jumpArticleDetailActivity(getActivity(), list.get(position));
     }
 
     @OnClick({R.id.iv_to_top})

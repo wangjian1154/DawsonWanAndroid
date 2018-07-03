@@ -21,6 +21,7 @@ import com.wj.base.utils.ToastUtils;
 import com.wj.base.view.TitleBar;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.core.Constants;
 import com.wj.dawsonwanandroid.core.JumpModel;
@@ -53,7 +54,7 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
     @BindView(R.id.title_bar)
     TitleBar titleBar;
 
-    private List<ArticleBean.DatasBean> articleList;
+    private List<ArticleBean> articleList;
     private ArticleListAdapter adapter;
     private int height = ScreenUtils.getHeightInPx(MyApp.getInstance());
     private int overallXScroll = 0;
@@ -116,11 +117,11 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
     }
 
     @Override
-    public void setListData(BaseResponse<ArticleBean> articleBean, boolean isRefresh) {
-        ArticleBean data = articleBean.getData();
+    public void setListData(BaseResponse<ArticleListBean> articleBean, boolean isRefresh) {
+        ArticleListBean data = articleBean.getData();
         if (isRefresh) articleList.clear();
         if (data != null) {
-            List<ArticleBean.DatasBean> mData = data.datas;
+            List<ArticleBean> mData = data.datas;
             if (mData != null && mData.size() > 0) {
                 articleList.addAll(mData);
             }
@@ -147,7 +148,7 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        JumpModel.getInstance().jumpWebActivity(this, articleList.get(position).link);
+        JumpModel.getInstance().jumpArticleDetailActivity(this, articleList.get(position));
     }
 
     @OnClick({R.id.iv_to_top})
@@ -193,7 +194,7 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (MyApp.checkLogin(this)) {
             setProgressIndicator(true);
-            ArticleBean.DatasBean item = articleList.get(position);
+            ArticleBean item = articleList.get(position);
             int articleId = item.id;
             if (item.collect) {
                 mPresenter.unCollection(articleId, position);

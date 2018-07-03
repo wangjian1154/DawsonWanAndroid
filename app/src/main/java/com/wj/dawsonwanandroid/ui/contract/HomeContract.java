@@ -1,7 +1,7 @@
 package com.wj.dawsonwanandroid.ui.contract;
 
 import com.wj.base.base.BaseContract;
-import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
 
@@ -13,7 +13,7 @@ public interface HomeContract {
 
         void setHomeBanner(List<HomeBanner> banners);
 
-        void setListData(BaseResponse<ArticleBean> articleBean,boolean isRefresh);
+        void setListData(BaseResponse<ArticleListBean> articleBean, boolean isRefresh);
 
         void showFailed(String error);
 

@@ -1,7 +1,7 @@
 package com.wj.dawsonwanandroid.net;
 
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
-import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
 import com.wj.dawsonwanandroid.bean.ProjectCategoryBean;
@@ -27,7 +27,7 @@ public interface ApiService {
     Observable<BaseResponse<List<HomeBanner>>> getHomeBanners();
 
     @GET(ApiConstants.API_HOME_ARTICLE)
-    Observable<BaseResponse<ArticleBean>> getArticleList(@Path("page") int page);
+    Observable<BaseResponse<ArticleListBean>> getArticleList(@Path("page") int page);
 
     @GET(ApiConstants.API_ANDROID_TREE)
     Observable<BaseResponse<List<AndroidTreeBean>>> getAndroidTreeList();
@@ -46,7 +46,7 @@ public interface ApiService {
     Observable<BaseResponse<UserBean>> login(@Query("username") String username, @Query("password") String password);
 
     @GET(ApiConstants.API_KNOWLEDGE)
-    Observable<BaseResponse<ArticleBean>> getKnowledgeList(@Path("page") int page, @Query("cid") int cid);
+    Observable<BaseResponse<ArticleListBean>> getKnowledgeList(@Path("page") int page, @Query("cid") int cid);
 
     @POST(ApiConstants.API_ARTICLE_COLLECTION)
     Observable<BaseResponse> collectionArticle(@Path("article_id") int article_id);
@@ -55,5 +55,5 @@ public interface ApiService {
     Observable<BaseResponse> unCollectionArticle(@Path("article_id") int article_id);
 
     @GET(ApiConstants.API_COLLECTION_LIST)
-    Observable<BaseResponse<ArticleBean>> getCollectionList(@Path("page") int page);
+    Observable<BaseResponse<ArticleListBean>> getCollectionList(@Path("page") int page);
 }

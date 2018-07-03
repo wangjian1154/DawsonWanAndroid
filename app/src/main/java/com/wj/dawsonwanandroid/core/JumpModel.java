@@ -3,11 +3,13 @@ package com.wj.dawsonwanandroid.core;
 import android.content.Context;
 
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
+import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.dao.DBManager;
+import com.wj.dawsonwanandroid.ui.activity.ArticleDetailViewActivity;
 import com.wj.dawsonwanandroid.ui.activity.CollectionActivity;
 import com.wj.dawsonwanandroid.ui.activity.KnowledgeActivity;
 import com.wj.dawsonwanandroid.ui.activity.LoginActivity;
 import com.wj.dawsonwanandroid.ui.activity.RegisterActivity;
-import com.wj.dawsonwanandroid.ui.activity.WebViewActivity;
 
 public class JumpModel {
 
@@ -20,8 +22,14 @@ public class JumpModel {
         return instance;
     }
 
-    public static void jumpWebActivity(Context context, String url) {
-        WebViewActivity.show(context, url);
+    public static void jumpArticleDetailActivity(Context context, ArticleBean articleBean) {
+//        DBManager.insertVisitHistory(articleBean);
+        String url = articleBean.link;
+        ArticleDetailViewActivity.show(context, url);
+    }
+
+    public static void jumpWebView(Context context,String url){
+        ArticleDetailViewActivity.show(context, url);
     }
 
     public static void jumpLogin(Context context) {

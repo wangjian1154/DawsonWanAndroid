@@ -1,7 +1,7 @@
 package com.wj.dawsonwanandroid.ui.presenter;
 
 import com.wj.base.base.BasePresenter;
-import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.net.ApiRetrofit;
 import com.wj.dawsonwanandroid.net.ApiService;
@@ -26,11 +26,11 @@ public class KnowledgePresenter extends BasePresenter<KnowledgeContract.View> im
         }
         ApiRetrofit.create(ApiService.class)
                 .getKnowledgeList(page, cid)
-                .compose(RxUtils.<BaseResponse<ArticleBean>>applySchedulers())
-                .compose(mView.<BaseResponse<ArticleBean>>bindToLife())
-                .subscribe(new Consumer<BaseResponse<ArticleBean>>() {
+                .compose(RxUtils.<BaseResponse<ArticleListBean>>applySchedulers())
+                .compose(mView.<BaseResponse<ArticleListBean>>bindToLife())
+                .subscribe(new Consumer<BaseResponse<ArticleListBean>>() {
                     @Override
-                    public void accept(BaseResponse<ArticleBean> result) throws Exception {
+                    public void accept(BaseResponse<ArticleListBean> result) throws Exception {
                         mView.setListData(isRefresh, result);
                     }
                 }, new Consumer<Throwable>() {

@@ -2,7 +2,6 @@ package com.wj.dawsonwanandroid.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,25 +10,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wj.base.base.BaseAgentWebActivity;
-import com.wj.base.base.SimpleActivity;
+import com.wj.base.utils.SPUtils;
 import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.view.TitleBar;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.core.Constants;
+import com.wj.dawsonwanandroid.core.JumpModel;
+import com.wj.dawsonwanandroid.dao.DBManager;
+import com.wj.dawsonwanandroid.dao.DaoMaster;
 
 import butterknife.BindView;
 
-public class WebViewActivity extends BaseAgentWebActivity {
+public class ArticleDetailViewActivity extends BaseAgentWebActivity {
 
     @BindView(R.id.title_bar)
     TitleBar titleBar;
+    @BindView(R.id.smart_refresh)
+    SmartRefreshLayout smartRefresh;
 
     public static void show(Context context, String url) {
-        Intent intent = new Intent(context, WebViewActivity.class);
+        Intent intent = new Intent(context, ArticleDetailViewActivity.class);
         intent.putExtra(Constants.Key.KEY, url);
         context.startActivity(intent);
     }
@@ -46,6 +51,13 @@ public class WebViewActivity extends BaseAgentWebActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        smartRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                mWebView.reload();
+                smartRefresh.finishRefresh();
             }
         });
     }
@@ -92,6 +104,7 @@ public class WebViewActivity extends BaseAgentWebActivity {
         return getResources().getColor(R.color.webview_load_indicator);
     }
 
+
     @Override
     protected int getIndicatorHeight() {
         return 3;
@@ -100,6 +113,7 @@ public class WebViewActivity extends BaseAgentWebActivity {
     @Nullable
     @Override
     protected String getUrl() {
-        return getIntent().getStringExtra(Constants.Key.KEY);
+        String Url = getIntent().getStringExtra(Constants.Key.KEY);
+        return Url;
     }
 }

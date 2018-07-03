@@ -1,7 +1,7 @@
 package com.wj.dawsonwanandroid.ui.contract;
 
 import com.wj.base.base.BaseContract;
-import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 
 /**
@@ -10,7 +10,7 @@ import com.wj.dawsonwanandroid.bean.BaseResponse;
 public interface KnowledgeContract {
 
     interface View extends BaseContract.BaseView {
-        void setListData(boolean isRefresh, BaseResponse<ArticleBean> result);
+        void setListData(boolean isRefresh, BaseResponse<ArticleListBean> result);
     }
 
     interface Presenter extends BaseContract.AbstractPresenter<View> {

@@ -14,6 +14,7 @@ import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ToastUtils;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.core.Constants;
 import com.wj.dawsonwanandroid.core.JumpModel;
@@ -39,7 +40,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     SmartRefreshLayout smartRefresh;
 
     private int cId;
-    private List<ArticleBean.DatasBean> articleList;
+    private List<ArticleBean> articleList;
     private ArticleListAdapter adapter;
 
     public static KnowledgeFragment newInstance(int cid) {
@@ -88,11 +89,11 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
     }
 
     @Override
-    public void setListData(boolean isRefresh, BaseResponse<ArticleBean> result) {
-        ArticleBean data = result.getData();
+    public void setListData(boolean isRefresh, BaseResponse<ArticleListBean> result) {
+        ArticleListBean data = result.getData();
         if (isRefresh) articleList.clear();
         if (data != null) {
-            List<ArticleBean.DatasBean> mData = data.datas;
+            List<ArticleBean> mData = data.datas;
             if (mData != null && mData.size() > 0) {
                 articleList.addAll(mData);
             }
@@ -114,6 +115,6 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        JumpModel.getInstance().jumpWebActivity(getActivity(), articleList.get(position).link);
+        JumpModel.getInstance().jumpArticleDetailActivity(getActivity(), articleList.get(position));
     }
 }

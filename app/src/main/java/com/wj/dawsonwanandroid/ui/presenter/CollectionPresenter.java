@@ -1,7 +1,7 @@
 package com.wj.dawsonwanandroid.ui.presenter;
 
 import com.wj.base.base.BasePresenter;
-import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.net.ApiRetrofit;
 import com.wj.dawsonwanandroid.net.ApiService;
@@ -21,11 +21,11 @@ public class CollectionPresenter extends BasePresenter<CollectionContact.View> i
     public void loadListData(final boolean isRefresh) {
         ApiRetrofit.create(ApiService.class)
                 .getCollectionList(page)
-                .compose(RxUtils.<BaseResponse<ArticleBean>>applySchedulers())
-                .compose(mView.<BaseResponse<ArticleBean>>bindToLife())
-                .subscribe(new Consumer<BaseResponse<ArticleBean>>() {
+                .compose(RxUtils.<BaseResponse<ArticleListBean>>applySchedulers())
+                .compose(mView.<BaseResponse<ArticleListBean>>bindToLife())
+                .subscribe(new Consumer<BaseResponse<ArticleListBean>>() {
                     @Override
-                    public void accept(BaseResponse<ArticleBean> articleBean) throws Exception {
+                    public void accept(BaseResponse<ArticleListBean> articleBean) throws Exception {
                         mView.setListData(articleBean, isRefresh);
                     }
                 }, new Consumer<Throwable>() {

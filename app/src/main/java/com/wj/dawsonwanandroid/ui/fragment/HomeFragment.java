@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.animation.SlideInLeftAnimation;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -21,6 +20,7 @@ import com.wj.base.utils.ScreenUtils;
 import com.wj.base.utils.ToastUtils;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.HomeBanner;
 import com.wj.dawsonwanandroid.core.Constants;
@@ -55,7 +55,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     @BindView(R.id.iv_to_top)
     ImageView ivToTop;
 
-    private List<ArticleBean.DatasBean> articleList;
+    private List<ArticleBean> articleList;
     private ArticleListAdapter adapter;
     private int height = ScreenUtils.getHeightInPx(MyApp.getInstance());
     private int overallXScroll = 0;
@@ -127,7 +127,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
                 .setOnBannerListener(new OnBannerListener() {
                     @Override
                     public void OnBannerClick(int position) {
-                        JumpModel.getInstance().jumpWebActivity(getActivity(), banners.get(position).getUrl());
+                        JumpModel.getInstance().jumpWebView(getActivity(), banners.get(position).getUrl());
                     }
                 })
                 .setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE)
@@ -137,11 +137,11 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     }
 
     @Override
-    public void setListData(BaseResponse<ArticleBean> articleBean, boolean isRefresh) {
-        ArticleBean data = articleBean.getData();
+    public void setListData(BaseResponse<ArticleListBean> articleBean, boolean isRefresh) {
+        ArticleListBean data = articleBean.getData();
         if (isRefresh) articleList.clear();
         if (data != null) {
-            List<ArticleBean.DatasBean> mData = data.datas;
+            List<ArticleBean> mData = data.datas;
             if (mData != null && mData.size() > 0) {
                 articleList.addAll(mData);
             }
@@ -215,7 +215,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        JumpModel.getInstance().jumpWebActivity(getActivity(), articleList.get(position).link);
+        JumpModel.getInstance().jumpArticleDetailActivity(getActivity(), articleList.get(position));
     }
 
 
@@ -232,7 +232,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         if (MyApp.checkLogin(getActivity())) {
             setProgressIndicator(true);
-            ArticleBean.DatasBean item = articleList.get(position);
+            ArticleBean item = articleList.get(position);
             int articleId = item.id;
             if (item.collect) {
                 mPresenter.unCollection(articleId, position);

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 
+
 android {
     compileSdkVersion 27
 
@@ -107,6 +108,7 @@ dependencies {
 
     api rootProject.ext.dependencies["roundedimageview"]
     api rootProject.ext.dependencies["recyclerview-animators"]
+
 
 
 }

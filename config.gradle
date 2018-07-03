@@ -94,5 +94,6 @@ ext {
             "materialprogressbar"     : "me.zhanghai.android.materialprogressbar:library:1.4.2",
             "agentweb"                : "com.just.agentweb:agentweb:4.0.2",
             "MagicIndicator"          : "com.github.hackware1993:MagicIndicator:1.5.0",
+            "greendao"                : "org.greenrobot:greendao:3.2.2"
     ]
 }

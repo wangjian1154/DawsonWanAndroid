@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.WebViewActivity"
+            android:name=".ui.activity.ArticleDetailViewActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait" />
         <activity

@@ -1,7 +1,7 @@
 package com.wj.dawsonwanandroid.ui.contract;
 
 import com.wj.base.base.BaseContract;
-import com.wj.dawsonwanandroid.bean.ArticleBean;
+import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 
 /**
@@ -11,7 +11,7 @@ public interface CollectionContact {
 
     interface View extends BaseContract.BaseView {
 
-        void setListData(BaseResponse<ArticleBean> articleBean, boolean isRefresh);
+        void setListData(BaseResponse<ArticleListBean> articleBean, boolean isRefresh);
 
         void collectionArticle(BaseResponse result,int position);
 

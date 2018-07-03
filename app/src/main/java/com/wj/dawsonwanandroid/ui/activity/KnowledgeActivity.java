@@ -8,21 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.wj.base.base.BaseActivity;
 import com.wj.base.base.BaseFragmentPageAdapter;
 import com.wj.base.base.SimpleActivity;
 import com.wj.base.utils.StatusBarUtil;
-import com.wj.base.utils.ToastUtils;
 import com.wj.base.view.TitleBar;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
-import com.wj.dawsonwanandroid.bean.ArticleBean;
-import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.core.Constants;
 import com.wj.dawsonwanandroid.ui.adapter.MyCommonNavigatorAdapter;
-import com.wj.dawsonwanandroid.ui.contract.KnowledgeContract;
 import com.wj.dawsonwanandroid.ui.fragment.KnowledgeFragment;
-import com.wj.dawsonwanandroid.ui.presenter.KnowledgePresenter;
 import com.wj.dawsonwanandroid.utils.Utils;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;

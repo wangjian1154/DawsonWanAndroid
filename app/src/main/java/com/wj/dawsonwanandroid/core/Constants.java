@@ -17,7 +17,12 @@ public class Constants {
         int EXIT_LOGIN = 2;
     }
 
-    public interface SP_KEY{
-        String USER_INFO="user_info";
+    public interface SP_KEY {
+        String USER_INFO = "user_info";
+    }
+
+    public interface DB {
+        String DB_NAME = "wan_android";
+        String TABLE_VISIT_HISTORY="visit_history";
     }
 }
