@@ -36,43 +36,7 @@ public class CollectionPresenter extends BasePresenter<CollectionContact.View> i
                 });
     }
 
-    @Override
-    public void collection(int article_id, final int position) {
-        ApiRetrofit.create(ApiService.class)
-                .collectionArticle(article_id)
-                .compose(RxUtils.<BaseResponse>applySchedulers())
-                .compose(mView.<BaseResponse>bindToLife())
-                .subscribe(new Consumer<BaseResponse>() {
-                    @Override
-                    public void accept(BaseResponse result) throws Exception {
-                        mView.collectionArticle(result,position);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        mView.showError(throwable.getMessage());
-                    }
-                });
-    }
 
-    @Override
-    public void unCollection(int article_id, final int position) {
-        ApiRetrofit.create(ApiService.class)
-                .unCollectionArticle(article_id)
-                .compose(RxUtils.<BaseResponse>applySchedulers())
-                .compose(mView.<BaseResponse>bindToLife())
-                .subscribe(new Consumer<BaseResponse>() {
-                    @Override
-                    public void accept(BaseResponse result) throws Exception {
-                        mView.unCollectionArticle(result,position);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        mView.showError(throwable.getMessage());
-                    }
-                });
-    }
     @Override
     public void loadData(boolean isRefresh) {
         if (isRefresh) {

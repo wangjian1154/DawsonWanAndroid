@@ -69,9 +69,7 @@ public class PersonFragment extends SimpleFragment {
                 break;
 
             case R.id.piv_browse_history:
-                if (MyApp.checkLogin(getActivity())) {
-
-                }
+                JumpModel.getInstance().jumpVisitHistory(getActivity());
                 break;
         }
     }

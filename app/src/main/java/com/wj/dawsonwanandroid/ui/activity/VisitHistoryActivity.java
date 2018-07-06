@@ -3,10 +3,8 @@ package com.wj.dawsonwanandroid.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,36 +12,27 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
-import com.wj.base.base.BaseActivity;
+import com.wj.base.base.SimpleActivity;
 import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
-import com.wj.base.utils.ToastUtils;
 import com.wj.base.view.TitleBar;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
-import com.wj.dawsonwanandroid.bean.ArticleListBean;
-import com.wj.dawsonwanandroid.bean.BaseResponse;
-import com.wj.dawsonwanandroid.core.Constants;
+import com.wj.dawsonwanandroid.core.DBManager;
 import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.core.MyApp;
 import com.wj.dawsonwanandroid.ui.adapter.ArticleListAdapter;
-import com.wj.dawsonwanandroid.ui.contract.CollectionContact;
-import com.wj.dawsonwanandroid.ui.presenter.CollectionPresenter;
 import com.wj.dawsonwanandroid.utils.Utils;
+
+import org.greenrobot.greendao.DbUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
-/**
- * 我的收藏
- */
-public class CollectionActivity extends BaseActivity<CollectionPresenter> implements
-        CollectionContact.View, OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener,
-        View.OnClickListener {
+public class VisitHistoryActivity extends SimpleActivity implements OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -58,25 +47,26 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
     private ArticleListAdapter adapter;
     private int height = ScreenUtils.getHeightInPx(MyApp.getInstance());
     private int overallXScroll = 0;
-
+    private int limit = 10;
 
     public static void show(Context context) {
-        Intent intent = new Intent(context, CollectionActivity.class);
+        Intent intent = new Intent(context, VisitHistoryActivity.class);
         context.startActivity(intent);
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_collection;
+        return R.layout.activity_visit_history;
     }
 
     @Override
     protected void initViewAndEvent(Bundle savedInstanceState) {
-        titleBar.setTitle("我的收藏");
+
+        titleBar.setTitle("浏览记录");
         articleList = new ArrayList<>();
         setProgressIndicator(true);
 
-        adapter = new ArticleListAdapter(articleList, false);
+        adapter = new ArticleListAdapter(articleList,false);
         BaseUtils.configRecyclerView(recyclerView, new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new SlideInLeftAnimator());
@@ -105,69 +95,46 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
             }
         });
 
-
-        mPresenter.loadData(true);
+        loadData(true);
     }
 
-
-    @Override
-    public CollectionPresenter createPresenter() {
-        return new CollectionPresenter();
-    }
-
-    @Override
-    public void setListData(BaseResponse<ArticleListBean> articleBean, boolean isRefresh) {
-        ArticleListBean data = articleBean.getData();
-        if (isRefresh) articleList.clear();
-        if (data != null) {
-            List<ArticleBean> mData = data.datas;
-            if (mData != null && mData.size() > 0) {
-                articleList.addAll(mData);
-            }
+    private void loadData(boolean isRefresh) {
+        if (isRefresh) {
+            articleList.clear();
         }
-        adapter.notifyDataSetChanged();
+
+        articleList.addAll(findAllVisit(limit, articleList.size()));
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
         Utils.refreshComplete(smartRefresh);
         setProgressIndicator(false);
     }
 
-    @Override
-    public void showError(String msg) {
-        ToastUtils.showShort(msg);
-    }
+    /**
+     * 查找浏览记录
+     *
+     * @return
+     */
+    private List<ArticleBean> findAllVisit(int limit, int offset) {
+        DBManager dbManager = new DBManager();
+        List<ArticleBean> list = dbManager.getDaoSession()
+                .queryBuilder(ArticleBean.class).limit(limit).offset(offset).list();
+        dbManager.close();
 
-    @Override
-    public void onLoadmore(RefreshLayout refreshlayout) {
-        mPresenter.loadData(false);
-    }
-
-    @Override
-    public void onRefresh(RefreshLayout refreshlayout) {
-        mPresenter.loadData(true);
+        return list;
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        JumpModel.getInstance().jumpArticleDetailActivity(this, articleList.get(position));
+        JumpModel.getInstance().jumpArticleDetailActivity(this,articleList.get(position));
     }
-
-    @OnClick({R.id.iv_to_top})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_to_top:
-                recyclerView.smoothScrollToPosition(0);
-                break;
-        }
-    }
-
 
     @Override
-    public void onEventMainThread(Message msg) {
-        super.onEventMainThread(msg);
-        switch (msg.what) {
-            case Constants.Key_EventBus_Msg.LOGIN_SUCCESS:
-            case Constants.Key_EventBus_Msg.EXIT_LOGIN:
-                mPresenter.loadData(true);
-                break;
-        }
+    public void onLoadmore(RefreshLayout refreshlayout) {
+        loadData(false);
+    }
+
+    @Override
+    public void onRefresh(RefreshLayout refreshlayout) {
+        loadData(true);
     }
 }

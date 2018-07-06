@@ -2,7 +2,6 @@ package com.wj.dawsonwanandroid.core;
 
 import android.app.Application;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -23,9 +22,6 @@ import com.wj.base.Initialization;
 import com.wj.base.utils.SPUtils;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.UserBean;
-import com.wj.dawsonwanandroid.dao.DBManager;
-import com.wj.dawsonwanandroid.dao.DaoMaster;
-import com.wj.dawsonwanandroid.dao.DaoSession;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -44,7 +40,6 @@ public class MyApp extends Application {
 
         new Initialization(this);
 
-        DBManager.initDatabase(this);
     }
 
 

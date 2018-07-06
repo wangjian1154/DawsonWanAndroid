@@ -64,7 +64,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
     protected void initViewAndEvent(Bundle savedInstanceState) {
         articleList = new ArrayList<>();
         BaseUtils.configRecyclerView(recyclerView, new LinearLayoutManager(getActivity()));
-        adapter = new ArticleListAdapter(articleList);
+        adapter = new ArticleListAdapter(articleList,true);
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new SlideInLeftAnimator());
 

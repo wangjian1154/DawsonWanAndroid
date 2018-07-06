@@ -57,7 +57,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         cId = bundle.getInt(Constants.Key.KEY);
         articleList = new ArrayList<>();
 
-        adapter = new ArticleListAdapter(articleList);
+        adapter = new ArticleListAdapter(articleList,true);
         BaseUtils.configRecyclerView(recyclerView, new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 

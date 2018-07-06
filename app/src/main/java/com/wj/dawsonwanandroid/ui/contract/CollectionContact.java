@@ -13,10 +13,6 @@ public interface CollectionContact {
 
         void setListData(BaseResponse<ArticleListBean> articleBean, boolean isRefresh);
 
-        void collectionArticle(BaseResponse result,int position);
-
-        void unCollectionArticle(BaseResponse result,int position);
-
     }
 
     interface Presenter extends BaseContract.AbstractPresenter<CollectionContact.View> {
@@ -24,10 +20,6 @@ public interface CollectionContact {
         void loadData(boolean isRefresh);
 
         void loadListData(boolean isRefresh);
-
-        void collection(int article_id,int position);
-
-        void unCollection(int article_id,int position);
 
     }
 }

@@ -1,6 +1,7 @@
 package com.wj.dawsonwanandroid.ui.adapter;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,8 +18,11 @@ import java.util.List;
  */
 public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHolder> {
 
-    public ArticleListAdapter(@Nullable List<ArticleBean> data) {
+    private boolean showCollection;
+
+    public ArticleListAdapter(@Nullable List<ArticleBean> data, boolean showCollection) {
         super(R.layout.item_list_article, data);
+        this.showCollection = showCollection;
     }
 
 
@@ -36,6 +40,8 @@ public class ArticleListAdapter extends BaseQuickAdapter<ArticleBean, BaseViewHo
         ivCollection.setImageResource(item.collect ? R.drawable.ic_collection : R.drawable.ic_collection_normal);
 
         helper.addOnClickListener(R.id.ll_collection);
+
+        helper.getView(R.id.ll_collection).setVisibility(showCollection ? View.VISIBLE : View.GONE);
     }
 
 }

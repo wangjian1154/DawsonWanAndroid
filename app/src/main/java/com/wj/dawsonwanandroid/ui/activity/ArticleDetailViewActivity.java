@@ -15,14 +15,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wj.base.base.BaseAgentWebActivity;
-import com.wj.base.utils.SPUtils;
 import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.view.TitleBar;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.core.Constants;
-import com.wj.dawsonwanandroid.core.JumpModel;
-import com.wj.dawsonwanandroid.dao.DBManager;
-import com.wj.dawsonwanandroid.dao.DaoMaster;
 
 import butterknife.BindView;
 

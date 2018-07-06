@@ -49,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:visibility="gone"
             android:paddingLeft="@dimen/widget_size_10"
             android:paddingRight="@dimen/widget_size_10"
             android:paddingTop="@dimen/widget_size_10">

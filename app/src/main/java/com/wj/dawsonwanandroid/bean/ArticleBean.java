@@ -8,6 +8,7 @@ import org.greenrobot.greendao.annotation.ToMany;
 import java.io.Serializable;
 import java.util.List;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Unique;
 
 /**
  * Created by wj on 2018/7/3.
@@ -27,7 +28,8 @@ public class ArticleBean implements Serializable{
     public String desc;
     public String envelopePic;
     public boolean fresh;
-    @Id
+    @Id(autoincrement = true)
+    public Long rid;
     public int id;
     public String link;
     public String niceDate;
@@ -43,13 +45,13 @@ public class ArticleBean implements Serializable{
     public int zan;
 
 
-    @Generated(hash = 810894734)
+    @Generated(hash = 1481080736)
     public ArticleBean(String apkLink, String author, int chapterId,
             String chapterName, boolean collect, int courseId, String desc,
-            String envelopePic, boolean fresh, int id, String link, String niceDate,
-            String origin, String projectLink, long publishTime, int superChapterId,
-            String superChapterName, String title, int type, int userId,
-            int visible, int zan) {
+            String envelopePic, boolean fresh, Long rid, int id, String link,
+            String niceDate, String origin, String projectLink, long publishTime,
+            int superChapterId, String superChapterName, String title, int type,
+            int userId, int visible, int zan) {
         this.apkLink = apkLink;
         this.author = author;
         this.chapterId = chapterId;
@@ -59,6 +61,7 @@ public class ArticleBean implements Serializable{
         this.desc = desc;
         this.envelopePic = envelopePic;
         this.fresh = fresh;
+        this.rid = rid;
         this.id = id;
         this.link = link;
         this.niceDate = niceDate;
@@ -261,6 +264,14 @@ public class ArticleBean implements Serializable{
 
     public boolean getFresh() {
         return this.fresh;
+    }
+
+    public Long getRid() {
+        return this.rid;
+    }
+
+    public void setRid(Long rid) {
+        this.rid = rid;
     }
 
 
