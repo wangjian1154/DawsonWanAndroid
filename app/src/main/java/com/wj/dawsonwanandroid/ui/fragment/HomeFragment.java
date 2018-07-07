@@ -39,7 +39,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
  * 首页
@@ -66,7 +65,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         BaseUtils.configRecyclerView(recyclerView, new LinearLayoutManager(getActivity()));
         adapter = new ArticleListAdapter(articleList,true);
         recyclerView.setAdapter(adapter);
-        recyclerView.setItemAnimator(new SlideInLeftAnimator());
 
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.layout_home_head, null);
         banner = headView.findViewById(R.id.banner);

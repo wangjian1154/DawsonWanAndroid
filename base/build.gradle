@@ -107,8 +107,8 @@ dependencies {
     api rootProject.ext.dependencies["MagicIndicator"]
 
     api rootProject.ext.dependencies["roundedimageview"]
+
     api rootProject.ext.dependencies["recyclerview-animators"]
 
-
-
+    api rootProject.ext.dependencies["material-dialogs"]
 }
