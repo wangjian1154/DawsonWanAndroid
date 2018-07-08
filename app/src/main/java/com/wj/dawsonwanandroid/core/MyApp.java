@@ -38,6 +38,8 @@ public class MyApp extends Application {
         super.onCreate();
         context = this;
 
+        ThirdParty.init();
+
         new Initialization(this);
 
     }
