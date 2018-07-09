@@ -19,6 +19,9 @@ import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.view.TitleBar;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.core.Constants;
+import com.wj.dawsonwanandroid.utils.ShareUtils;
+
+import java.net.URL;
 
 import butterknife.BindView;
 
@@ -28,6 +31,8 @@ public class ArticleDetailViewActivity extends BaseAgentWebActivity {
     TitleBar titleBar;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
+
+    private String url;
 
     public static void show(Context context, String url) {
         Intent intent = new Intent(context, ArticleDetailViewActivity.class);
@@ -56,6 +61,28 @@ public class ArticleDetailViewActivity extends BaseAgentWebActivity {
                 smartRefresh.finishRefresh();
             }
         });
+        titleBar.setRightImgButton(R.drawable.ic_share, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtils.shareWeb(ArticleDetailViewActivity.this, mTitleStr, null, null, url);
+            }
+        });
+
+        setOnLoadWebViewCallback(new LoadWebViewCallback() {
+            @Override
+            public void onProgressChanged(int progress) {
+                if (progress == 100) {
+                    titleBar.getRightButton().setVisibility(View.VISIBLE);
+                } else {
+                    titleBar.getRightButton().setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onTitleLoadComplete(String title) {
+                titleBar.setTitle(title);
+            }
+        });
     }
 
     @NonNull
@@ -64,34 +91,11 @@ public class ArticleDetailViewActivity extends BaseAgentWebActivity {
         return (ViewGroup) this.findViewById(R.id.container);
     }
 
-    @Nullable
-    @Override
-    protected WebChromeClient getWebChromeClient() {
-        WebChromeClient mWebChromeClient = new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                //do you work
-//            Log.i("Info","onProgress:"+newProgress);
-            }
-
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-                if (titleBar != null) {
-                    titleBar.setTitle(title);
-                }
-            }
-        };
-
-        return mWebChromeClient;
-    }
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (mAgentWeb != null && mAgentWeb.handleKeyEvent(keyCode, event)) {
             return true;
         }
-
         return super.onKeyDown(keyCode, event);
     }
 
@@ -109,7 +113,8 @@ public class ArticleDetailViewActivity extends BaseAgentWebActivity {
     @Nullable
     @Override
     protected String getUrl() {
-        String Url = getIntent().getStringExtra(Constants.Key.KEY);
-        return Url;
+        url = getIntent().getStringExtra(Constants.Key.KEY);
+        return url;
     }
+
 }

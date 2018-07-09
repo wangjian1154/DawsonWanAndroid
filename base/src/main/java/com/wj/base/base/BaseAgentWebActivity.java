@@ -25,6 +25,7 @@ import com.just.agentweb.IWebLayout;
 import com.just.agentweb.MiddlewareWebChromeBase;
 import com.just.agentweb.MiddlewareWebClientBase;
 import com.just.agentweb.PermissionInterceptor;
+import com.wj.base.utils.ToastUtils;
 
 /**
  * Created by wj on 2018/5/16.
@@ -37,6 +38,8 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
     private MiddlewareWebChromeBase mMiddleWareWebChrome;
     private MiddlewareWebClientBase mMiddleWareWebClient;
     protected WebView mWebView;
+    protected String mTitleStr;
+    protected LoadWebViewCallback loadWebViewCallback;
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -154,7 +157,7 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
         return null;
     }
 
-    class MySetting extends AgentWebSettingsImpl{
+    class MySetting extends AgentWebSettingsImpl {
 
         @Override
         public WebSettings getWebSettings() {
@@ -173,7 +176,28 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
 
     protected @Nullable
     WebChromeClient getWebChromeClient() {
-        return null;
+        WebChromeClient mWebChromeClient = new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                //do you work
+//            Log.i("Info","onProgress:"+newProgress);
+                if (loadWebViewCallback != null) {
+                    loadWebViewCallback.onProgressChanged(newProgress);
+                }
+            }
+
+            @Override
+            public void onReceivedTitle(WebView view, String titleStr) {
+                super.onReceivedTitle(view, titleStr);
+                if (view != null) {
+                    mTitleStr = titleStr;
+                    if (loadWebViewCallback != null) {
+                        loadWebViewCallback.onTitleLoadComplete(mTitleStr);
+                    }
+                }
+            }
+        };
+        return mWebChromeClient;
     }
 
     protected @ColorInt
@@ -226,6 +250,17 @@ public abstract class BaseAgentWebActivity extends SimpleActivity {
     MiddlewareWebClientBase getMiddleWareWebClient() {
         return this.mMiddleWareWebClient = new MiddlewareWebClientBase() {
         };
+    }
+
+    protected void setOnLoadWebViewCallback(LoadWebViewCallback callback) {
+        this.loadWebViewCallback = callback;
+    }
+
+    public abstract class LoadWebViewCallback {
+
+        public void onProgressChanged(int progress){}
+
+        public void onTitleLoadComplete(String title){}
     }
 
 }

@@ -112,7 +112,7 @@ public class TitleBar extends FrameLayout {
     public TitleBar setRightImgButton(int bgId, OnClickListener listener) {
         if (bgId != 0) {
             mRightBtn.setVisibility(View.VISIBLE);
-            mRightBtn.setBackgroundResource(bgId);
+            mRightBtn.setImageResource(bgId);
             if (listener != null)
                 mRightBtn.setOnClickListener(listener);
         } else {
@@ -143,7 +143,7 @@ public class TitleBar extends FrameLayout {
             for (int i = 0; i < count; i++) {
                 linearLayout = (LinearLayout) inflater.inflate(R.layout.inflater_imagebtn, null);
                 imageButton = (ImageButton) linearLayout.findViewById(R.id.img);
-                imageButton.setBackgroundResource(bgIds[i]);
+                imageButton.setImageResource(bgIds[i]);
                 btns[i] = imageButton;
                 mRightContainer.addView(linearLayout);
                 imageButton.setOnClickListener(listeners[i]);
@@ -195,7 +195,7 @@ public class TitleBar extends FrameLayout {
 
     public ImageButton setRightBtnResource(int r) {
         mRightBtn.setVisibility(View.VISIBLE);
-        mRightBtn.setBackgroundResource(r);
+        mRightBtn.setImageResource(r);
         return mRightBtn;
     }
 

@@ -54,6 +54,8 @@ public class VisitHistoryActivity extends SimpleActivity implements
     private int height = ScreenUtils.getHeightInPx(MyApp.getInstance());
     private int overallXScroll = 0;
     private int limit = 10;
+    private MaterialDialog dialogRemove;
+    private MaterialDialog dialogClear;
 
     public static void show(Context context) {
         Intent intent = new Intent(context, VisitHistoryActivity.class);
@@ -105,21 +107,26 @@ public class VisitHistoryActivity extends SimpleActivity implements
             @Override
             public boolean onItemLongClick(BaseQuickAdapter adapter, View view, final int position) {
 
-                MaterialDialog materialDialog = new MaterialDialog
-                        .Builder(VisitHistoryActivity.this)
-                        .title("提示")
-                        .content("确定移除这条浏览记录？")
-                        .positiveText("确定")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                removeVisit(articleList.get(position), position);
-                                dialog.dismiss();
-                            }
-                        })
-                        .negativeText("取消")
-                        .onNegative(null)
-                        .show();
+                if (dialogRemove == null) {
+                    dialogRemove = new MaterialDialog
+                            .Builder(VisitHistoryActivity.this)
+                            .title("提示")
+                            .content("确定移除这条浏览记录？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    removeVisit(articleList.get(position), position);
+                                    dialog.dismiss();
+                                }
+                            })
+                            .negativeText("取消")
+                            .onNegative(null)
+                            .show();
+                } else {
+                    dialogRemove.show();
+                }
+
 
                 return false;
             }
@@ -128,21 +135,25 @@ public class VisitHistoryActivity extends SimpleActivity implements
         titleBar.setRightText("清除", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MaterialDialog materialDialog = new MaterialDialog
-                        .Builder(VisitHistoryActivity.this)
-                        .title("提示")
-                        .content("确定移除所有浏览记录？")
-                        .positiveText("确定")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                removeAllVisit();
-                                dialog.dismiss();
-                            }
-                        })
-                        .negativeText("取消")
-                        .onNegative(null)
-                        .show();
+                if (dialogClear==null){
+                    dialogClear = new MaterialDialog
+                            .Builder(VisitHistoryActivity.this)
+                            .title("提示")
+                            .content("确定移除所有浏览记录？")
+                            .positiveText("确定")
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                    removeAllVisit();
+                                    dialog.dismiss();
+                                }
+                            })
+                            .negativeText("取消")
+                            .onNegative(null)
+                            .show();
+                }else {
+                    dialogClear.show();
+                }
             }
         });
 
