@@ -4,10 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.wj.base.view.ArticleSearchView
+        android:id="@+id/search_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search_view">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,11 +33,11 @@
         android:id="@+id/iv_to_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/widget_size_40"
         android:layout_marginRight="@dimen/widget_size_15"
-        android:visibility="gone"
-        android:src="@drawable/ic_to_top" />
+        android:src="@drawable/ic_to_top"
+        android:visibility="gone" />
 
 </RelativeLayout>
