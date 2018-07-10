@@ -1,4 +1,4 @@
-package com.wj.base.view;
+package com.wj.dawsonwanandroid.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,17 +7,16 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.support.v7.widget.SearchView;
-import com.wj.base.R;
+
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
+import com.wj.dawsonwanandroid.R;
 
 /**
  * Created by wj on 2018/7/9.
  */
 public class ArticleSearchView extends FrameLayout {
 
-    ImageView ivBack;
-    SearchView searchView;
+    MaterialSearchView searchView;
     private Context mContext;
 
     public ArticleSearchView(@NonNull Context context) {
@@ -36,7 +35,6 @@ public class ArticleSearchView extends FrameLayout {
 
     private void initView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_article_searchview, this);
-        ivBack = view.findViewById(R.id.iv_back);
         searchView=view.findViewById(R.id.searchView);
 
     }
