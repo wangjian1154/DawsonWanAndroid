@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rl_search_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:background="@color/title_bar_bg">
@@ -27,7 +28,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="@string/app_name"
-            android:textColor="@color/white"
+            android:textColor="@color/title_color"
             android:textSize="@dimen/font_size_16" />
 
 
@@ -49,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/black">
+            android:background="@color/white">
 
             <RadioButton
                 android:id="@+id/rb_home"
@@ -61,10 +62,9 @@
                 android:drawableTop="@drawable/selector_tab_home"
                 android:gravity="center"
                 android:paddingBottom="@dimen/widget_size_5"
-                android:paddingTop="@dimen/widget_size_5"
                 android:text="首页"
                 android:textColor="@drawable/selector_tab_text"
-                android:textSize="@dimen/font_size_14" />
+                android:textSize="@dimen/font_size_12" />
 
 
             <RadioButton
@@ -76,10 +76,9 @@
                 android:drawableTop="@drawable/selector_tab_category"
                 android:gravity="center"
                 android:paddingBottom="@dimen/widget_size_5"
-                android:paddingTop="@dimen/widget_size_5"
                 android:text="分类"
                 android:textColor="@drawable/selector_tab_text"
-                android:textSize="@dimen/font_size_14" />
+                android:textSize="@dimen/font_size_12" />
 
 
             <RadioButton
@@ -91,10 +90,9 @@
                 android:drawableTop="@drawable/selector_tab_project"
                 android:gravity="center"
                 android:paddingBottom="@dimen/widget_size_5"
-                android:paddingTop="@dimen/widget_size_5"
                 android:text="项目"
                 android:textColor="@drawable/selector_tab_text"
-                android:textSize="@dimen/font_size_14" />
+                android:textSize="@dimen/font_size_12" />
 
             <RadioButton
                 android:id="@+id/rb_person"
@@ -105,10 +103,9 @@
                 android:drawableTop="@drawable/selector_tab_person"
                 android:gravity="center"
                 android:paddingBottom="@dimen/widget_size_5"
-                android:paddingTop="@dimen/widget_size_5"
                 android:text="个人"
                 android:textColor="@drawable/selector_tab_text"
-                android:textSize="@dimen/font_size_14" />
+                android:textSize="@dimen/font_size_12" />
         </LinearLayout>
     </LinearLayout>
 

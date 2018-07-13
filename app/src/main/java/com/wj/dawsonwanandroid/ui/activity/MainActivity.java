@@ -2,6 +2,7 @@ package com.wj.dawsonwanandroid.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RadioButton;
 
@@ -33,6 +34,8 @@ public class MainActivity extends SimpleActivity {
     RadioButton rbOpenSource;
     @BindView(R.id.rb_person)
     RadioButton rbPerson;
+    @BindView(R.id.rl_search_title)
+    View searchTitle;
 
     private List<Fragment> fragments;
 
@@ -64,22 +67,26 @@ public class MainActivity extends SimpleActivity {
         fragments.add(new PersonFragment());
     }
 
-    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_open_source, R.id.rb_person,R.id.iv_search})
+    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_open_source, R.id.rb_person, R.id.iv_search})
     public void onBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.rb_home:
+                searchTitle.setVisibility(View.VISIBLE);
                 switchFragment(0);
                 break;
 
             case R.id.rb_category:
+                searchTitle.setVisibility(View.VISIBLE);
                 switchFragment(1);
                 break;
 
             case R.id.rb_open_source:
+                searchTitle.setVisibility(View.VISIBLE);
                 switchFragment(2);
                 break;
 
             case R.id.rb_person:
+                searchTitle.setVisibility(View.GONE);
                 switchFragment(3);
                 break;
 

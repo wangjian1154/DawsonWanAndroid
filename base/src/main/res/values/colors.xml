@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--base-->
     <color name="colorPrimary">#393A3F</color>
     <color name="colorPrimaryDark">#393A3F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#393A3F</color>
 
+    <color name="main_tab_check">#4B93F8</color>
+    <color name="main_tab_normal">#707070</color>
     <color name="page_bg">#EFEFEF</color>
-    <color name="title_bar_bg">#393A3F</color>
+    <color name="title_bar_bg">#FFFFFF</color>
     <color name="webview_load_indicator">#228B22</color>
     <color name="line_bg">#dddddd</color>
     <color name="text_pressed">#05000000</color>
+    <color name="title_color">#2A2A2A</color>
+
+    <!--font-->
+    <color name="font_black">#2A2A2A</color>
 </resources>

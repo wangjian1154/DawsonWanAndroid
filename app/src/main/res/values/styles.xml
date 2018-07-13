@@ -25,7 +25,7 @@
 
     <style name="Search_Article" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@android:color/darker_gray</item>
-        <item name="colorControlActivated">@android:color/white</item>
+        <item name="colorControlActivated">#CCCCCC</item>
     </style>
 
 </resources>

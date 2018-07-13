@@ -8,8 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:background="@color/title_bar_bg"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
@@ -20,28 +20,28 @@
             android:paddingLeft="@dimen/widget_size_10"
             android:paddingRight="@dimen/widget_size_10"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_back" />
+            android:src="@drawable/ic_nav_back_light" />
 
 
         <com.wj.base.view.ClearEditText
             android:id="@+id/et_search"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="@dimen/title_height"
-            android:textColor="@color/white"
+            android:layout_marginRight="@dimen/widget_size_10"
+            android:layout_weight="1"
             android:maxLines="1"
             android:singleLine="true"
-            android:theme="@style/Search_Article"
-            android:layout_marginRight="@dimen/widget_size_10" />
+            android:textColor="@color/font_black"
+            android:theme="@style/Search_Article" />
 
         <TextView
             android:id="@+id/tv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingRight="@dimen/widget_size_10"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_size_16"
-            android:text="搜索" />
+            android:text="搜索"
+            android:textColor="@color/font_black"
+            android:textSize="@dimen/font_size_16" />
 
     </LinearLayout>
 
@@ -53,7 +53,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

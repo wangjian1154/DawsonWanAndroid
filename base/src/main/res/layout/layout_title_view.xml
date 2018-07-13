@@ -13,7 +13,7 @@
         android:paddingLeft="@dimen/widget_size_10"
         android:background="@null"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_nav_back_light"
         android:visibility="invisible" />
 
     <LinearLayout
@@ -45,7 +45,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/widget_size_10"
-        android:textColor="@color/white"
+        android:textColor="@color/title_color"
         android:textSize="@dimen/font_size_14"
         android:visibility="gone" />
 
@@ -64,7 +64,7 @@
         android:paddingLeft="@dimen/widget_size_8"
         android:paddingRight="@dimen/widget_size_8"
         android:singleLine="true"
-        android:textColor="@color/white"
+        android:textColor="@color/title_color"
         android:textCursorDrawable="@null"
         android:textSize="16dp"
         android:visibility="gone" />
@@ -96,7 +96,7 @@
             android:gravity="center"
             android:paddingBottom="@dimen/widget_size_3"
             android:paddingTop="@dimen/widget_size_3"
-            android:textColor="@color/white"
+            android:textColor="@color/title_color"
             android:textSize="12dp" />
 
         <ImageView
@@ -117,7 +117,7 @@
         android:layout_marginRight="@dimen/widget_size_10"
         android:singleLine="true"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/title_color"
         android:textSize="@dimen/font_size_16" />
 
 </RelativeLayout>

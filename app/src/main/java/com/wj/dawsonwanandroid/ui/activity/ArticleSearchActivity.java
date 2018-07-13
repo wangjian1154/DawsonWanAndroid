@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.just.agentweb.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -24,6 +25,7 @@ import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.ArticleListBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
+import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.ui.adapter.ArticleListAdapter;
 import com.wj.dawsonwanandroid.ui.contract.SearchArticleContract;
 import com.wj.dawsonwanandroid.ui.presenter.SearchArticlePresenter;
@@ -83,6 +85,14 @@ public class ArticleSearchActivity extends BaseActivity<SearchArticlePresenter> 
             }
         });
 
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                JumpModel.getInstance().jumpArticleDetailActivity(ArticleSearchActivity.this,
+                        articleList.get(position));
+            }
+        });
+
     }
 
     @OnClick({R.id.iv_back, R.id.tv_search})
@@ -100,9 +110,7 @@ public class ArticleSearchActivity extends BaseActivity<SearchArticlePresenter> 
 
     private void loadData(boolean isRefresh) {
         String searchContent = etSearch.getText().toString().trim();
-        if (!StringUtils.isEmpty(searchContent)) {
-            mPresenter.search(isRefresh, searchContent);
-        }
+        mPresenter.search(isRefresh, searchContent);
     }
 
 
@@ -123,7 +131,9 @@ public class ArticleSearchActivity extends BaseActivity<SearchArticlePresenter> 
             articleList.addAll(result.getData().datas);
         }
 
-        adapter.notifyItemRangeChanged(0, articleList.size());
+        adapter.notifyDataSetChanged();
+        smartRefresh.finishRefresh();
+        smartRefresh.finishLoadmore();
     }
 
     @Override
