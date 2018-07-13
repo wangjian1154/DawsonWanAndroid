@@ -8,6 +8,8 @@ import com.wj.dawsonwanandroid.bean.ProjectCategoryBean;
 import com.wj.dawsonwanandroid.bean.ProjectListBean;
 import com.wj.dawsonwanandroid.bean.UserBean;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -56,4 +58,7 @@ public interface ApiService {
 
     @GET(ApiConstants.API_COLLECTION_LIST)
     Observable<BaseResponse<ArticleListBean>> getCollectionList(@Path("page") int page);
+
+    @POST(ApiConstants.API_SEARCH)
+    Observable<BaseResponse<ArticleListBean>> searchArticle(@Path("page") int page,@Query("k") String key);
 }

@@ -1,6 +1,5 @@
 package com.wj.dawsonwanandroid.ui.contract;
 
-import com.google.gson.JsonObject;
 import com.wj.base.base.BaseContract;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.UserBean;

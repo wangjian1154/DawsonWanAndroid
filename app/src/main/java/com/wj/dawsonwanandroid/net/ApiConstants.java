@@ -40,4 +40,7 @@ public class ApiConstants {
 
     //我的收藏列表
     public static final String API_COLLECTION_LIST = "/lg/collect/list/{page}/json";
+
+    //搜索文章
+    public static final String API_SEARCH = "/article/query/{page}/json";
 }

@@ -6,6 +6,7 @@ import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.dao.ArticleBeanDao;
 import com.wj.dawsonwanandroid.ui.activity.ArticleDetailViewActivity;
+import com.wj.dawsonwanandroid.ui.activity.ArticleSearchActivity;
 import com.wj.dawsonwanandroid.ui.activity.CollectionActivity;
 import com.wj.dawsonwanandroid.ui.activity.KnowledgeActivity;
 import com.wj.dawsonwanandroid.ui.activity.LoginActivity;
@@ -61,5 +62,9 @@ public class JumpModel {
 
     public void jumpVisitHistory(Context context) {
         VisitHistoryActivity.show(context);
+    }
+
+    public void jumpArticleSearch(Context context) {
+        ArticleSearchActivity.show(context);
     }
 }

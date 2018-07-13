@@ -4,16 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.wj.dawsonwanandroid.view.ArticleSearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/search_view">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"

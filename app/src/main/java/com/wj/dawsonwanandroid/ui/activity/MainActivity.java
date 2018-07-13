@@ -9,6 +9,7 @@ import com.wj.base.base.BaseFragmentPageAdapter;
 import com.wj.base.base.SimpleActivity;
 import com.wj.base.view.NoScrollViewPager;
 import com.wj.dawsonwanandroid.R;
+import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.ui.fragment.CategoryFragment;
 import com.wj.dawsonwanandroid.ui.fragment.HomeFragment;
 import com.wj.dawsonwanandroid.ui.fragment.OpenSourceFragment;
@@ -52,10 +53,6 @@ public class MainActivity extends SimpleActivity {
         switchFragment(0);
         viewPager.setOffscreenPageLimit(fragments.size());
 
-
-
-
-
     }
 
     private void initData() {
@@ -67,7 +64,7 @@ public class MainActivity extends SimpleActivity {
         fragments.add(new PersonFragment());
     }
 
-    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_open_source, R.id.rb_person})
+    @OnClick({R.id.rb_home, R.id.rb_category, R.id.rb_open_source, R.id.rb_person,R.id.iv_search})
     public void onBottomNavigation(View view) {
         switch (view.getId()) {
             case R.id.rb_home:
@@ -84,6 +81,10 @@ public class MainActivity extends SimpleActivity {
 
             case R.id.rb_person:
                 switchFragment(3);
+                break;
+
+            case R.id.iv_search:
+                JumpModel.getInstance().jumpArticleSearch(this);
                 break;
         }
     }

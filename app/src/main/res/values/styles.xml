@@ -23,4 +23,9 @@
         <!-- 是否使用背景半透明 -->
     </style>
 
+    <style name="Search_Article" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/white</item>
+    </style>
+
 </resources>
