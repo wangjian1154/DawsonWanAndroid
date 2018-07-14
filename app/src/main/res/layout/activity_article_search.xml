@@ -30,7 +30,9 @@
             android:layout_marginRight="@dimen/widget_size_10"
             android:layout_weight="1"
             android:maxLines="1"
+            android:imeOptions="actionSearch"
             android:singleLine="true"
+            android:hint="@string/hint_search"
             android:textColor="@color/font_black"
             android:theme="@style/Search_Article" />
 
