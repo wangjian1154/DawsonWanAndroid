@@ -19,6 +19,7 @@ import com.wj.base.utils.BannerImageLoader;
 import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
 import com.wj.base.utils.ToastUtils;
+import com.wj.base.view.recyclerview.CoreRecyclerView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.ArticleListBean;
@@ -49,7 +50,7 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
 
     private Banner banner;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    CoreRecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.iv_to_top)
@@ -76,7 +77,6 @@ public class HomeFragment extends BaseFragment<HomePresenter> implements HomeCon
         adapter.setOnItemChildClickListener(this);
 
         setProgressIndicator(true);
-
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {

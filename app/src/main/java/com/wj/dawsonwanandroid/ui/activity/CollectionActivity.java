@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,7 +17,7 @@ import com.wj.base.base.BaseActivity;
 import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
 import com.wj.base.utils.ToastUtils;
-import com.wj.base.view.TitleBar;
+import com.wj.base.view.CoreTitleView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.ArticleListBean;
@@ -52,7 +51,7 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
     @BindView(R.id.iv_to_top)
     ImageView ivToTop;
     @BindView(R.id.title_bar)
-    TitleBar titleBar;
+    CoreTitleView titleBar;
 
     private List<ArticleBean> articleList;
     private ArticleListAdapter adapter;

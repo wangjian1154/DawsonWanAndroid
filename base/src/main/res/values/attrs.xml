@@ -4,4 +4,31 @@
     <declare-styleable name="PersonItemView">
         <attr name="title" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="CoreRecyclerView">
+        <attr name="frv_divider" format="reference|color" /><!--全局分割线divider-->
+        <attr name="frv_dividerVertical" format="reference|color" /><!--垂直分割线divider-->
+        <attr name="frv_dividerHorizontal" format="reference|color" /><!--水平分割线divider-->
+        <attr name="frv_dividerHeight" format="dimension" /><!--全局分割线size-->
+        <attr name="frv_dividerVerticalHeight" format="dimension" /><!--垂直分割线size-->
+        <attr name="frv_dividerHorizontalHeight" format="dimension" /><!--水平分割线size-->
+        <attr name="frv_itemViewBothSidesMargin" format="dimension" /><!--itemView两边的边距（不会设置headerView和footerView的两边）-->
+        <attr name="frv_emptyView" format="reference" /><!--emptyView id-->
+        <attr name="frv_isEmptyViewKeepShowHeadOrFooter" format="boolean" /><!--显示EmptyView时，是否保留显示已设置的HeadView和FooterView-->
+        <attr name="frv_layoutManager" format="enum"><!--布局类型-->
+            <enum name="linear" value="0" />
+            <enum name="grid" value="1" />
+            <enum name="staggeredGrid" value="2" />
+        </attr>
+        <attr name="frv_layoutManagerOrientation" format="enum"><!--布局方向-->
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+        <attr name="frv_spanCount" format="integer" /><!--格子数量，frv_layoutManager=grid / staggeredGrid时有效-->
+        <attr name="frv_isReverseLayout" format="boolean" /><!--设置是否反向-->
+        <attr name="frv_headerDividersEnabled" format="boolean" /><!--是否启用headView中的分割线-->
+        <attr name="frv_footerDividersEnabled" format="boolean" /><!--是否启用footerView中的分割线-->
+        <attr name="frv_isNotShowGridEndDivider" format="boolean" /><!--是否不显示Grid最后item的分割线-->
+    </declare-styleable>
+
 </resources>

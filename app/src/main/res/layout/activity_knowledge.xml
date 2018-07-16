@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        <com.wj.base.view.TitleBar
+        <com.wj.base.view.CoreTitleView
             android:id="@+id/title_bar"
             android:background="@color/title_bar_bg"
             android:layout_width="match_parent"

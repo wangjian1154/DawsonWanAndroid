@@ -18,18 +18,15 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wj.base.base.SimpleActivity;
 import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
-import com.wj.base.utils.ToastUtils;
-import com.wj.base.view.TitleBar;
+import com.wj.base.view.CoreTitleView;
+import com.wj.base.view.recyclerview.CoreRecyclerView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.core.DBManager;
 import com.wj.dawsonwanandroid.core.JumpModel;
 import com.wj.dawsonwanandroid.core.MyApp;
-import com.wj.dawsonwanandroid.dao.ArticleBeanDao;
 import com.wj.dawsonwanandroid.ui.adapter.ArticleListAdapter;
 import com.wj.dawsonwanandroid.utils.Utils;
-
-import org.greenrobot.greendao.DbUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +38,13 @@ public class VisitHistoryActivity extends SimpleActivity implements
         OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    CoreRecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
     @BindView(R.id.iv_to_top)
     ImageView ivToTop;
     @BindView(R.id.title_bar)
-    TitleBar titleBar;
+    CoreTitleView titleBar;
 
     private List<ArticleBean> articleList;
     private ArticleListAdapter adapter;

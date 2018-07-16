@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.TintTypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -27,7 +26,7 @@ import com.wj.base.R;
  * 自定义标题
  */
 
-public class TitleBar extends FrameLayout {
+public class CoreTitleView extends FrameLayout {
 
     private String TAG = "TitleBar";
     private TextView mTitle;
@@ -41,16 +40,16 @@ public class TitleBar extends FrameLayout {
     private int mRotation = 0;
 
 
-    public TitleBar(Context context) {
+    public CoreTitleView(Context context) {
         this(context, null);
     }
 
-    public TitleBar(Context context, AttributeSet attrs) {
+    public CoreTitleView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
     @SuppressLint("RestrictedApi")
-    public TitleBar(Context context, AttributeSet attrs, int defStyle) {
+    public CoreTitleView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -109,7 +108,7 @@ public class TitleBar extends FrameLayout {
             mLeftBtn.setOnClickListener(listener);
     }
 
-    public TitleBar setRightImgButton(int bgId, OnClickListener listener) {
+    public CoreTitleView setRightImgButton(int bgId, OnClickListener listener) {
         if (bgId != 0) {
             mRightBtn.setVisibility(View.VISIBLE);
             mRightBtn.setImageResource(bgId);
@@ -258,5 +257,15 @@ public class TitleBar extends FrameLayout {
         }
     }
 
+    /**
+     * 设置跑马灯
+     */
+    public void setMarquee(){
+        mTitle.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+        mTitle.setMarqueeRepeatLimit(-1);
+        mTitle.setFocusable(true);
+        mTitle.setFocusableInTouchMode(true);
+        mTitle.setSingleLine(true);
+    }
 
 }

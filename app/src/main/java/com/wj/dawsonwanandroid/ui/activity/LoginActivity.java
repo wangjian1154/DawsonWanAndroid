@@ -9,13 +9,11 @@ import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 
-import com.google.gson.JsonObject;
 import com.wj.base.base.BaseActivity;
 import com.wj.base.utils.SPUtils;
-import com.wj.base.utils.StatusBarUtil;
 import com.wj.base.utils.StringUtils;
 import com.wj.base.utils.ToastUtils;
-import com.wj.base.view.TitleBar;
+import com.wj.base.view.CoreTitleView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
 import com.wj.dawsonwanandroid.bean.UserBean;
@@ -37,7 +35,7 @@ public class LoginActivity extends BaseActivity<UserPresenter> implements UserCo
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.title_bar)
-    TitleBar titleBar;
+    CoreTitleView titleBar;
 
     public static void show(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);

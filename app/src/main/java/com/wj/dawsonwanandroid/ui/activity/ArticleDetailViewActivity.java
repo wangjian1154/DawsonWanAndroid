@@ -8,27 +8,23 @@ import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wj.base.base.BaseAgentWebActivity;
 import com.wj.base.utils.StatusBarUtil;
-import com.wj.base.view.TitleBar;
+import com.wj.base.view.CoreTitleView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.core.Constants;
 import com.wj.dawsonwanandroid.utils.ShareUtils;
-
-import java.net.URL;
 
 import butterknife.BindView;
 
 public class ArticleDetailViewActivity extends BaseAgentWebActivity {
 
     @BindView(R.id.title_bar)
-    TitleBar titleBar;
+    CoreTitleView titleBar;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
 
@@ -48,6 +44,8 @@ public class ArticleDetailViewActivity extends BaseAgentWebActivity {
     @Override
     protected void initViewAndEvent(Bundle savedInstanceState) {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.title_bar_bg));
+        titleBar.setMarquee();
+
         titleBar.setBackButton(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

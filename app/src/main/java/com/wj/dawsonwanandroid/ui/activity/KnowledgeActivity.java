@@ -11,7 +11,7 @@ import android.view.View;
 import com.wj.base.base.BaseFragmentPageAdapter;
 import com.wj.base.base.SimpleActivity;
 import com.wj.base.utils.StatusBarUtil;
-import com.wj.base.view.TitleBar;
+import com.wj.base.view.CoreTitleView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
 import com.wj.dawsonwanandroid.core.Constants;
@@ -35,7 +35,7 @@ public class KnowledgeActivity extends SimpleActivity {
     @BindView(R.id.magic_indicator)
     MagicIndicator magicIndicator;
     @BindView(R.id.title_bar)
-    TitleBar titleBar;
+    CoreTitleView titleBar;
 
     private List<Fragment> fragments;
     private List<String> titles;
