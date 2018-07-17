@@ -32,8 +32,6 @@
         <item name="android:scrollbarStyle">outsideOverlay</item>
         <item name="android:scrollbars">vertical</item>
         <item name="frv_dividerHeight">@dimen/widget_size_10</item>
-        <item name="android:paddingTop">@dimen/widget_size_10</item>
-        <item name="android:paddingBottom">@dimen/widget_size_10</item>
         <item name="frv_footerDividersEnabled">false</item>
         <item name="frv_headerDividersEnabled">false</item>
         <item name="frv_isEmptyViewKeepShowHeadOrFooter">true</item>

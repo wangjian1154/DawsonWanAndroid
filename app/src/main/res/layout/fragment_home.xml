@@ -17,6 +17,7 @@
         <com.wj.base.view.recyclerview.CoreRecyclerView
             android:id="@+id/recyclerView"
             app:frv_emptyView="@+id/emptyView"
+            android:paddingTop="0dp"
             style="@style/CoreRecyclerView"/>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

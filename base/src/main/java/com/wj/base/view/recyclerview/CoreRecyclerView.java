@@ -3,37 +3,27 @@ package com.wj.base.view.recyclerview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.LinearLayout;
 
-
-import com.just.agentweb.LogUtils;
 import com.wj.base.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
- * * notice:
- * 1 emptyView  ：A 同时配置3个条件  @id/emptyView &&isHeaderDividersEnabled = true &&setEmptyClickListener
- * B  直接设置 setEmptView
- * postion 注意 headview count postion+headviewCount = postion
- * <p/>
- * 2 其它同listView
+ * CoreRecyclerView
+ * Created by iWgang on 15/10/31.
+ * https://github.com/iwgang/CoreRecyclerView
  */
 public class CoreRecyclerView extends RecyclerView {
-    public static final int MAX_Y_OVERSCROLL_DISTANCE = 200;
     public static final int LAYOUT_MANAGER_TYPE_LINEAR = 0;
     public static final int LAYOUT_MANAGER_TYPE_GRID = 1;
     public static final int LAYOUT_MANAGER_TYPE_STAGGERED_GRID = 2;
@@ -41,14 +31,14 @@ public class CoreRecyclerView extends RecyclerView {
     private static final int DEF_LAYOUT_MANAGER_TYPE = LAYOUT_MANAGER_TYPE_LINEAR;
     private static final int DEF_GRID_SPAN_COUNT = 2;
     private static final int DEF_LAYOUT_MANAGER_ORIENTATION = OrientationHelper.VERTICAL;
-    private static final int DEF_DIVIDER_HEIGHT = 1;
+    private static final int DEF_DIVIDER_HEIGHT = 30;
 
     private List<View> mHeaderView = new ArrayList<View>();
     private List<View> mFooterView = new ArrayList<View>();
     private CoreWrapRecyclerViewAdapter mWrapCoreRecyclerViewAdapter;
-    private Adapter mReqAdapter;
+    private RecyclerView.Adapter mReqAdapter;
     private GridLayoutManager mCurGridLayoutManager;
-    private CoreDefaultItemDecoration mFamiliarDefaultItemDecoration;
+    private CoreDefaultItemDecoration mCoreDefaultItemDecoration;
 
     private Drawable mVerticalDivider;
     private Drawable mHorizontalDivider;
@@ -58,6 +48,8 @@ public class CoreRecyclerView extends RecyclerView {
     private boolean isHeaderDividersEnabled = false;
     private boolean isFooterDividersEnabled = false;
     private boolean isDefaultItemDecoration = true;
+    private boolean isKeepShowHeadOrFooter = false;
+    private boolean isNotShowGridEndDivider = false;
     private int mEmptyViewResId;
     private View mEmptyView;
     private OnItemClickListener mTempOnItemClickListener;
@@ -65,10 +57,10 @@ public class CoreRecyclerView extends RecyclerView {
     private OnHeadViewBindViewHolderListener mTempOnHeadViewBindViewHolderListener;
     private OnFooterViewBindViewHolderListener mTempOnFooterViewBindViewHolderListener;
     private int mLayoutManagerType;
-    private int mMaxYOverscrollDistance = 0;
-    private OnClickListener mEmptyViewListener;
-    private boolean hasShowEmptyView;
-    private InterfaceSetAdapter mInterfaceSetAdapter;
+    private Drawable mDefAllDivider;
+    private int mDefAllDividerHeight;
+    private boolean needInitAddItemDescration = false;
+    private boolean hasShowEmptyView = false;
 
     public CoreRecyclerView(Context context) {
         this(context, null);
@@ -83,19 +75,20 @@ public class CoreRecyclerView extends RecyclerView {
         init(context, attrs);
     }
 
-
     private void init(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CoreRecyclerView);
-        Drawable divider = ta.getDrawable(R.styleable.CoreRecyclerView_frv_divider);
-        int dividerHeight = (int) ta.getDimension(R.styleable.CoreRecyclerView_frv_dividerHeight, -1);
+        mDefAllDivider = ta.getDrawable(R.styleable.CoreRecyclerView_frv_divider);
+        mDefAllDividerHeight = (int)ta.getDimension(R.styleable.CoreRecyclerView_frv_dividerHeight, -1);
         mVerticalDivider = ta.getDrawable(R.styleable.CoreRecyclerView_frv_dividerVertical);
         mHorizontalDivider = ta.getDrawable(R.styleable.CoreRecyclerView_frv_dividerHorizontal);
-        mVerticalDividerHeight = (int) ta.getDimension(R.styleable.CoreRecyclerView_frv_dividerVerticalHeight, -1);
-        mHorizontalDividerHeight = (int) ta.getDimension(R.styleable.CoreRecyclerView_frv_dividerHorizontalHeight, -1);
-        mItemViewBothSidesMargin = (int) ta.getDimension(R.styleable.CoreRecyclerView_frv_itemViewBothSidesMargin, 0);
+        mVerticalDividerHeight = (int)ta.getDimension(R.styleable.CoreRecyclerView_frv_dividerVerticalHeight, -1);
+        mHorizontalDividerHeight = (int)ta.getDimension(R.styleable.CoreRecyclerView_frv_dividerHorizontalHeight, -1);
+        mItemViewBothSidesMargin = (int)ta.getDimension(R.styleable.CoreRecyclerView_frv_itemViewBothSidesMargin, 0);
         mEmptyViewResId = ta.getResourceId(R.styleable.CoreRecyclerView_frv_emptyView, -1);
+        isKeepShowHeadOrFooter = ta.getBoolean(R.styleable.CoreRecyclerView_frv_isEmptyViewKeepShowHeadOrFooter, false);
         isHeaderDividersEnabled = ta.getBoolean(R.styleable.CoreRecyclerView_frv_headerDividersEnabled, false);
         isFooterDividersEnabled = ta.getBoolean(R.styleable.CoreRecyclerView_frv_footerDividersEnabled, false);
+        isNotShowGridEndDivider = ta.getBoolean(R.styleable.CoreRecyclerView_frv_isNotShowGridEndDivider, false);
         if (ta.hasValue(R.styleable.CoreRecyclerView_frv_layoutManager)) {
             int layoutManagerType = ta.getInt(R.styleable.CoreRecyclerView_frv_layoutManager, DEF_LAYOUT_MANAGER_TYPE);
             int layoutManagerOrientation = ta.getInt(R.styleable.CoreRecyclerView_frv_layoutManagerOrientation, DEF_LAYOUT_MANAGER_ORIENTATION);
@@ -104,63 +97,56 @@ public class CoreRecyclerView extends RecyclerView {
 
             switch (layoutManagerType) {
                 case LAYOUT_MANAGER_TYPE_LINEAR:
-                    processGridDivider(divider, dividerHeight, false, layoutManagerOrientation);
                     setLayoutManager(new LinearLayoutManager(context, layoutManagerOrientation, isReverseLayout));
                     break;
                 case LAYOUT_MANAGER_TYPE_GRID:
-                    processGridDivider(divider, dividerHeight, false, layoutManagerOrientation);
                     setLayoutManager(new GridLayoutManager(context, gridSpanCount, layoutManagerOrientation, isReverseLayout));
                     break;
                 case LAYOUT_MANAGER_TYPE_STAGGERED_GRID:
-                    processGridDivider(divider, dividerHeight, false, layoutManagerOrientation);
-                    final StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(gridSpanCount, layoutManagerOrientation);
-                    staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-                    setLayoutManager(staggeredGridLayoutManager);
+                    setLayoutManager(new StaggeredGridLayoutManager(gridSpanCount, layoutManagerOrientation));
                     break;
             }
         }
-        final DisplayMetrics metrics = getResources().getDisplayMetrics();
-        final float density = metrics.density;
-
-        mMaxYOverscrollDistance = (int) (density * MAX_Y_OVERSCROLL_DISTANCE);
         ta.recycle();
     }
 
-    private void processGridDivider(Drawable divider, int dividerHeight, boolean isLinearLayoutManager, int layoutManagerOrientation) {
-        if ((null == mVerticalDivider || null == mHorizontalDivider) && null != divider) {
+    private void processDefDivider(boolean isLinearLayoutManager, int layoutManagerOrientation) {
+        if (!isDefaultItemDecoration) return ;
+
+        if ((null == mVerticalDivider || null == mHorizontalDivider) && null != mDefAllDivider) {
             if (isLinearLayoutManager) {
                 if (layoutManagerOrientation == OrientationHelper.VERTICAL && null == mHorizontalDivider) {
-                    mHorizontalDivider = divider;
+                    mHorizontalDivider = mDefAllDivider;
                 } else if (layoutManagerOrientation == OrientationHelper.HORIZONTAL && null == mVerticalDivider) {
-                    mVerticalDivider = divider;
+                    mVerticalDivider = mDefAllDivider;
                 }
             } else {
                 if (null == mVerticalDivider) {
-                    mVerticalDivider = divider;
+                    mVerticalDivider = mDefAllDivider;
                 }
 
                 if (null == mHorizontalDivider) {
-                    mHorizontalDivider = divider;
+                    mHorizontalDivider = mDefAllDivider;
                 }
             }
         }
 
-        if (mVerticalDividerHeight > 0 && mHorizontalDividerHeight > 0) return;
+        if (mVerticalDividerHeight > 0 && mHorizontalDividerHeight > 0) return ;
 
-        if (dividerHeight > 0) {
+        if (mDefAllDividerHeight > 0) {
             if (isLinearLayoutManager) {
                 if (layoutManagerOrientation == OrientationHelper.VERTICAL && mHorizontalDividerHeight <= 0) {
-                    mHorizontalDividerHeight = dividerHeight;
-                } else if (layoutManagerOrientation == OrientationHelper.HORIZONTAL && mVerticalDividerHeight <= 0) {
-                    mVerticalDividerHeight = dividerHeight;
+                    mHorizontalDividerHeight = mDefAllDividerHeight;
+                } else if(layoutManagerOrientation == OrientationHelper.HORIZONTAL && mVerticalDividerHeight <= 0) {
+                    mVerticalDividerHeight = mDefAllDividerHeight;
                 }
             } else {
                 if (mVerticalDividerHeight <= 0) {
-                    mVerticalDividerHeight = dividerHeight;
+                    mVerticalDividerHeight = mDefAllDividerHeight;
                 }
 
                 if (mHorizontalDividerHeight <= 0) {
-                    mHorizontalDividerHeight = dividerHeight;
+                    mHorizontalDividerHeight = mDefAllDividerHeight;
                 }
             }
         } else {
@@ -173,7 +159,7 @@ public class CoreRecyclerView extends RecyclerView {
                             mHorizontalDividerHeight = DEF_DIVIDER_HEIGHT;
                         }
                     }
-                } else if (layoutManagerOrientation == OrientationHelper.HORIZONTAL && mVerticalDividerHeight <= 0) {
+                } else if(layoutManagerOrientation == OrientationHelper.HORIZONTAL && mVerticalDividerHeight <= 0) {
                     if (null != mVerticalDivider) {
                         if (mVerticalDivider.getIntrinsicHeight() > 0) {
                             mVerticalDividerHeight = mVerticalDivider.getIntrinsicHeight();
@@ -204,41 +190,41 @@ public class CoreRecyclerView extends RecyclerView {
 
     @Override
     public void setAdapter(Adapter adapter) {
-// Only once
+        // Only once
         if (mEmptyViewResId != -1) {
             if (null != getParent()) {
-                ViewGroup parentView = ((ViewGroup) getParent());
+                ViewGroup parentView = ((ViewGroup)getParent());
                 View tempEmptyView1 = parentView.findViewById(mEmptyViewResId);
 
                 if (null != tempEmptyView1) {
                     mEmptyView = tempEmptyView1;
-                    parentView.removeView(tempEmptyView1);
-                    mEmptyView.setVisibility(GONE);
+
+                    if (isKeepShowHeadOrFooter) parentView.removeView(tempEmptyView1);
                 } else {
                     ViewParent pParentView = parentView.getParent();
                     if (null != pParentView && pParentView instanceof ViewGroup) {
                         View tempEmptyView2 = ((ViewGroup) pParentView).findViewById(mEmptyViewResId);
                         if (null != tempEmptyView2) {
                             mEmptyView = tempEmptyView2;
-                            mEmptyView.setVisibility(GONE);
-                            ((ViewGroup)pParentView).removeView(tempEmptyView2);
-                        } else {
-                            ViewParent ppParentView = pParentView.getParent();
-                            View tempEmptyView3 = ((ViewGroup) ppParentView).findViewById(mEmptyViewResId);
-                            if (null != tempEmptyView3) {
-                                mEmptyView = tempEmptyView3;
-                                mEmptyView.setVisibility(GONE);
-                                ((ViewGroup)ppParentView).removeView(tempEmptyView3);
-                            }
+
+                            if (isKeepShowHeadOrFooter) ((ViewGroup) pParentView).removeView(tempEmptyView2);
                         }
                     }
                 }
             }
             mEmptyViewResId = -1;
+        } else if (isKeepShowHeadOrFooter && null != mEmptyView) {
+            ViewParent emptyViewParent = mEmptyView.getParent();
+            if (null != emptyViewParent && emptyViewParent instanceof ViewGroup) {
+                ((ViewGroup) emptyViewParent).removeView(mEmptyView);
+            }
         }
+
         if (null == adapter) {
             if (null != mReqAdapter) {
-                mReqAdapter.unregisterAdapterDataObserver(mReqAdapterDataObserver);
+                if (!isKeepShowHeadOrFooter) {
+                    mReqAdapter.unregisterAdapterDataObserver(mReqAdapterDataObserver);
+                }
                 mReqAdapter = null;
                 mWrapCoreRecyclerViewAdapter = null;
 
@@ -248,9 +234,6 @@ public class CoreRecyclerView extends RecyclerView {
             return;
         }
 
-        if (null != mReqAdapterDataObserver && null != mReqAdapter) {
-            mReqAdapter.unregisterAdapterDataObserver(mReqAdapterDataObserver);
-        }
         mReqAdapter = adapter;
         mWrapCoreRecyclerViewAdapter = new CoreWrapRecyclerViewAdapter(this, adapter, mHeaderView, mFooterView, mLayoutManagerType);
 
@@ -260,47 +243,35 @@ public class CoreRecyclerView extends RecyclerView {
         mWrapCoreRecyclerViewAdapter.setOnFooterViewBindViewHolderListener(mTempOnFooterViewBindViewHolderListener);
 
         mReqAdapter.registerAdapterDataObserver(mReqAdapterDataObserver);
-
         super.setAdapter(mWrapCoreRecyclerViewAdapter);
+
+        if (needInitAddItemDescration && null != mCoreDefaultItemDecoration) {
+            needInitAddItemDescration = false;
+            super.addItemDecoration(mCoreDefaultItemDecoration);
+        }
+
         processEmptyView();
-        if (null!=mInterfaceSetAdapter)
-            mInterfaceSetAdapter.onSetAdapter();
-
     }
 
-
-    public void setInterfaceSetAdapter(InterfaceSetAdapter mInterfaceSetAdapter) {
-        this.mInterfaceSetAdapter = mInterfaceSetAdapter;
+    public void reRegisterAdapterDataObserver() {
+        if (null != mReqAdapter && !mReqAdapter.hasObservers()) {
+            mReqAdapter.registerAdapterDataObserver(mReqAdapterDataObserver);
+        }
     }
 
-    /**
-     * 测量emptyView
-     */
-    public void getEmptyViewHeight() {
-       /*if (mEmptyViewHeight == 0) {
-            mEmptyViewHeight = getMeasuredHeight();
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (null != mReqAdapter && mReqAdapter.hasObservers()) {
+            mReqAdapter.unregisterAdapterDataObserver(mReqAdapterDataObserver);
         }
-        int height = mEmptyViewHeight;
-        for (int i = 0; i < mHeaderView.size(); i++) {
-            View headView = mHeaderView.get(i);
-            if (headView.isShown()) {
-                height -= mHeaderView.get(i).getMeasuredHeight();
-            }
-        }
-        for (int i = 0; i < mFooterView.size(); i++) {
-            View footView = mFooterView.get(i);
-            if (footView.isShown()) {
-                height -= mFooterView.get(i).getMeasuredHeight();
-            }
-        }*/
-        mEmptyView.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
     }
 
     @Override
     public void setLayoutManager(LayoutManager layout) {
         super.setLayoutManager(layout);
 
-        if (null == layout) return;
+        if (null == layout) return ;
 
         if (layout instanceof GridLayoutManager) {
             mCurGridLayoutManager = ((GridLayoutManager) layout);
@@ -318,28 +289,27 @@ public class CoreRecyclerView extends RecyclerView {
             });
 
             mLayoutManagerType = LAYOUT_MANAGER_TYPE_GRID;
-            setDivider(mVerticalDivider, mHorizontalDivider);
+            processDefDivider(false, mCurGridLayoutManager.getOrientation());
+            initDefaultItemDecoration();
         } else if (layout instanceof StaggeredGridLayoutManager) {
             mLayoutManagerType = LAYOUT_MANAGER_TYPE_STAGGERED_GRID;
-            setDivider(mVerticalDivider, mHorizontalDivider);
+            processDefDivider(false, ((StaggeredGridLayoutManager) layout).getOrientation());
+            initDefaultItemDecoration();
         } else if (layout instanceof LinearLayoutManager) {
             mLayoutManagerType = LAYOUT_MANAGER_TYPE_LINEAR;
-            if (((LinearLayoutManager) layout).getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                setDividerVertical(mVerticalDivider);
-            } else {
-                setDividerHorizontal(mHorizontalDivider);
-            }
+            processDefDivider(true, ((LinearLayoutManager)layout).getOrientation());
+            initDefaultItemDecoration();
         }
     }
 
     @Override
     public void addItemDecoration(ItemDecoration decor) {
-        if (null == decor) return;
+        if (null == decor) return ;
 
         // remove default ItemDecoration
-        if (null != mFamiliarDefaultItemDecoration) {
-            removeItemDecoration(mFamiliarDefaultItemDecoration);
-            mFamiliarDefaultItemDecoration = null;
+        if (null != mCoreDefaultItemDecoration) {
+            removeItemDecoration(mCoreDefaultItemDecoration);
+            mCoreDefaultItemDecoration = null;
         }
 
         isDefaultItemDecoration = false;
@@ -347,107 +317,86 @@ public class CoreRecyclerView extends RecyclerView {
         super.addItemDecoration(decor);
     }
 
-    private void addDefaultItemDecoration() {
-        if (null != mFamiliarDefaultItemDecoration) {
-            removeItemDecoration(mFamiliarDefaultItemDecoration);
-            mFamiliarDefaultItemDecoration = null;
+    private void initDefaultItemDecoration() {
+        if (!isDefaultItemDecoration) return ;
+
+        if (null != mCoreDefaultItemDecoration) {
+            super.removeItemDecoration(mCoreDefaultItemDecoration);
+            mCoreDefaultItemDecoration = null;
         }
 
-        mFamiliarDefaultItemDecoration = new CoreDefaultItemDecoration(this, mVerticalDivider, mHorizontalDivider, mVerticalDividerHeight, mHorizontalDividerHeight);
-        mFamiliarDefaultItemDecoration.setItemViewBothSidesMargin(mItemViewBothSidesMargin);
-        mFamiliarDefaultItemDecoration.setHeaderDividersEnabled(isHeaderDividersEnabled);
-        mFamiliarDefaultItemDecoration.setFooterDividersEnabled(isFooterDividersEnabled);
-        super.addItemDecoration(mFamiliarDefaultItemDecoration);
+        mCoreDefaultItemDecoration = new CoreDefaultItemDecoration(this, mVerticalDivider, mHorizontalDivider, mVerticalDividerHeight, mHorizontalDividerHeight);
+        mCoreDefaultItemDecoration.setItemViewBothSidesMargin(mItemViewBothSidesMargin);
+        mCoreDefaultItemDecoration.setHeaderDividersEnabled(isHeaderDividersEnabled);
+        mCoreDefaultItemDecoration.setFooterDividersEnabled(isFooterDividersEnabled);
+        mCoreDefaultItemDecoration.setNotShowGridEndDivider(isNotShowGridEndDivider);
+
+        if (null != getAdapter()) {
+            needInitAddItemDescration = false;
+            super.addItemDecoration(mCoreDefaultItemDecoration);
+        } else {
+            needInitAddItemDescration = true;
+        }
     }
 
-    /**
-     * 由于emptyView 高度无法初始化
-     * 先隐藏视图 待 测量好高度后再显示
-     * <p/>
-     * emptyView 作为 recycleView子试图处理
-     * 也可以传统方式布局需设置mEmptyView = null
-     * modified by qtl
-     */
     private void processEmptyView() {
-        LogUtils.e("processEmptyView","---");
         if (null != mEmptyView) {
             boolean isShowEmptyView = (null != mReqAdapter ? mReqAdapter.getItemCount() : 0) == 0;
-            //setAdapter 时隐藏
-            if (isShowEmptyView&&hasShowEmptyView) {
-                mEmptyView.setVisibility(VISIBLE);
-                return;
-            } else if(isShowEmptyView) {
-                hasShowEmptyView = true;
-                mEmptyView.setVisibility(GONE);
+
+            if (isShowEmptyView == hasShowEmptyView) return ;
+
+            if (isKeepShowHeadOrFooter) {
+                if (hasShowEmptyView) {
+                    mWrapCoreRecyclerViewAdapter.notifyItemRemoved(getHeaderViewsCount());
+                }
+            } else {
+                mEmptyView.setVisibility(isShowEmptyView ? VISIBLE : GONE);
+                setVisibility(isShowEmptyView ? GONE : VISIBLE);
             }
+
+            this.hasShowEmptyView = isShowEmptyView;
         }
     }
 
-
     /**
-     * Called when an item view is detached from this RecyclerView.
-     * <p/>
-     * <p>Subclasses of RecyclerView may want to perform extra bookkeeping or modifications
-     * of child views as they become detached. This will be called as a
-     * {@link LayoutManager} fully detaches the child view from the parent and its window.</p>
-     *
-     * @param child Child view that is now detached from this RecyclerView and its associated window
+     * Set EmptyView (before setAdapter)
+     * @param emptyView your EmptyView
      */
-    @Override
-    public void onChildDetachedFromWindow(View child) {
-        super.onChildDetachedFromWindow(child);
+    public void setEmptyView(View emptyView) {
+        setEmptyView(emptyView, false);
     }
 
     /**
-     * Called when an item view is attached to this RecyclerView.
-     * <p/>
-     * <p>Subclasses of RecyclerView may want to perform extra bookkeeping or modifications
-     * of child views as they become attached. This will be called before a
-     * {@link LayoutManager} measures or lays out the view and is a good time to perform these
-     * changes.</p>
-     *
-     * @param child Child view that is now attached to this RecyclerView and its associated window
+     * Set EmptyView (before setAdapter)
+     * @param emptyView your EmptyView
+     * @param isKeepShowHeadOrFooter is Keep show HeadView or FooterView
      */
-    @Override
-    public void onChildAttachedToWindow(View child) {
-        super.onChildAttachedToWindow(child);
-        if (null != mEmptyView && child.equals(mEmptyView))
-            getEmptyViewHeight();
+    public void setEmptyView(View emptyView, boolean isKeepShowHeadOrFooter) {
+        this.mEmptyView = emptyView;
+        this.isKeepShowHeadOrFooter = isKeepShowHeadOrFooter;
     }
-
 
     public View getEmptyView() {
-        if (null != mEmptyViewListener && null != mEmptyView)
-            mEmptyView.setOnClickListener(mEmptyViewListener);
         return mEmptyView;
     }
 
-    public boolean showEmptyView(){
-        final View view = getEmptyView();
-        if (view != null){
-            view.setVisibility(VISIBLE);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * getEmptyView时 bindClickListener
-     *
-     * @param listener
-     */
-    public void setEmptyClickListener(OnClickListener listener) {
-        this.mEmptyViewListener = listener;
+    public void setEmptyViewKeepShowHeadOrFooter(boolean isKeepShowHeadOrFoot) {
+        this.isKeepShowHeadOrFooter = isKeepShowHeadOrFoot;
     }
 
     public boolean isShowEmptyView() {
-        return mEmptyView == null ? false : mEmptyView.isShown();
+        return hasShowEmptyView;
     }
 
+    public boolean isKeepShowHeadOrFooter() {
+        return isKeepShowHeadOrFooter;
+    }
 
-    public void setDivider(Drawable divider) {
-        if (!isDefaultItemDecoration || (mVerticalDividerHeight <= 0 && mHorizontalDividerHeight <= 0))
-            return;
+    public void setDivider(int height, Drawable divider) {
+        if (!isDefaultItemDecoration || height <= 0) return ;
+
+        this.mVerticalDividerHeight = height;
+        this.mHorizontalDividerHeight = height;
 
         if (this.mVerticalDivider != divider) {
             this.mVerticalDivider = divider;
@@ -457,11 +406,33 @@ public class CoreRecyclerView extends RecyclerView {
             this.mHorizontalDivider = divider;
         }
 
-        if (null == mFamiliarDefaultItemDecoration) {
-            addDefaultItemDecoration();
-        } else {
-            mFamiliarDefaultItemDecoration.setVerticalDividerDrawable(mVerticalDivider);
-            mFamiliarDefaultItemDecoration.setHorizontalDividerDrawable(mHorizontalDivider);
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setVerticalDividerDrawableHeight(mVerticalDividerHeight);
+            mCoreDefaultItemDecoration.setHorizontalDividerDrawableHeight(mHorizontalDividerHeight);
+
+            mCoreDefaultItemDecoration.setVerticalDividerDrawable(mVerticalDivider);
+            mCoreDefaultItemDecoration.setHorizontalDividerDrawable(mHorizontalDivider);
+
+            if (null != mWrapCoreRecyclerViewAdapter) {
+                mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    public void setDivider(Drawable divider) {
+        if (!isDefaultItemDecoration || (mVerticalDividerHeight <= 0 && mHorizontalDividerHeight <= 0)) return ;
+
+        if (this.mVerticalDivider != divider) {
+            this.mVerticalDivider = divider;
+        }
+
+        if (this.mHorizontalDivider != divider) {
+            this.mHorizontalDivider = divider;
+        }
+
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setVerticalDividerDrawable(mVerticalDivider);
+            mCoreDefaultItemDecoration.setHorizontalDividerDrawable(mHorizontalDivider);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -470,8 +441,7 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public void setDivider(Drawable dividerVertical, Drawable dividerHorizontal) {
-        if (!isDefaultItemDecoration || (mVerticalDividerHeight <= 0 && mHorizontalDividerHeight <= 0))
-            return;
+        if (!isDefaultItemDecoration || (mVerticalDividerHeight <= 0 && mHorizontalDividerHeight <= 0)) return ;
 
         if (this.mVerticalDivider != dividerVertical) {
             this.mVerticalDivider = dividerVertical;
@@ -481,11 +451,9 @@ public class CoreRecyclerView extends RecyclerView {
             this.mHorizontalDivider = dividerHorizontal;
         }
 
-        if (null == mFamiliarDefaultItemDecoration) {
-            addDefaultItemDecoration();
-        } else {
-            mFamiliarDefaultItemDecoration.setVerticalDividerDrawable(mVerticalDivider);
-            mFamiliarDefaultItemDecoration.setHorizontalDividerDrawable(mHorizontalDivider);
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setVerticalDividerDrawable(mVerticalDivider);
+            mCoreDefaultItemDecoration.setHorizontalDividerDrawable(mHorizontalDivider);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -494,16 +462,14 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public void setDividerVertical(Drawable dividerVertical) {
-        if (!isDefaultItemDecoration || mVerticalDividerHeight <= 0) return;
+        if (!isDefaultItemDecoration || mVerticalDividerHeight <= 0) return ;
 
         if (this.mVerticalDivider != dividerVertical) {
             this.mVerticalDivider = dividerVertical;
         }
 
-        if (null == mFamiliarDefaultItemDecoration) {
-            addDefaultItemDecoration();
-        } else {
-            mFamiliarDefaultItemDecoration.setVerticalDividerDrawable(mVerticalDivider);
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setVerticalDividerDrawable(mVerticalDivider);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -512,16 +478,14 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public void setDividerHorizontal(Drawable dividerHorizontal) {
-        if (!isDefaultItemDecoration || mHorizontalDividerHeight <= 0) return;
+        if (!isDefaultItemDecoration || mHorizontalDividerHeight <= 0) return ;
 
         if (this.mHorizontalDivider != dividerHorizontal) {
             this.mHorizontalDivider = dividerHorizontal;
         }
 
-        if (null == mFamiliarDefaultItemDecoration) {
-            addDefaultItemDecoration();
-        } else {
-            mFamiliarDefaultItemDecoration.setHorizontalDividerDrawable(mHorizontalDivider);
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setHorizontalDividerDrawable(mHorizontalDivider);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -530,12 +494,14 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public void setDividerHeight(int height) {
+        if (!isDefaultItemDecoration) return ;
+
         this.mVerticalDividerHeight = height;
         this.mHorizontalDividerHeight = height;
 
-        if (isDefaultItemDecoration && null != mFamiliarDefaultItemDecoration) {
-            mFamiliarDefaultItemDecoration.setVerticalDividerDrawableHeight(mVerticalDividerHeight);
-            mFamiliarDefaultItemDecoration.setHorizontalDividerDrawableHeight(mHorizontalDividerHeight);
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setVerticalDividerDrawableHeight(mVerticalDividerHeight);
+            mCoreDefaultItemDecoration.setHorizontalDividerDrawableHeight(mHorizontalDividerHeight);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -544,10 +510,12 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public void setDividerVerticalHeight(int height) {
+        if (!isDefaultItemDecoration) return ;
+
         this.mVerticalDividerHeight = height;
 
-        if (isDefaultItemDecoration && null != mFamiliarDefaultItemDecoration) {
-            mFamiliarDefaultItemDecoration.setVerticalDividerDrawableHeight(mVerticalDividerHeight);
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setVerticalDividerDrawableHeight(mVerticalDividerHeight);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -556,10 +524,26 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public void setDividerHorizontalHeight(int height) {
+        if (!isDefaultItemDecoration) return ;
+
         this.mHorizontalDividerHeight = height;
 
-        if (isDefaultItemDecoration && null != mFamiliarDefaultItemDecoration) {
-            mFamiliarDefaultItemDecoration.setHorizontalDividerDrawableHeight(mHorizontalDividerHeight);
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setHorizontalDividerDrawableHeight(mHorizontalDividerHeight);
+
+            if (null != mWrapCoreRecyclerViewAdapter) {
+                mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    public void setItemViewBothSidesMargin(int bothSidesMargin) {
+        if (!isDefaultItemDecoration) return ;
+
+        this.mItemViewBothSidesMargin = bothSidesMargin;
+
+        if (null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setItemViewBothSidesMargin(mItemViewBothSidesMargin);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -569,7 +553,6 @@ public class CoreRecyclerView extends RecyclerView {
 
     /**
      * HeadView onBindViewHolder callback
-     *
      * @param onHeadViewBindViewHolderListener OnHeadViewBindViewHolderListener
      */
     public void setOnHeadViewBindViewHolderListener(CoreRecyclerView.OnHeadViewBindViewHolderListener onHeadViewBindViewHolderListener) {
@@ -582,7 +565,6 @@ public class CoreRecyclerView extends RecyclerView {
 
     /**
      * FooterView onBindViewHolder callback
-     *
      * @param onFooterViewBindViewHolderListener OnFooterViewBindViewHolderListener
      */
     public void setOnFooterViewBindViewHolderListener(CoreRecyclerView.OnFooterViewBindViewHolderListener onFooterViewBindViewHolderListener) {
@@ -593,12 +575,6 @@ public class CoreRecyclerView extends RecyclerView {
         }
     }
 
-    /**
-     * recycleview的复用机制
-     * 多个headView 时请区分和重置
-     * onHeadViewBindViewHolderListener
-     * @param v
-     */
     public void addHeaderView(View v) {
         addHeaderView(v, false);
     }
@@ -615,7 +591,6 @@ public class CoreRecyclerView extends RecyclerView {
                 scrollToPosition(pos);
             }
         }
-
     }
 
     public boolean removeHeaderView(View v) {
@@ -645,8 +620,6 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public boolean removeFooterView(View v) {
-        if (null == v)
-            return false;
         if (!mFooterView.contains(v)) return false;
 
         if (null != mWrapCoreRecyclerViewAdapter) {
@@ -679,7 +652,7 @@ public class CoreRecyclerView extends RecyclerView {
                 ret = ((GridLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition() - getHeaderViewsCount();
                 break;
             case LAYOUT_MANAGER_TYPE_STAGGERED_GRID:
-                StaggeredGridLayoutManager tempStaggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
+                StaggeredGridLayoutManager tempStaggeredGridLayoutManager = (StaggeredGridLayoutManager)layoutManager;
                 int[] firstVisibleItemPositions = new int[tempStaggeredGridLayoutManager.getSpanCount()];
                 tempStaggeredGridLayoutManager.findFirstCompletelyVisibleItemPositions(firstVisibleItemPositions);
                 ret = firstVisibleItemPositions[0] - getHeaderViewsCount();
@@ -698,19 +671,19 @@ public class CoreRecyclerView extends RecyclerView {
 
         switch (mLayoutManagerType) {
             case LAYOUT_MANAGER_TYPE_LINEAR:
-                ret = ((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition() - getHeaderViewsCount();
+                ret = ((LinearLayoutManager)layoutManager).findLastCompletelyVisibleItemPosition() - getHeaderViewsCount();
                 if (ret > curItemCount) {
                     ret -= getFooterViewsCount();
                 }
                 break;
             case LAYOUT_MANAGER_TYPE_GRID:
-                ret = ((GridLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition() - getHeaderViewsCount();
+                ret = ((GridLayoutManager)layoutManager).findLastCompletelyVisibleItemPosition() - getHeaderViewsCount();
                 if (ret > curItemCount) {
                     ret -= getFooterViewsCount();
                 }
                 break;
             case LAYOUT_MANAGER_TYPE_STAGGERED_GRID:
-                StaggeredGridLayoutManager tempStaggeredGridLayoutManager = (StaggeredGridLayoutManager) layoutManager;
+                StaggeredGridLayoutManager tempStaggeredGridLayoutManager = (StaggeredGridLayoutManager)layoutManager;
                 int[] lastVisibleItemPositions = new int[tempStaggeredGridLayoutManager.getSpanCount()];
                 tempStaggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(lastVisibleItemPositions);
                 if (lastVisibleItemPositions.length > 0) {
@@ -731,8 +704,8 @@ public class CoreRecyclerView extends RecyclerView {
 
     public void setHeaderDividersEnabled(boolean isHeaderDividersEnabled) {
         this.isHeaderDividersEnabled = isHeaderDividersEnabled;
-        if (isDefaultItemDecoration && null != mFamiliarDefaultItemDecoration) {
-            mFamiliarDefaultItemDecoration.setHeaderDividersEnabled(isHeaderDividersEnabled);
+        if (isDefaultItemDecoration && null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setHeaderDividersEnabled(isHeaderDividersEnabled);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
@@ -742,13 +715,28 @@ public class CoreRecyclerView extends RecyclerView {
 
     public void setFooterDividersEnabled(boolean isFooterDividersEnabled) {
         this.isFooterDividersEnabled = isFooterDividersEnabled;
-        if (isDefaultItemDecoration && null != mFamiliarDefaultItemDecoration) {
-            mFamiliarDefaultItemDecoration.setFooterDividersEnabled(isFooterDividersEnabled);
+        if (isDefaultItemDecoration && null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setFooterDividersEnabled(isFooterDividersEnabled);
 
             if (null != mWrapCoreRecyclerViewAdapter) {
                 mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    public void setNotShowGridEndDivider(boolean isNotShowGridEndDivider) {
+        this.isNotShowGridEndDivider = isNotShowGridEndDivider;
+        if (isDefaultItemDecoration && null != mCoreDefaultItemDecoration) {
+            mCoreDefaultItemDecoration.setNotShowGridEndDivider(isNotShowGridEndDivider);
+
+            if (null != mWrapCoreRecyclerViewAdapter) {
+                mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    public int getCurLayoutManagerType() {
+        return mLayoutManagerType;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -767,26 +755,6 @@ public class CoreRecyclerView extends RecyclerView {
         }
     }
 
-    /**
-     * 滚动到最底部
-     */
-    public void scrollToLastPostion() {
-        int pos = (null == mReqAdapter ? 0 : mReqAdapter.getItemCount()) + getHeaderViewsCount() + mFooterView.size() - 1;
-        scrollToPosition(pos);
-    }
-
-    public View getLaseFootView() {
-        if (null != mFooterView && mFooterView.size() > 0)
-            return mFooterView.get(mFooterView.size() - 1);
-        return null;
-    }
-
-    public void setAllFootViews(int Visable) {
-        for (View temp:mFooterView){
-            temp.setVisibility(Visable);
-        }
-    }
-
     public interface OnItemClickListener {
         void onItemClick(CoreRecyclerView CoreRecyclerView, View view, int position);
     }
@@ -796,134 +764,40 @@ public class CoreRecyclerView extends RecyclerView {
     }
 
     public interface OnHeadViewBindViewHolderListener {
-        void onHeadViewBindViewHolder(ViewHolder holder, int position, boolean isInitializeInvoke);
+        void onHeadViewBindViewHolder(RecyclerView.ViewHolder holder, int position, boolean isInitializeInvoke);
     }
 
     public interface OnFooterViewBindViewHolderListener {
-        void onFooterViewBindViewHolder(ViewHolder holder, int position, boolean isInitializeInvoke);
+        void onFooterViewBindViewHolder(RecyclerView.ViewHolder holder, int position, boolean isInitializeInvoke);
     }
 
     private AdapterDataObserver mReqAdapterDataObserver = new AdapterDataObserver() {
         @Override
         public void onChanged() {
             mWrapCoreRecyclerViewAdapter.notifyDataSetChanged();
-            LogUtils.e("onChanged","---");
             processEmptyView();
         }
 
         public void onItemRangeInserted(int positionStart, int itemCount) {
             mWrapCoreRecyclerViewAdapter.notifyItemInserted(getHeaderViewsCount() + positionStart);
-            LogUtils.e("onItemRangeInserted","---");
             processEmptyView();
         }
 
-
         public void onItemRangeRemoved(int positionStart, int itemCount) {
-            LogUtils.e("onItemRangeRemoved","---");
             mWrapCoreRecyclerViewAdapter.notifyItemRemoved(getHeaderViewsCount() + positionStart);
             processEmptyView();
         }
 
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount) {
-            LogUtils.e("onItemRangeChanged","---");
             mWrapCoreRecyclerViewAdapter.notifyItemRangeChanged(getHeaderViewsCount() + positionStart, itemCount);
             processEmptyView();
         }
 
         @Override
-        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
-            mWrapCoreRecyclerViewAdapter.notifyItemRangeChanged(getHeaderViewsCount()+positionStart,itemCount,payload);
-            processEmptyView();
-        }
-
-        @Override
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
-            LogUtils.e("onItemRangeMoved","---");
             mWrapCoreRecyclerViewAdapter.notifyItemMoved(getHeaderViewsCount() + fromPosition, getHeaderViewsCount() + toPosition);
         }
     };
 
-    public Adapter getReqAdapter() {
-        return mReqAdapter;
-    }
-
-    public void setReqAdapter(Adapter reqAdapter) {
-        mReqAdapter = reqAdapter;
-    }
-
-    public CoreWrapRecyclerViewAdapter getWrapCoreRecyclerViewAdapter() {
-        return mWrapCoreRecyclerViewAdapter;
-    }
-
-    public void setWrapCoreRecyclerViewAdapter(CoreWrapRecyclerViewAdapter wrapCoreRecyclerViewAdapter) {
-        mWrapCoreRecyclerViewAdapter = wrapCoreRecyclerViewAdapter;
-    }
-
-    /**
-     * Set the over-scroll mode for this view. Valid over-scroll modes are
-     * {@link #OVER_SCROLL_ALWAYS} (default), {@link #OVER_SCROLL_IF_CONTENT_SCROLLS}
-     * (allow over-scrolling only if the view content is larger than the container),
-     * or {@link #OVER_SCROLL_NEVER}.
-     * <p/>
-     * Setting the over-scroll mode of a view will have an effect only if the
-     * view is capable of scrolling.
-     *
-     * @param overScrollMode The new over-scroll mode for this view.
-     */
-    @Override
-    public void setOverScrollMode(int overScrollMode) {
-        super.setOverScrollMode(overScrollMode);
-    }
-
-    /**
-     * Scroll the view with standard behavior for scrolling beyond the normal
-     * content boundaries. Views that call this method should override
-     * {@link #onOverScrolled(int, int, boolean, boolean)} to respond to the
-     * results of an over-scroll operation.
-     * <p/>
-     * Views can use this method to handle any touch or fling-based scrolling.
-     *
-     * @param deltaX         Change in X in pixels
-     * @param deltaY         Change in Y in pixels
-     * @param scrollX        Current X scroll value in pixels before applying deltaX
-     * @param scrollY        Current Y scroll value in pixels before applying deltaY
-     * @param scrollRangeX   Maximum content scroll range along the X axis
-     * @param scrollRangeY   Maximum content scroll range along the Y axis
-     * @param maxOverScrollX Number of pixels to overscroll by in either direction
-     *                       along the X axis.
-     * @param maxOverScrollY Number of pixels to overscroll by in either direction
-     *                       along the Y axis.
-     * @param isTouchEvent   true if this scroll operation is the result of a touch event.
-     * @return true if scrolling was clamped to an over-scroll boundary along either
-     * axis, false otherwise.
-     */
-    @Override
-    protected boolean overScrollBy(int deltaX, int deltaY, int scrollX, int scrollY, int scrollRangeX, int scrollRangeY, int maxOverScrollX, int maxOverScrollY, boolean isTouchEvent) {
-        return super.overScrollBy(deltaX, deltaY, scrollX, scrollY, scrollRangeX, scrollRangeY, maxOverScrollX, maxOverScrollY, isTouchEvent);
-    }
-
-    public boolean isScrollToBottom() {
-        switch (mLayoutManagerType) {
-            case 1:
-                return ((LinearLayoutManager) getLayoutManager()).getOrientation() == LinearLayoutManager.VERTICAL ? !ViewCompat.canScrollVertically(this, 1) : !ViewCompat.canScrollHorizontally(this, 1);
-            case 2:
-                return ((LinearLayoutManager) getLayoutManager()).getOrientation() == LinearLayoutManager.VERTICAL ? !ViewCompat.canScrollVertically(this, 1) : !ViewCompat.canScrollHorizontally(this, 1);
-            case 3:
-                return ((StaggeredGridLayoutManager) getLayoutManager()).getOrientation() == LinearLayoutManager.VERTICAL ? !ViewCompat.canScrollVertically(this, 1) : !ViewCompat.canScrollHorizontally(this, 1);
-        }
-        return false;
-    }
-
-    public  interface InterfaceSetAdapter {
-        void onSetAdapter();
-    }
-
-    public List<View> getHeaderView() {
-        return mHeaderView;
-    }
-
-    public void setHeaderView(List<View> mHeaderView) {
-        this.mHeaderView = mHeaderView;
-    }
 }

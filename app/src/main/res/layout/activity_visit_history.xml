@@ -24,16 +24,10 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/title_bar">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.wj.base.view.recyclerview.CoreRecyclerView
-                android:id="@+id/recyclerView"
-                app:frv_emptyView="@id/emptyView"
-                style="@style/CoreRecyclerView" />
-
-        </RelativeLayout>
+        <com.wj.base.view.recyclerview.CoreRecyclerView
+            android:id="@+id/recyclerView"
+            app:frv_emptyView="@id/emptyView"
+            style="@style/CoreRecyclerView" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
