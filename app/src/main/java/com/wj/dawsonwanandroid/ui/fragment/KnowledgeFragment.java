@@ -12,6 +12,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wj.base.base.BaseFragment;
 import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ToastUtils;
+import com.wj.base.view.recyclerview.CoreRecyclerView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.ArticleListBean;
@@ -35,7 +36,7 @@ public class KnowledgeFragment extends BaseFragment<KnowledgePresenter> implemen
         OnRefreshLoadmoreListener, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    CoreRecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
 

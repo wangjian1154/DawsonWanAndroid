@@ -12,8 +12,12 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 
+/**
+ * CoreRecyclerView Default ItemDecoration
+ * Created by iWgang on 15/11/08.
+ * https://github.com/iwgang/CoreRecyclerView
+ */
 public class CoreDefaultItemDecoration extends RecyclerView.ItemDecoration {
-    private CoreRecyclerView mCoreRecyclerView;
     private Drawable mVerticalDividerDrawable;
     private Drawable mHorizontalDividerDrawable;
     private int mVerticalDividerDrawableHeight;
@@ -25,51 +29,49 @@ public class CoreDefaultItemDecoration extends RecyclerView.ItemDecoration {
     private int mGridSpanCount = 0;
     private boolean isHeaderDividersEnabled;
     private boolean isFooterDividersEnabled;
-    private boolean isNotShowGridEndDivider;
     private float mUnDivisibleValue = 0;
     private boolean isDivisible = true;
 
-    public CoreDefaultItemDecoration(CoreRecyclerView CoreRecyclerView, Drawable dividerVertical, Drawable dividerHorizontal, int dividerDrawableSizeVertical, int dividerDrawableSizeHorizontal) {
-        this.mCoreRecyclerView = CoreRecyclerView;
+    public CoreDefaultItemDecoration(RecyclerView recyclerView, Drawable dividerVertical, Drawable dividerHorizontal, int dividerDrawableSizeVertical, int dividerDrawableSizeHorizontal) {
         this.mVerticalDividerDrawable = dividerVertical;
         this.mHorizontalDividerDrawable = dividerHorizontal;
         this.mVerticalDividerDrawableHeight = dividerDrawableSizeVertical;
         this.mHorizontalDividerDrawableHeight = dividerDrawableSizeHorizontal;
-        initLayoutManagerType();
+
+        init(recyclerView);
     }
 
-    private void initLayoutManagerType() {
-        this.mLayoutManagerType = mCoreRecyclerView.getCurLayoutManagerType();
-        RecyclerView.LayoutManager layoutManager = mCoreRecyclerView.getLayoutManager();
-        switch (mLayoutManagerType) {
-            case CoreRecyclerView.LAYOUT_MANAGER_TYPE_LINEAR:
-                LinearLayoutManager curLinearLayoutManager = (LinearLayoutManager)layoutManager;
-                if (curLinearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                    mOrientation = OrientationHelper.HORIZONTAL;
-                } else {
-                    mOrientation = OrientationHelper.VERTICAL;
-                }
-                break;
-            case CoreRecyclerView.LAYOUT_MANAGER_TYPE_GRID:
-                GridLayoutManager curGridLayoutManager = (GridLayoutManager)layoutManager;
-                mGridSpanCount = curGridLayoutManager.getSpanCount();
-                if (curGridLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                    mOrientation = OrientationHelper.HORIZONTAL;
-                } else {
-                    mOrientation = OrientationHelper.VERTICAL;
-                }
-                break;
-            case CoreRecyclerView.LAYOUT_MANAGER_TYPE_STAGGERED_GRID:
-                StaggeredGridLayoutManager curStaggeredGridLayoutManager = (StaggeredGridLayoutManager)layoutManager;
-                mGridSpanCount = curStaggeredGridLayoutManager.getSpanCount();
-                if (curStaggeredGridLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
-                    mOrientation = OrientationHelper.HORIZONTAL;
-                } else {
-                    mOrientation = OrientationHelper.VERTICAL;
-                }
-                break;
-            default:
-                this.mLayoutManagerType = CoreRecyclerView.LAYOUT_MANAGER_TYPE_LINEAR;
+    private void init(RecyclerView mRecyclerView) {
+        RecyclerView.LayoutManager mLayoutManager = mRecyclerView.getLayoutManager();
+        if (mLayoutManager.getClass().isAssignableFrom(LinearLayoutManager.class)) {
+            mLayoutManagerType = CoreRecyclerView.LAYOUT_MANAGER_TYPE_LINEAR;
+
+            LinearLayoutManager curLinearLayoutManager = (LinearLayoutManager)mLayoutManager;
+            if (curLinearLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                mOrientation = OrientationHelper.HORIZONTAL;
+            } else {
+                mOrientation = OrientationHelper.VERTICAL;
+            }
+        } else if (mLayoutManager.getClass().isAssignableFrom(GridLayoutManager.class)) {
+            mLayoutManagerType = CoreRecyclerView.LAYOUT_MANAGER_TYPE_GRID;
+
+            GridLayoutManager curGridLayoutManager = (GridLayoutManager)mLayoutManager;
+            mGridSpanCount = curGridLayoutManager.getSpanCount();
+            if (curGridLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                mOrientation = OrientationHelper.HORIZONTAL;
+            } else {
+                mOrientation = OrientationHelper.VERTICAL;
+            }
+        } else if (mLayoutManager.getClass().isAssignableFrom(StaggeredGridLayoutManager.class)) {
+            mLayoutManagerType = CoreRecyclerView.LAYOUT_MANAGER_TYPE_STAGGERED_GRID;
+
+            StaggeredGridLayoutManager curStaggeredGridLayoutManager = (StaggeredGridLayoutManager)mLayoutManager;
+            mGridSpanCount = curStaggeredGridLayoutManager.getSpanCount();
+            if (curStaggeredGridLayoutManager.getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                mOrientation = OrientationHelper.HORIZONTAL;
+            } else {
+                mOrientation = OrientationHelper.VERTICAL;
+            }
         }
 
         initDivisible();
@@ -116,10 +118,6 @@ public class CoreDefaultItemDecoration extends RecyclerView.ItemDecoration {
 
     public void setFooterDividersEnabled(boolean isFooterDividersEnabled) {
         this.isFooterDividersEnabled = isFooterDividersEnabled;
-    }
-
-    public void setNotShowGridEndDivider(boolean isNotShowGridEndDivider) {
-        this.isNotShowGridEndDivider = isNotShowGridEndDivider;
     }
 
     @Override
@@ -235,7 +233,7 @@ public class CoreDefaultItemDecoration extends RecyclerView.ItemDecoration {
 
                     if (mOrientation == OrientationHelper.HORIZONTAL) {
                         // horizontal draw divider
-                        if (!isNotShowGridEndDivider || (!isGridLayoutLastNum && !isGridItemLayoutLastColumn)) {
+                        if (!isGridLayoutLastNum && !isGridItemLayoutLastColumn) {
                             int horizontalLeft = childView.getLeft() - childViewParams.leftMargin;
                             int horizontalTop = childView.getBottom() + childViewParams.bottomMargin;
                             int horizontalRight = childView.getRight() + childViewParams.rightMargin;
@@ -284,9 +282,9 @@ public class CoreDefaultItemDecoration extends RecyclerView.ItemDecoration {
                         mVerticalDividerDrawable.draw(c);
                     } else {
                         // draw vertical divider
-                        if (!isNotShowGridEndDivider || (!isGridItemLayoutLastColumn
+                        if (!isGridItemLayoutLastColumn
                                 && ((mLayoutManagerType == CoreRecyclerView.LAYOUT_MANAGER_TYPE_GRID && !isGridLayoutLastNum)
-                                || mLayoutManagerType == CoreRecyclerView.LAYOUT_MANAGER_TYPE_STAGGERED_GRID))) {
+                                || mLayoutManagerType == CoreRecyclerView.LAYOUT_MANAGER_TYPE_STAGGERED_GRID)) {
                             int verticalLeft = childView.getRight() + childViewParams.rightMargin;
                             int verticalTop = childView.getTop() - childViewParams.topMargin;
                             int verticalRight = verticalLeft + mVerticalDividerDrawableHeight;
@@ -342,8 +340,6 @@ public class CoreDefaultItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        if (mVerticalDividerDrawableHeight <= 0 && mHorizontalDividerDrawableHeight <= 0) return;
-
         RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) view.getLayoutParams();
         int position = params.getViewAdapterPosition();
         int headersCount;
@@ -492,7 +488,7 @@ public class CoreDefaultItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     private boolean isEmptyView(CoreRecyclerView CoreRecyclerView, int position, int headersCount) {
-        if (null != CoreRecyclerView && CoreRecyclerView.isKeepShowHeadOrFooter()
+        if (null != CoreRecyclerView
                 && CoreRecyclerView.isShowEmptyView() && position == headersCount) {
             return true;
         }

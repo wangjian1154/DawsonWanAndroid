@@ -11,6 +11,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.wj.base.base.BaseFragment;
 import com.wj.base.utils.BaseUtils;
+import com.wj.base.view.recyclerview.CoreRecyclerView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.AndroidTreeBean;
 import com.wj.dawsonwanandroid.bean.BaseResponse;
@@ -29,7 +30,7 @@ public class CategoryFragment extends BaseFragment<CategoryPresenter> implements
         CategoryContract.View, OnRefreshListener, BaseQuickAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    CoreRecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
 

@@ -18,6 +18,7 @@ import com.wj.base.utils.BaseUtils;
 import com.wj.base.utils.ScreenUtils;
 import com.wj.base.utils.ToastUtils;
 import com.wj.base.view.CoreTitleView;
+import com.wj.base.view.recyclerview.CoreRecyclerView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.ArticleListBean;
@@ -45,7 +46,7 @@ public class CollectionActivity extends BaseActivity<CollectionPresenter> implem
         View.OnClickListener {
 
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    CoreRecyclerView recyclerView;
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
     @BindView(R.id.iv_to_top)
