@@ -1,7 +1,9 @@
 package com.wj.base.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.view.View;
 
 import com.wj.base.R;
 import com.wj.base.utils.StatusBarUtil;
@@ -28,7 +30,7 @@ public abstract class SimpleActivity extends PermissionActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
-        StatusBarUtil.setColor(this,getResources().getColor(R.color.title_bar_bg));
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.title_bar_bg));
         bind = ButterKnife.bind(this);
         if (!EventBus.getDefault().isRegistered(this))
             EventBus.getDefault().register(this);
@@ -39,7 +41,8 @@ public abstract class SimpleActivity extends PermissionActivity {
         initViewAndEvent(savedInstanceState);
     }
 
-    protected void onViewCreated() {}
+    protected void onViewCreated() {
+    }
 
     protected abstract int getLayoutId();
 

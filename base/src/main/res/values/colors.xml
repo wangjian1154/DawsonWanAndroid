@@ -14,6 +14,7 @@
     <color name="line_bg">#dddddd</color>
     <color name="text_pressed">#05000000</color>
     <color name="title_color">#2A2A2A</color>
+    <color name="gray">#808080</color><!--灰色 -->
 
     <!--font-->
     <color name="font_black">#2A2A2A</color>

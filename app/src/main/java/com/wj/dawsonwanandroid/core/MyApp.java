@@ -25,6 +25,9 @@ import com.wj.dawsonwanandroid.bean.UserBean;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.nio.file.Path;
+import java.util.LinkedHashMap;
+
 /**
  * Created by wj on 2018/5/11.
  */
@@ -43,8 +46,6 @@ public class MyApp extends Application {
         new Initialization(this);
 
     }
-
-
 
     public static Context getInstance() {
         return context;

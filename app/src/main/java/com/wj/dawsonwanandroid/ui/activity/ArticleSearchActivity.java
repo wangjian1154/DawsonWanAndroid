@@ -5,22 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.just.agentweb.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.wj.base.base.BaseActivity;
-import com.wj.base.base.SimpleActivity;
 import com.wj.base.utils.BaseUtils;
-import com.wj.base.utils.StringUtils;
 import com.wj.base.utils.ToastUtils;
 import com.wj.base.view.ClearEditText;
+import com.wj.base.view.recyclerview.CoreRecyclerView;
 import com.wj.dawsonwanandroid.R;
 import com.wj.dawsonwanandroid.bean.ArticleBean;
 import com.wj.dawsonwanandroid.bean.ArticleListBean;
@@ -30,13 +27,10 @@ import com.wj.dawsonwanandroid.ui.adapter.ArticleListAdapter;
 import com.wj.dawsonwanandroid.ui.contract.SearchArticleContract;
 import com.wj.dawsonwanandroid.ui.presenter.SearchArticlePresenter;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ArticleSearchActivity extends BaseActivity<SearchArticlePresenter> implements SearchArticleContract.View {
@@ -50,7 +44,7 @@ public class ArticleSearchActivity extends BaseActivity<SearchArticlePresenter> 
     @BindView(R.id.smart_refresh)
     SmartRefreshLayout smartRefresh;
     @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
+    CoreRecyclerView recyclerView;
 
     private int page = 0;
     private List<ArticleBean> articleList;
